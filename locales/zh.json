@@ -1,4 +1,10 @@
 {
+  "LoginServerAction": {
+    "missing": "帳號和密碼為必填項目",
+    "serverError": "伺服器錯誤，請稍後再試",
+    "invalidCredentials": "帳號或密碼錯誤",
+    "success": "登入成功"
+  },
   "HeaderLayout": {
     "login": "登入"
   },

@@ -1,19 +1,20 @@
 'use client';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createLoginSchema } from '@/lib/formValidation';
-import { fetchLoginData } from '@/lib/api/user';
-export default function LoginPage() {
-  const t = useTranslations('LoginPage');
-  const LoginSchema = createLoginSchema(t);
-  type LoginForm = z.infer<typeof LoginSchema>;
+import { loginAction } from '@/app/actions/login';
 
+export default function LoginPage() {
   const [loginFormData, setLoginFormData] = useState<LoginForm>({
     account: '',
     password: '',
   });
+  const [isPending, startTransition] = useTransition();
+  const t = useTranslations('LoginPage');
+  const LoginSchema = createLoginSchema(t);
+  type LoginForm = z.infer<typeof LoginSchema>;
 
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof LoginForm, string>>
@@ -40,11 +41,22 @@ export default function LoginPage() {
     }
 
     //TODO:送出登入資料的api
-    const isLoginValid = fetchLoginData({
-      account: loginFormData.account,
-      password: loginFormData.password,
+    startTransition(async () => {
+      const res = await loginAction({
+        account: loginFormData.account,
+        password: loginFormData.password,
+      });
+
+      if (res.status !== 200) {
+        setLoginFormData({ ...loginFormData, password: '' });
+        setErrorMSGs({}); // 清除錯誤訊息
+        console.log('登入失敗:', res?.data?.message);
+        return;
+      } else {
+        // 登入成功後的處理
+        console.log('登入成功:', res?.data?.message);
+      }
     });
-    console.log('isLoginValid', isLoginValid);
   };
 
   const forgetPassword = () => {
@@ -88,6 +100,7 @@ export default function LoginPage() {
           size="small"
           variant="contained"
           color="secondary"
+          disabled={isPending}
         >
           {t('loginButton')}
         </Button>

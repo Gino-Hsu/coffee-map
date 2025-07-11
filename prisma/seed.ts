@@ -6,14 +6,14 @@ const prisma = new PrismaClient();
 const rawUserData = [
   {
     name: 'YuAn',
-    email: 'YuA@coffeemap.com',
-    password: '123456',
+    email: process.env.ADMIN_YUAN_EMAIL!,
+    password: process.env.ADMIN_YUAN_PASSWORD!,
     role: 'admin',
   },
   {
     name: 'Gino',
-    email: 'Gino@coffeemap.com',
-    password: '123456',
+    email: process.env.ADMIN_GINO_EMAIL!,
+    password: process.env.ADMIN_YUAN_PASSWORD!,
     role: 'admin',
   },
 ];

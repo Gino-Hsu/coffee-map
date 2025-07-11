@@ -14,7 +14,8 @@
     "lint": "next lint",
     "migrate": "prisma migrate dev --name init",
     "seed": "prisma db seed",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "reset": "prisma migrate reset --force"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

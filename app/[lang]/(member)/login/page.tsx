@@ -1,7 +1,9 @@
 import { getTranslations } from 'next-intl/server';
 import LoginPage from '@/components/loginPage';
 
-export default async function Login(params: { params: { lang: string } }) {
+export default async function Login(params: {
+  params: Promise<{ lang: string }>;
+}) {
   const { lang } = await params.params;
   const t = await getTranslations('LoginPage');
 

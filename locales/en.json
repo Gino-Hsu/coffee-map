@@ -1,0 +1,19 @@
+{
+  "HeaderLayout": {
+    "login": "Login"
+  },
+  "LoginPage": {
+    "title": "Login",
+    "accountLabel": "Account",
+    "passwordLabel": "Password",
+    "forgetPassword": "Forgot Password",
+    "loginButton": "Login",
+    "required": "This is required",
+    "errorMSG": {
+      "email": {
+        "format": "Please enter the correct email."
+      },
+      "password": "Incorrect password"
+    } 
+  }
+}

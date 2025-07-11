@@ -1,0 +1,19 @@
+{
+  "HeaderLayout": {
+    "login": "登入"
+  },
+  "LoginPage": {
+    "title": "登入",
+    "accountLabel": "帳號",
+    "passwordLabel": "密碼",
+    "forgetPassword": "忘記密碼",
+    "loginButton": "登入",
+    "required": "這是必填項目",
+    "errorMSG": {
+      "email": {
+        "format": "請輸入正確的電子信箱"
+      },
+      "password": "密碼錯誤"
+    } 
+  }
+}

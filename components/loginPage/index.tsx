@@ -1,17 +1,17 @@
 'use client';
-import { useState, useTransition } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createLoginSchema } from '@/lib/formValidation';
 import { loginAction } from '@/app/actions/login';
 
-export default function LoginPage() {
-  const [loginFormData, setLoginFormData] = useState<LoginForm>({
+export default function LoginPage({ lang }: { lang: string }) {
+  const formDataRef = useRef<{ account: string; password: string }>({
     account: '',
     password: '',
   });
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition(); // 用於處理異步操作
   const t = useTranslations('LoginPage');
   const LoginSchema = createLoginSchema(t);
   type LoginForm = z.infer<typeof LoginSchema>;
@@ -22,13 +22,13 @@ export default function LoginPage() {
 
   const handleChange =
     (field: keyof LoginForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setLoginFormData({ ...loginFormData, [field]: e.target.value });
+      formDataRef.current[field] = e.target.value;
       setErrorMSGs({ ...errorMSGs, [field]: '' });
     };
 
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = LoginSchema.safeParse(loginFormData);
+    const result = LoginSchema.safeParse(formDataRef.current);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof LoginForm, string>> = {};
@@ -43,12 +43,16 @@ export default function LoginPage() {
     //TODO:送出登入資料的api
     startTransition(async () => {
       const res = await loginAction({
-        account: loginFormData.account,
-        password: loginFormData.password,
+        account: formDataRef.current.account,
+        password: formDataRef.current.password,
+        locale: lang,
       });
 
       if (res.status !== 200) {
-        setLoginFormData({ ...loginFormData, password: '' });
+        formDataRef.current = {
+          account: formDataRef.current.account,
+          password: '',
+        }; // 清空表單
         setErrorMSGs({}); // 清除錯誤訊息
         console.log('登入失敗:', res?.data?.message);
         return;
@@ -71,7 +75,7 @@ export default function LoginPage() {
             id="account"
             label={t('accountLabel')}
             variant="outlined"
-            value={loginFormData.account}
+            value={formDataRef.current.account}
             error={!!errorMSGs.account}
             helperText={errorMSGs.account}
             onChange={handleChange('account')}
@@ -81,7 +85,7 @@ export default function LoginPage() {
             label={t('passwordLabel')}
             type="password"
             variant="outlined"
-            value={loginFormData.password}
+            value={formDataRef.current.password}
             error={!!errorMSGs.password}
             helperText={errorMSGs.password}
             onChange={handleChange('password')}

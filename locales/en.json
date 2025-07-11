@@ -1,4 +1,10 @@
 {
+  "LoginServerAction": {
+    "missing": "Account and password are required",
+    "serverError": "Server error, please try again later",
+    "invalidCredentials": "Invalid account or password",
+    "success": "Login successful"
+  },
   "HeaderLayout": {
     "login": "Login"
   },

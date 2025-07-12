@@ -1,0 +1,48 @@
+{
+  "LoginServerAction": {
+    "missing": "帳號及び暗証番号は必須です",
+    "serverError": "伺服器錯誤が發生しました。しばらくしてから再度お試しください",
+    "invalidCredentials": "帳號または暗証番号が正しくありません",
+    "success": "登入に成功しました"
+  },
+  "HeaderLayout": {
+    "login": "登入"
+  },
+  "LoginPage": {
+    "title": "登入",
+    "accountLabel": "帳號",
+    "passwordLabel": "暗証番号",
+    "navigateRegisterPage": "新規登錄へ",
+    "forgetPassword": "暗証番号をお忘れですか？",
+    "loginButton": "登入",
+    "required": "此項目は必須です",
+    "errorMSG": {
+      "email": {
+        "format": "正確な電子郵件地址を入力してください"
+      },
+      "password": "暗証番号が正しくありません"
+    }
+  },
+  "RegisterPage": {
+    "title": "新規登錄",
+    "accountLabel": "帳號",
+    "nameLabel": "姓名",
+    "passwordLabel": "暗証番号",
+    "confirmPasswordLabel": "暗証番号（確認）",
+    "navigateLoginPage": "登入に戻る",
+    "forgetPassword": "暗証番号をお忘れですか？",
+    "registerButton": "登錄",
+    "errorMSG": {
+      "required": "此項目は必須です",
+      "email": {
+        "format": "正確な電子郵件地址を入力してください"
+      },
+      "password": {
+        "length": "暗証番号は6文字以上で入力してください"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "暗証番号が一致しません"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 'use client';
+import { useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 import {
   FormControl,
   Select,
@@ -8,12 +9,33 @@ import {
   SelectChangeEvent,
 } from '@mui/material';
 
+const supportedLangs = ['zh', 'en', 'ja'];
+
 function LanguageSelect() {
   const [language, setLanguage] = useState('zh');
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setLanguage(event.target.value);
-    console.log(`Selected language: ${event.target.value}`);
+  useEffect(() => {
+    const currentLang = pathname.split('/')[1];
+    if (supportedLangs.includes(currentLang)) {
+      setLanguage(currentLang);
+    } else {
+      setLanguage('zh');
+    }
+  }, [pathname]);
+
+  const handleLangChange = (event: SelectChangeEvent) => {
+    const newLang = event.target.value;
+
+    // 將路徑切換語系
+    const segments = pathname.split('/');
+    segments[1] = newLang;
+    const newPath = segments.join('/');
+
+    console.log('切換語言:', newLang, '新路徑:', newPath);
+
+    router.push(newPath);
   };
 
   return (
@@ -22,10 +44,11 @@ function LanguageSelect() {
         name="language"
         id="languageSelect"
         value={language}
-        onChange={handleChange}
+        onChange={handleLangChange}
       >
         <MenuItem value={'zh'}>繁體中文</MenuItem>
         <MenuItem value={'en'}>English</MenuItem>
+        <MenuItem value={'ja'}>日本語</MenuItem>
       </Select>
     </FormControl>
   );

@@ -1,5 +1,6 @@
 'use client';
 import { useRef, useState, useTransition } from 'react';
+import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
@@ -11,36 +12,37 @@ export default function LoginPage({ lang }: { lang: string }) {
     account: '',
     password: '',
   });
+  const [errorMSGs, setErrorMSGs] = useState<
+    Partial<Record<keyof typeLoginForm, string>>
+  >({});
   const [isPending, startTransition] = useTransition(); // 用於處理異步操作
   const t = useTranslations('LoginPage');
-  const LoginSchema = createLoginSchema(t);
-  type LoginForm = z.infer<typeof LoginSchema>;
+  const loginSchema = createLoginSchema(t);
+  type typeLoginForm = z.infer<typeof loginSchema>;
 
-  const [errorMSGs, setErrorMSGs] = useState<
-    Partial<Record<keyof LoginForm, string>>
-  >({});
-
-  const handleChange =
-    (field: keyof LoginForm) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      formDataRef.current[field] = e.target.value;
-      setErrorMSGs({ ...errorMSGs, [field]: '' });
-    };
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: keyof typeLoginForm
+  ) => {
+    formDataRef.current[field] = e.target.value;
+    setErrorMSGs({ ...errorMSGs, [field]: '' });
+  };
 
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = LoginSchema.safeParse(formDataRef.current);
+    const result = loginSchema.safeParse(formDataRef.current);
 
     if (!result.success) {
-      const fieldErrors: Partial<Record<keyof LoginForm, string>> = {};
+      const fieldErrors: Partial<Record<keyof typeLoginForm, string>> = {};
       for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof LoginForm;
+        const key = issue.path[0] as keyof typeLoginForm;
         fieldErrors[key] = issue.message;
       }
       setErrorMSGs(fieldErrors);
       return;
     }
 
-    //TODO:送出登入資料的api
+    // 送出登入資料的api(server action)
     startTransition(async () => {
       const res = await loginAction({
         account: formDataRef.current.account,
@@ -52,7 +54,7 @@ export default function LoginPage({ lang }: { lang: string }) {
         formDataRef.current = {
           account: formDataRef.current.account,
           password: '',
-        }; // 清空表單
+        }; // 清空表單密碼
         setErrorMSGs({}); // 清除錯誤訊息
         console.log('登入失敗:', res?.data?.message);
         return;
@@ -63,7 +65,7 @@ export default function LoginPage({ lang }: { lang: string }) {
     });
   };
 
-  const forgetPassword = () => {
+  const handleClickForgetPassword = () => {
     console.log('forget password clicked，準備開光箱');
   };
 
@@ -78,7 +80,7 @@ export default function LoginPage({ lang }: { lang: string }) {
             value={formDataRef.current.account}
             error={!!errorMSGs.account}
             helperText={errorMSGs.account}
-            onChange={handleChange('account')}
+            onChange={e => handleChange(e, 'account')}
           />
           <TextField
             id="password"
@@ -88,12 +90,19 @@ export default function LoginPage({ lang }: { lang: string }) {
             value={formDataRef.current.password}
             error={!!errorMSGs.password}
             helperText={errorMSGs.password}
-            onChange={handleChange('password')}
+            onChange={e => handleChange(e, 'password')}
           />
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-1">
+          <Link
+            href={'/register'}
+            className="text-xs text-gray-500 hover:underline cursor-pointer"
+          >
+            {t('navigateRegisterPage')}
+          </Link>
+          <p className="text-xs text-gray-500">/</p>
           <p
-            onClick={() => forgetPassword()}
+            onClick={handleClickForgetPassword}
             className="text-xs text-gray-500 hover:underline cursor-pointer"
           >
             {t('forgetPassword')}

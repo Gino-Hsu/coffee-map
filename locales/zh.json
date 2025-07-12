@@ -12,6 +12,7 @@
     "title": "登入",
     "accountLabel": "帳號",
     "passwordLabel": "密碼",
+    "navigateRegisterPage": "前往註冊",
     "forgetPassword": "忘記密碼",
     "loginButton": "登入",
     "required": "這是必填項目",

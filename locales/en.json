@@ -12,6 +12,7 @@
     "title": "Login",
     "accountLabel": "Account",
     "passwordLabel": "Password",
+    "navigateRegisterPage": "Go to Register",
     "forgetPassword": "Forgot Password",
     "loginButton": "Login",
     "required": "This is required",

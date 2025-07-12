@@ -1,10 +1,11 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createRegisterSchema } from '@/lib/formValidation';
+import { registerAction } from '@/app/actions/register';
 
 export default function RegisterPage() {
   const formDataRef = useRef<{
@@ -21,6 +22,7 @@ export default function RegisterPage() {
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof typeRegisterForm, string>>
   >({});
+  const [isPending, startTransition] = useTransition(); // 用於處理異步操作
   const t = useTranslations('RegisterPage');
   const registerSchema = createRegisterSchema(t);
   type typeRegisterForm = z.infer<typeof registerSchema>;
@@ -51,7 +53,29 @@ export default function RegisterPage() {
       return;
     }
 
-    //TODO 送出註冊資料的api(server action)
+    //送出註冊資料的api
+    startTransition(async () => {
+      const res = await registerAction({
+        email: formDataRef.current.email,
+        name: formDataRef.current.name,
+        password: formDataRef.current.password,
+        confirmPassword: formDataRef.current.confirmPassword,
+      });
+
+      if (res.status !== 200) {
+        formDataRef.current = {
+          ...formDataRef.current,
+          password: '',
+          confirmPassword: '',
+        }; // 清空表單密碼
+        setErrorMSGs({}); // 清除錯誤訊息
+        console.log('註冊失敗:', res?.data?.message);
+        return;
+      }
+
+      // 註冊成功後的處理
+      console.log('註冊成功:', res?.data?.message);
+    });
   };
 
   const handleClickForgetPassword = () => {
@@ -63,8 +87,8 @@ export default function RegisterPage() {
       <FormControl className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-3">
           <TextField
-            id="account"
-            label={t('accountLabel')}
+            id="email"
+            label={t('emailLabel')}
             variant="outlined"
             value={formDataRef.current.email}
             error={!!errorMSGs.email}
@@ -121,6 +145,7 @@ export default function RegisterPage() {
           size="small"
           variant="contained"
           color="secondary"
+          disabled={isPending}
         >
           {t('registerButton')}
         </Button>

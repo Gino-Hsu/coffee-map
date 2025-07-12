@@ -1,68 +1,57 @@
 'use client';
-import { useRef, useState, useTransition } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
-import { createLoginSchema } from '@/lib/formValidation';
-import { loginAction } from '@/app/actions/login';
+import { createRegisterSchema } from '@/lib/formValidation';
 
-export default function LoginPage({ lang }: { lang: string }) {
-  const formDataRef = useRef<{ account: string; password: string }>({
-    account: '',
+export default function RegisterPage() {
+  const formDataRef = useRef<{
+    email: string;
+    name: string;
+    password: string;
+    confirmPassword: string;
+  }>({
+    email: '',
+    name: '',
     password: '',
+    confirmPassword: '',
   });
   const [errorMSGs, setErrorMSGs] = useState<
-    Partial<Record<keyof typeLoginForm, string>>
+    Partial<Record<keyof typeRegisterForm, string>>
   >({});
-  const [isPending, startTransition] = useTransition(); // 用於處理異步操作
-  const t = useTranslations('LoginPage');
-  const loginSchema = createLoginSchema(t);
-  type typeLoginForm = z.infer<typeof loginSchema>;
+  const t = useTranslations('RegisterPage');
+  const registerSchema = createRegisterSchema(t);
+  type typeRegisterForm = z.infer<typeof registerSchema>;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: keyof typeLoginForm
+    field: keyof typeRegisterForm
   ) => {
     formDataRef.current[field] = e.target.value;
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
-  const handleSubmitLogin = (e: React.FormEvent) => {
+  const handleSubmitRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = loginSchema.safeParse(formDataRef.current);
+    const result = registerSchema.safeParse(formDataRef.current);
+
+    console.log('Register form data:', result?.error?.issues);
 
     if (!result.success) {
-      const fieldErrors: Partial<Record<keyof typeLoginForm, string>> = {};
+      const fieldErrors: Partial<Record<keyof typeRegisterForm, string>> = {};
       for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof typeLoginForm;
+        const key = issue.path[0] as keyof typeRegisterForm;
         fieldErrors[key] = issue.message;
       }
+
+      console.log('Validation errors:', fieldErrors);
       setErrorMSGs(fieldErrors);
       return;
     }
 
-    // 送出登入資料的api(server action)
-    startTransition(async () => {
-      const res = await loginAction({
-        account: formDataRef.current.account,
-        password: formDataRef.current.password,
-        locale: lang,
-      });
-
-      if (res.status !== 200) {
-        formDataRef.current = {
-          account: formDataRef.current.account,
-          password: '',
-        }; // 清空表單密碼
-        setErrorMSGs({}); // 清除錯誤訊息
-        console.log('登入失敗:', res?.data?.message);
-        return;
-      } else {
-        // 登入成功後的處理
-        console.log('登入成功:', res?.data?.message);
-      }
-    });
+    //TODO 送出註冊資料的api(server action)
   };
 
   const handleClickForgetPassword = () => {
@@ -70,17 +59,26 @@ export default function LoginPage({ lang }: { lang: string }) {
   };
 
   return (
-    <form onSubmit={handleSubmitLogin}>
+    <form onSubmit={handleSubmitRegister}>
       <FormControl className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-3">
           <TextField
             id="account"
             label={t('accountLabel')}
             variant="outlined"
-            value={formDataRef.current.account}
-            error={!!errorMSGs.account}
-            helperText={errorMSGs.account}
-            onChange={e => handleChange(e, 'account')}
+            value={formDataRef.current.email}
+            error={!!errorMSGs.email}
+            helperText={errorMSGs.email}
+            onChange={e => handleChange(e, 'email')}
+          />
+          <TextField
+            id="name"
+            label={t('nameLabel')}
+            variant="outlined"
+            value={formDataRef.current.name}
+            error={!!errorMSGs.name}
+            helperText={errorMSGs.name}
+            onChange={e => handleChange(e, 'name')}
           />
           <TextField
             id="password"
@@ -92,13 +90,23 @@ export default function LoginPage({ lang }: { lang: string }) {
             helperText={errorMSGs.password}
             onChange={e => handleChange(e, 'password')}
           />
+          <TextField
+            id="confirmPassword"
+            label={t('confirmPasswordLabel')}
+            type="password"
+            variant="outlined"
+            value={formDataRef.current.confirmPassword}
+            error={!!errorMSGs.confirmPassword}
+            helperText={errorMSGs.confirmPassword}
+            onChange={e => handleChange(e, 'confirmPassword')}
+          />
         </div>
         <div className="flex justify-end gap-1">
           <Link
-            href={'/register'}
+            href={'/login'}
             className="text-xs text-gray-500 hover:underline cursor-pointer"
           >
-            {t('navigateRegisterPage')}
+            {t('navigateLoginPage')}
           </Link>
           <p className="text-xs text-gray-500">/</p>
           <p
@@ -113,9 +121,8 @@ export default function LoginPage({ lang }: { lang: string }) {
           size="small"
           variant="contained"
           color="secondary"
-          disabled={isPending}
         >
-          {t('loginButton')}
+          {t('registerButton')}
         </Button>
       </FormControl>
     </form>

@@ -29,7 +29,8 @@ export default function RegisterPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof typeRegisterForm
   ) => {
-    formDataRef.current[field] = e.target.value;
+    const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
+    formDataRef.current[field] = cleanedValue;
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
@@ -63,8 +64,8 @@ export default function RegisterPage() {
       <FormControl className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-3">
           <TextField
-            id="account"
-            label={t('accountLabel')}
+            id="email"
+            label={t('emailLabel')}
             variant="outlined"
             value={formDataRef.current.email}
             error={!!errorMSGs.email}

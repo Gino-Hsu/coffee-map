@@ -1,8 +1,8 @@
 {
   "LoginServerAction": {
-    "missing": "Account and password are required",
+    "missing": "email and password are required",
     "serverError": "Server error, please try again later",
-    "invalidCredentials": "Invalid account or password",
+    "invalidCredentials": "Invalid email or password",
     "success": "Login successful"
   },
   "HeaderLayout": {
@@ -10,7 +10,7 @@
   },
   "LoginPage": {
     "title": "Login",
-    "accountLabel": "Account",
+    "emailLabel": "Email",
     "passwordLabel": "Password",
     "navigateRegisterPage": "Go to Register",
     "forgetPassword": "Forgot Password",
@@ -25,7 +25,7 @@
   },
   "RegisterPage": {
     "title": "Register",
-    "accountLabel": "Account",
+    "emailLabel": "Email",
     "nameLabel": "Name",
     "passwordLabel": "Password",
     "confirmPasswordLabel": "Confirm Password",

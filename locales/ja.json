@@ -10,7 +10,7 @@
   },
   "LoginPage": {
     "title": "登入",
-    "accountLabel": "帳號",
+    "emailLabel": "帳號",
     "passwordLabel": "暗証番号",
     "navigateRegisterPage": "新規登錄へ",
     "forgetPassword": "暗証番号をお忘れですか？",
@@ -25,7 +25,7 @@
   },
   "RegisterPage": {
     "title": "新規登錄",
-    "accountLabel": "帳號",
+    "emailLabel": "帳號",
     "nameLabel": "姓名",
     "passwordLabel": "暗証番号",
     "confirmPasswordLabel": "暗証番号（確認）",

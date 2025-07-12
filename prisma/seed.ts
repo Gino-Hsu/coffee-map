@@ -16,6 +16,12 @@ const rawUserData = [
     password: process.env.ADMIN_YUAN_PASSWORD!,
     role: 'admin',
   },
+  // {
+  //   name: 'Admin',
+  //   email: process.env.ADMIN_EMAIL!,
+  //   password: process.env.ADMIN_PASSWORD!,
+  //   role: 'admin',
+  // },
 ];
 
 // 用 bcrypt 加密所有密碼

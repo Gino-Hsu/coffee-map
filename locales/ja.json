@@ -1,21 +1,28 @@
 {
   "LoginServerAction": {
-    "missing": "帳號及び暗証番号は必須です",
+    "missing": "電子郵件及び暗証番号は必須です",
     "serverError": "伺服器錯誤が發生しました。しばらくしてから再度お試しください",
-    "invalidCredentials": "帳號または暗証番号が正しくありません",
+    "invalidCredentials": "電子郵件または暗証番号が正しくありません",
     "success": "登入に成功しました"
   },
+"RegisterServerAction": {
+  "missing": "全ての登入欄位は必須です",
+  "serverError": "伺服器錯誤が發生しました。しばらくしてから再度お試しください",
+  "confirmPasswordUnmatched": "暗証番号と確認用暗証番号が一致しません",
+  "emailAlreadyInUse": "この電子郵件は既に使用されています",
+  "success": "登入に成功"
+},
   "HeaderLayout": {
     "login": "登入"
   },
   "LoginPage": {
     "title": "登入",
-    "emailLabel": "帳號",
+    "emailLabel": "電子郵件",
     "passwordLabel": "暗証番号",
-    "navigateRegisterPage": "新規登錄へ",
+    "navigateRegisterPage": "登録へ進む",
     "forgetPassword": "暗証番号をお忘れですか？",
     "loginButton": "登入",
-    "required": "此項目は必須です",
+    "required": "この欄は必須です",
     "errorMSG": {
       "email": {
         "format": "正確な電子郵件地址を入力してください"
@@ -24,16 +31,16 @@
     }
   },
   "RegisterPage": {
-    "title": "新規登錄",
-    "emailLabel": "帳號",
+    "title": "新規登録",
+    "emailLabel": "電子郵件",
     "nameLabel": "姓名",
     "passwordLabel": "暗証番号",
     "confirmPasswordLabel": "暗証番号（確認）",
-    "navigateLoginPage": "登入に戻る",
-    "forgetPassword": "暗証番号をお忘れですか？",
-    "registerButton": "登錄",
+    "navigateLoginPage": "登録畫面に戻る",
+    "forgetPassword": "暗証番号を忘れた場合",
+    "registerButton": "登録",
     "errorMSG": {
-      "required": "此項目は必須です",
+      "required": "この欄は必須です",
       "email": {
         "format": "正確な電子郵件地址を入力してください"
       },

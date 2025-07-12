@@ -5,6 +5,13 @@
     "invalidCredentials": "信箱或密碼錯誤",
     "success": "登入成功"
   },
+  "RegisterServerAction" : {
+    "missing": "信箱、名稱、密碼和確認密碼為必填項目",
+    "serverError": "伺服器錯誤，請稍後再試",
+    "confirmPasswordUnmatched": "密碼與確認密碼不匹配",
+    "emailAlreadyInUse":"此信箱已被使用", 
+    "success": "註冊成功"
+  },
   "HeaderLayout": {
     "login": "登入"
   },

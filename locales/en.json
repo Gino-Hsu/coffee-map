@@ -1,9 +1,16 @@
 {
   "LoginServerAction": {
-    "missing": "email and password are required",
+    "missing": "Email and password are required",
     "serverError": "Server error, please try again later",
     "invalidCredentials": "Invalid email or password",
     "success": "Login successful"
+  },
+  "RegisterServerAction" : {
+    "missing": "All register fields are required",
+    "serverError": "Server error, please try again later",
+    "confirmPasswordUnmatched": "Password doesn't match with confirmPassword",
+    "emailAlreadyInUse":"Email already in use",
+    "success": "Registration successful"
   },
   "HeaderLayout": {
     "login": "Login"

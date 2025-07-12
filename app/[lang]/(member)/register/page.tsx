@@ -1,4 +1,4 @@
-import RegisterPage from '@/components/registorPage';
+import RegisterPage from '@/components/registerPage';
 import { getTranslations } from 'next-intl/server';
 
 export default async function Register() {

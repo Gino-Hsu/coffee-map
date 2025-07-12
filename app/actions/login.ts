@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET!;
 const EXPIRES_IN = '7d';
 
-interface LoginInput {
+interface loginInput {
   email: string;
   password: string;
   locale?: string;
@@ -20,10 +20,10 @@ export async function loginAction({
   email,
   password,
   locale = 'zh',
-}: LoginInput) {
+}: loginInput) {
   const t = await getTranslations({ locale, namespace: 'LoginServerAction' });
 
-  console.log('loginAction called with:', { email, password });
+  console.log('loginAction called with:', { email });
   //! 確保帳號和密碼不為空
   if (!email || !password) {
     console.error('❗️Email and password are required');

@@ -19,7 +19,7 @@ POST /server-actions/loginAction
 
 | 欄位     | 型別     | 是否必填 | 描述               |
 |----------|----------|----------|--------------------|
-| account  | `string` | ✅       | 使用者帳號（email）|
+| email  | `string` | ✅       | 使用者帳號（email）|
 | password | `string` | ✅       | 使用者密碼         |
 | locale   | `string` | ❌       | 語系（預設為 `"zh"`）|
 
@@ -27,7 +27,7 @@ POST /server-actions/loginAction
 
 ```json
 {
-  "account": "user@coffeemap.com",
+  "email": "user@coffeemap.com",
   "password": "123456",
   "locale": "zh"
 }

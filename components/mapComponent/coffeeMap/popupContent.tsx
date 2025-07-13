@@ -15,7 +15,7 @@ export default function PopupContent({
   return (
     <div>
       <div>
-        {!isFavorite ? (
+        {isFavorite ? (
           <FavoriteIcon color={'error'} className="cursor-pointer" />
         ) : (
           <FavoriteBorderIcon color={'error'} className="cursor-pointer" />

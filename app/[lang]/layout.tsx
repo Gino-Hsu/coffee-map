@@ -6,6 +6,7 @@ import HeaderLayout from '@/components/headerLayout';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { UserProvider } from '@/lib/context/userContext';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -45,8 +46,10 @@ export default async function LocaleLayout({
       >
         <EmotionRegistry>
           <NextIntlClientProvider>
-            <HeaderLayout />
-            {children}
+            <UserProvider>
+              <HeaderLayout />
+              {children}
+            </UserProvider>
           </NextIntlClientProvider>
         </EmotionRegistry>
       </body>

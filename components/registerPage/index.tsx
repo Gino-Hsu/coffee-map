@@ -5,7 +5,7 @@ import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createRegisterSchema } from '@/lib/formValidation';
-import { registerAction } from '@/app/actions/register';
+import { registerAction } from '@/app/actions/user/register';
 
 export default function RegisterPage() {
   const formDataRef = useRef<{

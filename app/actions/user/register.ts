@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import { getTranslations } from 'next-intl/server';
 import bcrypt from 'bcrypt';
 
-interface regiseterInput {
+interface registerInput {
   email: string;
   name: string;
   password: string;
@@ -17,7 +17,7 @@ export async function registerAction({
   password,
   confirmPassword,
   locale = 'zh',
-}: regiseterInput) {
+}: registerInput) {
   const t = await getTranslations({
     locale,
     namespace: 'RegisterServerAction',

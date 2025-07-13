@@ -51,5 +51,11 @@
         "passwordMismatch": "Passwords do not match"
       }
     }
+  },
+  "CoffeeMap": {
+    "popupInfo": {
+      "storeName": "Shop Name",
+      "address": "Address"
+    }
   }
 }

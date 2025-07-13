@@ -6,7 +6,7 @@
     "success": "登入に成功しました"
   },
 "RegisterServerAction": {
-  "missing": "全ての燈入欄位は必須です",
+  "missing": "全ての登入欄位は必須です",
   "serverError": "伺服器錯誤が發生しました。しばらくしてから再度お試しください",
   "confirmPasswordUnmatched": "暗証番号と確認用暗証番号が一致しません",
   "emailAlreadyInUse": "この電子郵件は既に使用されています",
@@ -19,7 +19,7 @@
     "title": "登入",
     "emailLabel": "電子郵件",
     "passwordLabel": "暗証番号",
-    "navigateRegisterPage": "登入へ進む",
+    "navigateRegisterPage": "登録へ進む",
     "forgetPassword": "暗証番号をお忘れですか？",
     "loginButton": "登入",
     "required": "この欄は必須です",

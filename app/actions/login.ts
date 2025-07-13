@@ -11,22 +11,22 @@ const JWT_SECRET = process.env.JWT_SECRET!;
 const EXPIRES_IN = '7d';
 
 interface loginInput {
-  account: string;
+  email: string;
   password: string;
   locale?: string;
 }
 
 export async function loginAction({
-  account,
+  email,
   password,
   locale = 'zh',
 }: loginInput) {
   const t = await getTranslations({ locale, namespace: 'LoginServerAction' });
 
-  console.log('loginAction called with:', { account });
+  console.log('loginAction called with:', { email });
   //! 確保帳號和密碼不為空
-  if (!account || !password) {
-    console.error('❗️Account and password are required');
+  if (!email || !password) {
+    console.error('❗️Email and password are required');
     return { data: { message: t('missing') }, status: 400 };
   }
   //! 確保 JWT_SECRET 已定義
@@ -36,10 +36,10 @@ export async function loginAction({
   }
 
   try {
-    const user = await prisma.user.findUnique({ where: { email: account } });
+    const user = await prisma.user.findUnique({ where: { email: email } });
     //! 檢查使用者是否存在以及密碼是否正確
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      console.error('❗️Invalid account or password');
+      console.error('❗️Invalid email or password');
       return { data: { message: t('invalidCredentials') }, status: 401 };
     }
 

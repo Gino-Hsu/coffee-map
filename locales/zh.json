@@ -17,7 +17,7 @@
   },
   "LoginPage": {
     "title": "登入",
-    "accountLabel": "信箱",
+    "emailLabel": "信箱",
     "passwordLabel": "密碼",
     "navigateRegisterPage": "前往註冊",
     "forgetPassword": "忘記密碼",

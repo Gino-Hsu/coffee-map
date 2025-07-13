@@ -8,8 +8,8 @@ import { createLoginSchema } from '@/lib/formValidation';
 import { loginAction } from '@/app/actions/login';
 
 export default function LoginPage({ lang }: { lang: string }) {
-  const formDataRef = useRef<{ account: string; password: string }>({
-    account: '',
+  const formDataRef = useRef<{ email: string; password: string }>({
+    email: '',
     password: '',
   });
   const [errorMSGs, setErrorMSGs] = useState<
@@ -24,7 +24,8 @@ export default function LoginPage({ lang }: { lang: string }) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof typeLoginForm
   ) => {
-    formDataRef.current[field] = e.target.value;
+    const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
+    formDataRef.current[field] = cleanedValue;
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
@@ -45,14 +46,14 @@ export default function LoginPage({ lang }: { lang: string }) {
     // 送出登入資料的api(server action)
     startTransition(async () => {
       const res = await loginAction({
-        account: formDataRef.current.account,
+        email: formDataRef.current.email,
         password: formDataRef.current.password,
         locale: lang,
       });
 
       if (res.status !== 200) {
         formDataRef.current = {
-          account: formDataRef.current.account,
+          email: formDataRef.current.email,
           password: '',
         }; // 清空表單密碼
         setErrorMSGs({}); // 清除錯誤訊息
@@ -74,13 +75,14 @@ export default function LoginPage({ lang }: { lang: string }) {
       <FormControl className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-3">
           <TextField
-            id="account"
-            label={t('accountLabel')}
+            id="email"
+            label={t('emailLabel')}
             variant="outlined"
-            value={formDataRef.current.account}
-            error={!!errorMSGs.account}
-            helperText={errorMSGs.account}
-            onChange={e => handleChange(e, 'account')}
+            value={formDataRef.current.email}
+            error={!!errorMSGs.email}
+            helperText={errorMSGs.email}
+            onChange={e => handleChange(e, 'email')}
+            disabled={isPending}
           />
           <TextField
             id="password"
@@ -91,6 +93,7 @@ export default function LoginPage({ lang }: { lang: string }) {
             error={!!errorMSGs.password}
             helperText={errorMSGs.password}
             onChange={e => handleChange(e, 'password')}
+            disabled={isPending}
           />
         </div>
         <div className="flex justify-end gap-1">

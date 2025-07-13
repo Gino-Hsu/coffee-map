@@ -31,7 +31,8 @@ export default function RegisterPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof typeRegisterForm
   ) => {
-    formDataRef.current[field] = e.target.value;
+    const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
+    formDataRef.current[field] = cleanedValue;
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
@@ -94,6 +95,7 @@ export default function RegisterPage() {
             error={!!errorMSGs.email}
             helperText={errorMSGs.email}
             onChange={e => handleChange(e, 'email')}
+            disabled={isPending}
           />
           <TextField
             id="name"
@@ -103,6 +105,7 @@ export default function RegisterPage() {
             error={!!errorMSGs.name}
             helperText={errorMSGs.name}
             onChange={e => handleChange(e, 'name')}
+            disabled={isPending}
           />
           <TextField
             id="password"
@@ -113,6 +116,7 @@ export default function RegisterPage() {
             error={!!errorMSGs.password}
             helperText={errorMSGs.password}
             onChange={e => handleChange(e, 'password')}
+            disabled={isPending}
           />
           <TextField
             id="confirmPassword"
@@ -123,6 +127,7 @@ export default function RegisterPage() {
             error={!!errorMSGs.confirmPassword}
             helperText={errorMSGs.confirmPassword}
             onChange={e => handleChange(e, 'confirmPassword')}
+            disabled={isPending}
           />
         </div>
         <div className="flex justify-end gap-1">

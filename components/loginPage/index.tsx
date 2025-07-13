@@ -82,6 +82,7 @@ export default function LoginPage({ lang }: { lang: string }) {
             error={!!errorMSGs.email}
             helperText={errorMSGs.email}
             onChange={e => handleChange(e, 'email')}
+            disabled={isPending}
           />
           <TextField
             id="password"
@@ -92,6 +93,7 @@ export default function LoginPage({ lang }: { lang: string }) {
             error={!!errorMSGs.password}
             helperText={errorMSGs.password}
             onChange={e => handleChange(e, 'password')}
+            disabled={isPending}
           />
         </div>
         <div className="flex justify-end gap-1">

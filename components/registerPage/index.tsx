@@ -5,7 +5,7 @@ import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createRegisterSchema } from '@/lib/formValidation';
-import { registerAction } from '@/app/actions/register';
+import { registerAction } from '@/app/actions/user/register';
 
 export default function RegisterPage() {
   const formDataRef = useRef<{
@@ -95,6 +95,7 @@ export default function RegisterPage() {
             error={!!errorMSGs.email}
             helperText={errorMSGs.email}
             onChange={e => handleChange(e, 'email')}
+            disabled={isPending}
           />
           <TextField
             id="name"
@@ -104,6 +105,7 @@ export default function RegisterPage() {
             error={!!errorMSGs.name}
             helperText={errorMSGs.name}
             onChange={e => handleChange(e, 'name')}
+            disabled={isPending}
           />
           <TextField
             id="password"
@@ -114,6 +116,7 @@ export default function RegisterPage() {
             error={!!errorMSGs.password}
             helperText={errorMSGs.password}
             onChange={e => handleChange(e, 'password')}
+            disabled={isPending}
           />
           <TextField
             id="confirmPassword"
@@ -124,6 +127,7 @@ export default function RegisterPage() {
             error={!!errorMSGs.confirmPassword}
             helperText={errorMSGs.confirmPassword}
             onChange={e => handleChange(e, 'confirmPassword')}
+            disabled={isPending}
           />
         </div>
         <div className="flex justify-end gap-1">

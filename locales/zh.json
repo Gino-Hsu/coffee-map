@@ -51,5 +51,11 @@
         "passwordMismatch": "密碼不匹配"
       }
     }
+  },
+  "CoffeeMap": {
+    "popupInfo": {
+      "storeName": "店家名稱",
+      "address": "地址"
+    }
   }
 }

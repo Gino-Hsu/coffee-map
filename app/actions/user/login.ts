@@ -59,7 +59,7 @@ export async function loginAction({
 
     // 返回成功訊息和狀態碼
     console.log('✅Login successful, token set in cookies');
-    return { data: { message: t('success') }, status: 200 };
+    return { data: { message: t('success'), isLogin: true }, status: 200 };
   } catch (error) {
     console.error('❗️Login error:', error);
     return { date: { message: t('serverError') }, status: 500 };

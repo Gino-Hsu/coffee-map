@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 // Function to create a Zod schema for login validation
 const createLoginSchema = (t: ReturnType<typeof useTranslations>) => {
   return z.object({
-    account: z.email(t('errorMSG.email.format')).min(1, t('required')),
+    email: z.email(t('errorMSG.email.format')).min(1, t('required')),
     password: z.string().min(1, t('required')), //TODO:密碼驗證格式待確認
   });
 };

@@ -1,16 +1,23 @@
 {
   "LoginServerAction": {
-    "missing": "帳號和密碼為必填項目",
+    "missing": "信箱和密碼為必填項目",
     "serverError": "伺服器錯誤，請稍後再試",
-    "invalidCredentials": "帳號或密碼錯誤",
+    "invalidCredentials": "信箱或密碼錯誤",
     "success": "登入成功"
+  },
+  "RegisterServerAction" : {
+    "missing": "信箱、名稱、密碼和確認密碼為必填項目",
+    "serverError": "伺服器錯誤，請稍後再試",
+    "confirmPasswordUnmatched": "密碼與確認密碼不匹配",
+    "emailAlreadyInUse":"此信箱已被使用", 
+    "success": "註冊成功"
   },
   "HeaderLayout": {
     "login": "登入"
   },
   "LoginPage": {
     "title": "登入",
-    "accountLabel": "帳號",
+    "emailLabel": "信箱",
     "passwordLabel": "密碼",
     "navigateRegisterPage": "前往註冊",
     "forgetPassword": "忘記密碼",
@@ -25,7 +32,7 @@
   },
   "RegisterPage": {
     "title": "註冊",
-    "accountLabel": "帳號",
+    "emailLabel": "信箱",
     "nameLabel": "姓名",
     "passwordLabel": "密碼",
     "confirmPasswordLabel": "確認密碼",

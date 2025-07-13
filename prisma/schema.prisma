@@ -15,11 +15,23 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id    String  @id @default(uuid())
   email String  @unique
   name  String
   password String
   role String @default("user") // Default role is 'user'
   createdAt DateTime @default(now())
+  createdList String[] @default([]) // 建立哪些店家資料
+  favoriteList String[] @default([]) // 收藏哪些店家
 }
 
+model ShopList {
+  id      String  @id @default(uuid())
+  name    String  @unique
+  lat     Float // 緯度
+  lng     Float // 經度
+  address String
+  city    String 
+  createdAt DateTime @default(now())
+  createdBy String? // 哪個會員id建立這筆資料
+}

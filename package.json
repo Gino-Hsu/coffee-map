@@ -18,7 +18,7 @@
     "reset": "prisma migrate reset --force"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed/shopListSeed.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",

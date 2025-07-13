@@ -1,3 +1,4 @@
+import { getShopsAction } from '@/app/actions/shop/getShops';
 import CoffeeMap from './coffeeMap';
 interface coffeeShop {
   id: string;
@@ -6,29 +7,29 @@ interface coffeeShop {
   lng: number;
   address: string;
   city: string;
+  createdAt: Date;
+  createdBy: string | null;
 }
 
-export default function MapComponent() {
-  const dummyShops: coffeeShop[] = [
-    {
-      id: '1',
-      name: 'Coffee Shop 1',
-      lat: 25.034,
-      lng: 121.5645,
-      address: '123 Coffee St, Taipei',
-      city: 'Taipei',
-    },
-    {
-      id: '2',
-      name: 'Coffee Shop 2',
-      lat: 25.035,
-      lng: 121.5655,
-      address: '456 Coffee Ave, Taipei',
-      city: 'Taipei',
-    },
-  ];
+export default async function MapComponent({
+  lang,
+  city,
+}: {
+  lang: string;
+  city: string;
+}) {
+  const getShop = await getShopsAction({ city });
+  if (getShop.status !== 200) {
+    console.error('Error fetching shops:', getShop.data.message);
+    return <div>Error loading coffee shops.</div>;
+  }
+  const shopsData: coffeeShop[] = getShop.data.resData
+    ? getShop.data.resData
+    : [];
 
-  const dummyFavoriteLists = ['1'];
+  const dummyFavoriteLists = ['1']; // TODO 待更換成使用者資料
 
-  return <CoffeeMap shops={dummyShops} favorites={dummyFavoriteLists} />;
+  return (
+    <CoffeeMap shops={shopsData} favorites={dummyFavoriteLists} lang={lang} />
+  );
 }

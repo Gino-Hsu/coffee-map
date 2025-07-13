@@ -51,5 +51,11 @@
         "passwordMismatch": "暗証番号が一致しません"
       }
     }
+  },
+  "CoffeeMap": {
+    "popupInfo": {
+      "storeName": "店名",
+      "address": "店の所在地"
+    }
   }
 }

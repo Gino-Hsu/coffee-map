@@ -5,7 +5,7 @@ import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createLoginSchema } from '@/lib/formValidation';
-import { loginAction } from '@/app/actions/login';
+import { loginAction } from '@/app/actions/user/login';
 
 export default function LoginPage({ lang }: { lang: string }) {
   const formDataRef = useRef<{ email: string; password: string }>({

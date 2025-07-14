@@ -1,78 +1,81 @@
 'use client';
 import { useRef, useState, useTransition } from 'react';
-import { useUserContext } from '@/lib/context/userContext';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
-import { createLoginSchema } from '@/lib/formValidation';
-import { loginAction } from '@/app/actions/user/login';
-import { getUserAction } from '@/app/actions/user/getUser';
-import { useRouter } from 'next/navigation';
-export default function LoginPage({ lang }: { lang: string }) {
-  const formDataRef = useRef<{ email: string; password: string }>({
+import { createRegisterSchema } from '@/lib/formValidation';
+import { registerAction } from '@/app/actions/user/register';
+
+export default function RegisterPage() {
+  const formDataRef = useRef<{
+    email: string;
+    name: string;
+    password: string;
+    confirmPassword: string;
+  }>({
     email: '',
+    name: '',
     password: '',
+    confirmPassword: '',
   });
   const [errorMSGs, setErrorMSGs] = useState<
-    Partial<Record<keyof typeLoginForm, string>>
+    Partial<Record<keyof typeRegisterForm, string>>
   >({});
   const [isPending, startTransition] = useTransition(); // 用於處理異步操作
-  const { setUser } = useUserContext();
-
-  const t = useTranslations('LoginPage');
-  const loginSchema = createLoginSchema(t);
-  type typeLoginForm = z.infer<typeof loginSchema>;
-  const router = useRouter();
+  const t = useTranslations('RegisterPage');
+  const registerSchema = createRegisterSchema(t);
+  type typeRegisterForm = z.infer<typeof registerSchema>;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: keyof typeLoginForm
+    field: keyof typeRegisterForm
   ) => {
     const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
     formDataRef.current[field] = cleanedValue;
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
-  const handleSubmitLogin = (e: React.FormEvent) => {
+  const handleSubmitRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = loginSchema.safeParse(formDataRef.current);
+    const result = registerSchema.safeParse(formDataRef.current);
+
+    console.log('Register form data:', result?.error?.issues);
 
     if (!result.success) {
-      const fieldErrors: Partial<Record<keyof typeLoginForm, string>> = {};
+      const fieldErrors: Partial<Record<keyof typeRegisterForm, string>> = {};
       for (const issue of result.error.issues) {
-        const key = issue.path[0] as keyof typeLoginForm;
+        const key = issue.path[0] as keyof typeRegisterForm;
         fieldErrors[key] = issue.message;
       }
+
+      console.log('Validation errors:', fieldErrors);
       setErrorMSGs(fieldErrors);
       return;
     }
 
-    // 送出登入資料的api(server action)
+    //送出註冊資料的api
     startTransition(async () => {
-      const res = await loginAction({
+      const res = await registerAction({
         email: formDataRef.current.email,
+        name: formDataRef.current.name,
         password: formDataRef.current.password,
-        locale: lang,
+        confirmPassword: formDataRef.current.confirmPassword,
       });
 
       if (res.status !== 200) {
         formDataRef.current = {
-          email: formDataRef.current.email,
+          ...formDataRef.current,
           password: '',
+          confirmPassword: '',
         }; // 清空表單密碼
         setErrorMSGs({}); // 清除錯誤訊息
-        console.log('登入失敗:', res?.data?.message);
+        console.log('註冊失敗:', res?.data?.message);
         return;
-      } else {
-        // 登入成功後的處理
-        if (res?.data?.isLogin) {
-          const userRes = await getUserAction(lang);
-          const userData = userRes.data.resData;
-          if (userData) setUser(userRes.data.resData);
-          router.replace(`/${lang}`);
-        }
       }
+
+      // 註冊成功後的處理
+      console.log('註冊成功:', res?.data?.message);
     });
   };
 
@@ -81,7 +84,7 @@ export default function LoginPage({ lang }: { lang: string }) {
   };
 
   return (
-    <form onSubmit={handleSubmitLogin}>
+    <form onSubmit={handleSubmitRegister}>
       <FormControl className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-3">
           <TextField
@@ -95,6 +98,16 @@ export default function LoginPage({ lang }: { lang: string }) {
             disabled={isPending}
           />
           <TextField
+            id="name"
+            label={t('nameLabel')}
+            variant="outlined"
+            value={formDataRef.current.name}
+            error={!!errorMSGs.name}
+            helperText={errorMSGs.name}
+            onChange={e => handleChange(e, 'name')}
+            disabled={isPending}
+          />
+          <TextField
             id="password"
             label={t('passwordLabel')}
             type="password"
@@ -105,13 +118,24 @@ export default function LoginPage({ lang }: { lang: string }) {
             onChange={e => handleChange(e, 'password')}
             disabled={isPending}
           />
+          <TextField
+            id="confirmPassword"
+            label={t('confirmPasswordLabel')}
+            type="password"
+            variant="outlined"
+            value={formDataRef.current.confirmPassword}
+            error={!!errorMSGs.confirmPassword}
+            helperText={errorMSGs.confirmPassword}
+            onChange={e => handleChange(e, 'confirmPassword')}
+            disabled={isPending}
+          />
         </div>
         <div className="flex justify-end gap-1">
           <Link
-            href={'/register'}
+            href={'/login'}
             className="text-xs text-gray-500 hover:underline cursor-pointer"
           >
-            {t('navigateRegisterPage')}
+            {t('navigateLoginPage')}
           </Link>
           <p className="text-xs text-gray-500">/</p>
           <p
@@ -128,7 +152,7 @@ export default function LoginPage({ lang }: { lang: string }) {
           color="secondary"
           disabled={isPending}
         >
-          {t('loginButton')}
+          {t('registerButton')}
         </Button>
       </FormControl>
     </form>

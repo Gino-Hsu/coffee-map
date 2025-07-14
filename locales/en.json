@@ -1,17 +1,25 @@
 {
   "LoginServerAction": {
-    "missing": "Account and password are required",
+    "missing": "Email and password are required",
     "serverError": "Server error, please try again later",
-    "invalidCredentials": "Invalid account or password",
+    "invalidCredentials": "Invalid email or password",
     "success": "Login successful"
+  },
+  "RegisterServerAction" : {
+    "missing": "All register fields are required",
+    "serverError": "Server error, please try again later",
+    "confirmPasswordUnmatched": "Password doesn't match with confirmPassword",
+    "emailAlreadyInUse":"Email already in use",
+    "success": "Registration successful"
   },
   "HeaderLayout": {
     "login": "Login"
   },
   "LoginPage": {
     "title": "Login",
-    "accountLabel": "Account",
+    "emailLabel": "Email",
     "passwordLabel": "Password",
+    "navigateRegisterPage": "Go to Register",
     "forgetPassword": "Forgot Password",
     "loginButton": "Login",
     "required": "This is required",
@@ -21,5 +29,33 @@
       },
       "password": "Incorrect password"
     } 
+  },
+  "RegisterPage": {
+    "title": "Register",
+    "emailLabel": "Email",
+    "nameLabel": "Name",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "navigateLoginPage": "Back to Login",
+    "forgetPassword": "Forgot Password",
+    "registerButton": "Register",
+    "errorMSG": {
+      "required": "This is required",
+      "email": {
+        "format": "Please enter the correct email."
+      },
+      "password": {
+        "length": "Password must be at least 6 characters long"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "Passwords do not match"
+      }
+    }
+  },
+  "CoffeeMap": {
+    "popupInfo": {
+      "storeName": "Shop Name",
+      "address": "Address"
+    }
   }
 }

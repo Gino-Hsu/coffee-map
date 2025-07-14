@@ -9,6 +9,7 @@ import { createLoginSchema } from '@/lib/formValidation';
 import { loginAction } from '@/app/actions/user/login';
 import { getUserAction } from '@/app/actions/user/getUser';
 import { useRouter } from 'next/navigation';
+
 export default function LoginPage({ lang }: { lang: string }) {
   const formDataRef = useRef<{ email: string; password: string }>({
     email: '',

@@ -1,6 +1,5 @@
 'use client';
 import { useRef, useState, useTransition } from 'react';
-import { useUserContext } from '@/lib/context/userContext';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import ModalMessage from '../common/modalMessage';
@@ -8,7 +7,6 @@ import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createLoginSchema } from '@/lib/formValidation';
 import { loginAction } from '@/app/actions/user/login';
-import { getUserAction } from '@/app/actions/user/getUser';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage({ lang }: { lang: string }) {
@@ -22,7 +20,6 @@ export default function LoginPage({ lang }: { lang: string }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [isPending, startTransition] = useTransition(); // 用於處理異步操作
-  const { setUser } = useUserContext();
 
   const t = useTranslations('LoginPage');
   const loginSchema = createLoginSchema(t);
@@ -72,12 +69,7 @@ export default function LoginPage({ lang }: { lang: string }) {
         return;
       } else {
         // 登入成功後的處理
-        if (res?.data?.isLogin) {
-          const userRes = await getUserAction(lang);
-          const userData = userRes.data.resData;
-          if (userData) setUser(userRes.data.resData);
-          router.replace(`/${lang}`);
-        }
+        router.replace(`/${lang}`);
       }
     });
   };

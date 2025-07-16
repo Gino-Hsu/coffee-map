@@ -3,7 +3,9 @@
     "missing": "電子郵件及び暗証番号は必須です",
     "serverError": "伺服器錯誤が發生しました。しばらくしてから再度お試しください",
     "invalidCredentials": "電子郵件または暗証番号が正しくありません",
-    "success": "登入に成功しました"
+    "success": "登入に成功しました",
+    "tooManyAttempts": "認証試行回数が過多です。暫時後に再試行願います"
+
   },
 "RegisterServerAction": {
   "missing": "全ての登入欄位は必須です",

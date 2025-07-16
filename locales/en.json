@@ -3,7 +3,8 @@
     "missing": "Email and password are required",
     "serverError": "Server error, please try again later",
     "invalidCredentials": "Invalid email or password",
-    "success": "Login successful"
+    "success": "Login successful",
+    "tooManyAttempts": "Too many login attempts. Please try again later"
   },
   "RegisterServerAction" : {
     "missing": "All register fields are required",

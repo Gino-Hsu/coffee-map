@@ -46,7 +46,7 @@ export default async function LocaleLayout({
       >
         <EmotionRegistry>
           <NextIntlClientProvider>
-            <UserProvider>
+            <UserProvider lang={lang}>
               <HeaderLayout />
               {children}
             </UserProvider>

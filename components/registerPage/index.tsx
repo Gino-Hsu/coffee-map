@@ -6,6 +6,7 @@ import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createRegisterSchema } from '@/lib/formValidation';
 import { registerAction } from '@/app/actions/user/register';
+import AvatarSelector from '@/components/common/avatarSelector';
 
 export default function RegisterPage() {
   const formDataRef = useRef<{
@@ -13,11 +14,13 @@ export default function RegisterPage() {
     name: string;
     password: string;
     confirmPassword: string;
+    avatar: number;
   }>({
     email: '',
     name: '',
     password: '',
     confirmPassword: '',
+    avatar: 1,
   });
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof typeRegisterForm, string>>
@@ -107,6 +110,7 @@ export default function RegisterPage() {
             onChange={e => handleChange(e, 'name')}
             disabled={isPending}
           />
+
           <TextField
             id="password"
             label={t('passwordLabel')}
@@ -129,6 +133,7 @@ export default function RegisterPage() {
             onChange={e => handleChange(e, 'confirmPassword')}
             disabled={isPending}
           />
+          <AvatarSelector />
         </div>
         <div className="flex justify-end gap-1">
           <Link

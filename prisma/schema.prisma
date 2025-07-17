@@ -19,6 +19,7 @@ model User {
   email String  @unique
   name  String
   password String
+  avatar Int @default(1) // 大頭貼
   role String @default("user") // Default role is 'user'
   createdAt DateTime @default(now())
   createdList String[] @default([]) // 建立哪些店家資料

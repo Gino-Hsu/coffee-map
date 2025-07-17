@@ -20,8 +20,6 @@ export default function CoffeeMap({ shops }: { shops: coffeeShop[] }) {
   const { user } = useContext(UserContext);
   const favoriteList = user?.favoriteList ? user?.favoriteList : [];
 
-  console.log('favoriteListIncompponent', user, favoriteList);
-
   return (
     <MapContainer
       center={[25.034, 121.5645]}

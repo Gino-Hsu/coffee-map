@@ -1,7 +1,13 @@
 'use client';
 
 import { getUserAction } from '@/app/actions/user/getUser';
-import { createContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 
 export type User =
   | {
@@ -16,7 +22,7 @@ export type User =
 
 type UserContextType = {
   user: User;
-  setUser: (user: User) => void;
+  setUser: Dispatch<SetStateAction<User>>;
 };
 
 export const UserContext = createContext<UserContextType>({

@@ -7,15 +7,23 @@
     "tooManyAttempts": "認証試行回数が過多です。暫時後に再試行願います"
 
   },
-"RegisterServerAction": {
-  "missing": "全ての登入欄位は必須です",
-  "serverError": "伺服器錯誤が發生しました。しばらくしてから再度お試しください",
-  "confirmPasswordUnmatched": "暗証番号と確認用暗証番号が一致しません",
-  "emailAlreadyInUse": "この電子郵件は既に使用されています",
-  "success": "登入に成功"
-},
+  "RegisterServerAction": {
+    "missing": "全ての登入欄位は必須です",
+    "serverError": "伺服器錯誤が發生しました。しばらくしてから再度お試しください",
+    "confirmPasswordUnmatched": "暗証番号と確認用暗証番号が一致しません",
+    "emailAlreadyInUse": "この電子郵件は既に使用されています",
+    "success": "登入に成功"
+  },
+ "UpdateFavoriteAction": {
+    "unverifiedUser": "未登入です。再度登入してください",
+    "addedFavorite": "お気に入りに追加しました",
+    "removedFavorite": "お気に入りから削除しました",
+    "tokenExpired": "登入期限切れです。再度登入してください",
+    "serverError": "サーバーエラーが発生しました。後でもう一度お試しください"
+  },
   "HeaderLayout": {
-    "login": "登入"
+    "login": "登入",
+    "logout": "登出"
   },
   "LoginPage": {
     "title": "登入",

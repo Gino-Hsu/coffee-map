@@ -1,5 +1,7 @@
 'use client';
 
+import { useContext } from 'react';
+import { UserContext } from '@/lib/context/userContext';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { coffeeIcon, favoriteIcon } from '@/lib/map/mapIcon';
@@ -14,15 +16,12 @@ export interface coffeeShop {
   city: string;
 }
 
-export default function CoffeeMap({
-  shops,
-  favorites,
-}: // lang,
-{
-  shops: coffeeShop[];
-  favorites: string[];
-  lang: string;
-}) {
+export default function CoffeeMap({ shops }: { shops: coffeeShop[] }) {
+  const { user } = useContext(UserContext);
+  const favoriteList = user?.favoriteList ? user?.favoriteList : [];
+
+  console.log('favoriteListIncompponent', user, favoriteList);
+
   return (
     <MapContainer
       center={[25.034, 121.5645]}
@@ -35,7 +34,7 @@ export default function CoffeeMap({
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {shops.map(shop => {
-        const isFavorite = favorites.includes(shop.id);
+        const isFavorite = favoriteList.includes(shop.id);
 
         return (
           <Marker

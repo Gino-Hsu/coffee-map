@@ -43,8 +43,8 @@ export default function PopupContent({
     );
 
     if (resToggleFavorites.status !== 200) {
-      console.error('更新失敗，回滾 UI');
       // 4. 回滾 UI（恢復原本狀態）
+      console.error('更新失敗');
       setUser(prevUser => {
         if (!prevUser) return prevUser;
         return { ...prevUser, favoriteList: user.favoriteList };

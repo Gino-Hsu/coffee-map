@@ -13,6 +13,14 @@
     "emailAlreadyInUse":"此信箱已被使用", 
     "success": "註冊成功"
   },
+  "GetUserServerAction": {
+    "missingToken": "找不到對應的token",
+    "userNotFound":"找不到對應的user資料",
+    "userFound": "成功抓取登入資料",
+    "tokenExpired": "登入已過期，請重新登入",
+    "tokenValidationFailed": "驗證失敗，請重新登入",
+    "serverError": "伺服器錯誤，請稍後再試"
+  },
   "HeaderLayout": {
     "login": "登入"
   },

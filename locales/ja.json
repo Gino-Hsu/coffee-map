@@ -14,6 +14,14 @@
   "emailAlreadyInUse": "この電子郵件は既に使用されています",
   "success": "登入に成功"
 },
+"GetUserServerAction": {
+  "missingToken": "認証トークンが見つかりません",
+  "userNotFound": "ユーザー情報が見つかりません",
+  "userFound": "ユーザー情報の取得に成功しました",
+  "tokenExpired": "認証トークンの有効期限が切れています",
+  "tokenValidationFailed": "認証トークンの検証に失敗しました",
+  "serverError": "サーバーエラーが発生しました。しばらくしてから再度お試しください"
+},
   "HeaderLayout": {
     "login": "登入"
   },

@@ -13,6 +13,14 @@
     "emailAlreadyInUse":"Email already in use",
     "success": "Registration successful"
   },
+  "GetUserServerAction": {
+    "missingToken": "Token not found.",
+    "userNotFound":"user not found.",
+    "userFound": "user found.",
+    "tokenExpired": "Expired token",
+    "tokenValidationFailed": "Token validation failed.",
+    "serverError": "Server error, please try again later"
+  },
   "HeaderLayout": {
     "login": "Login"
   },

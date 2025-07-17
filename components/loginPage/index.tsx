@@ -2,29 +2,36 @@
 import { useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
+import ModalMessage from '../common/modalMessage';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createLoginSchema } from '@/lib/formValidation';
-import { loginAction } from '@/app/actions/login';
+import { loginAction } from '@/app/actions/user/login';
+import { useRouter } from 'next/navigation';
 
 export default function LoginPage({ lang }: { lang: string }) {
-  const formDataRef = useRef<{ account: string; password: string }>({
-    account: '',
+  const formDataRef = useRef<{ email: string; password: string }>({
+    email: '',
     password: '',
   });
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof typeLoginForm, string>>
   >({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
   const [isPending, startTransition] = useTransition(); // 用於處理異步操作
+
   const t = useTranslations('LoginPage');
   const loginSchema = createLoginSchema(t);
   type typeLoginForm = z.infer<typeof loginSchema>;
+  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof typeLoginForm
   ) => {
-    formDataRef.current[field] = e.target.value;
+    const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
+    formDataRef.current[field] = cleanedValue;
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
@@ -45,22 +52,24 @@ export default function LoginPage({ lang }: { lang: string }) {
     // 送出登入資料的api(server action)
     startTransition(async () => {
       const res = await loginAction({
-        account: formDataRef.current.account,
+        email: formDataRef.current.email,
         password: formDataRef.current.password,
         locale: lang,
       });
 
       if (res.status !== 200) {
         formDataRef.current = {
-          account: formDataRef.current.account,
+          email: formDataRef.current.email,
           password: '',
         }; // 清空表單密碼
         setErrorMSGs({}); // 清除錯誤訊息
         console.log('登入失敗:', res?.data?.message);
+        setModalMessage(res?.data?.message ? res?.data?.message : '');
+        setModalOpen(true);
         return;
       } else {
         // 登入成功後的處理
-        console.log('登入成功:', res?.data?.message);
+        router.replace(`/${lang}`);
       }
     });
   };
@@ -70,54 +79,63 @@ export default function LoginPage({ lang }: { lang: string }) {
   };
 
   return (
-    <form onSubmit={handleSubmitLogin}>
-      <FormControl className="flex flex-col gap-y-3">
-        <div className="flex flex-col gap-y-3">
-          <TextField
-            id="account"
-            label={t('accountLabel')}
-            variant="outlined"
-            value={formDataRef.current.account}
-            error={!!errorMSGs.account}
-            helperText={errorMSGs.account}
-            onChange={e => handleChange(e, 'account')}
-          />
-          <TextField
-            id="password"
-            label={t('passwordLabel')}
-            type="password"
-            variant="outlined"
-            value={formDataRef.current.password}
-            error={!!errorMSGs.password}
-            helperText={errorMSGs.password}
-            onChange={e => handleChange(e, 'password')}
-          />
-        </div>
-        <div className="flex justify-end gap-1">
-          <Link
-            href={'/register'}
-            className="text-xs text-gray-500 hover:underline cursor-pointer"
+    <>
+      <form onSubmit={handleSubmitLogin}>
+        <FormControl className="flex flex-col gap-y-3">
+          <div className="flex flex-col gap-y-3">
+            <TextField
+              id="email"
+              label={t('emailLabel')}
+              variant="outlined"
+              value={formDataRef.current.email}
+              error={!!errorMSGs.email}
+              helperText={errorMSGs.email}
+              onChange={e => handleChange(e, 'email')}
+              disabled={isPending}
+            />
+            <TextField
+              id="password"
+              label={t('passwordLabel')}
+              type="password"
+              variant="outlined"
+              value={formDataRef.current.password}
+              error={!!errorMSGs.password}
+              helperText={errorMSGs.password}
+              onChange={e => handleChange(e, 'password')}
+              disabled={isPending}
+            />
+          </div>
+          <div className="flex justify-end gap-1">
+            <Link
+              href={'/register'}
+              className="text-xs text-gray-500 hover:underline cursor-pointer"
+            >
+              {t('navigateRegisterPage')}
+            </Link>
+            <p className="text-xs text-gray-500">/</p>
+            <p
+              onClick={handleClickForgetPassword}
+              className="text-xs text-gray-500 hover:underline cursor-pointer"
+            >
+              {t('forgetPassword')}
+            </p>
+          </div>
+          <Button
+            type="submit"
+            size="small"
+            variant="contained"
+            color="secondary"
+            disabled={isPending}
           >
-            {t('navigateRegisterPage')}
-          </Link>
-          <p className="text-xs text-gray-500">/</p>
-          <p
-            onClick={handleClickForgetPassword}
-            className="text-xs text-gray-500 hover:underline cursor-pointer"
-          >
-            {t('forgetPassword')}
-          </p>
-        </div>
-        <Button
-          type="submit"
-          size="small"
-          variant="contained"
-          color="secondary"
-          disabled={isPending}
-        >
-          {t('loginButton')}
-        </Button>
-      </FormControl>
-    </form>
+            {t('loginButton')}
+          </Button>
+        </FormControl>
+      </form>
+      <ModalMessage
+        open={modalOpen}
+        message={`❗️ ${modalMessage}`}
+        onClose={() => setModalOpen(false)}
+      />
+    </>
   );
 }

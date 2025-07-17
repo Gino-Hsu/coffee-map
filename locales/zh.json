@@ -1,16 +1,40 @@
 {
   "LoginServerAction": {
-    "missing": "帳號和密碼為必填項目",
+    "missing": "信箱和密碼為必填項目",
     "serverError": "伺服器錯誤，請稍後再試",
-    "invalidCredentials": "帳號或密碼錯誤",
-    "success": "登入成功"
+    "invalidCredentials": "信箱或密碼錯誤",
+    "success": "登入成功",
+    "tooManyAttempts": "嘗試登入次數過多，請稍後再試"
+  },
+  "RegisterServerAction" : {
+    "missing": "信箱、名稱、密碼和確認密碼為必填項目",
+    "serverError": "伺服器錯誤，請稍後再試",
+    "confirmPasswordUnmatched": "密碼與確認密碼不匹配",
+    "emailAlreadyInUse":"此信箱已被使用", 
+    "success": "註冊成功"
+  },
+  "GetUserServerAction": {
+    "missingToken": "找不到對應的token",
+    "userNotFound":"找不到對應的user資料",
+    "userFound": "成功抓取登入資料",
+    "tokenExpired": "登入已過期，請重新登入",
+    "tokenValidationFailed": "驗證失敗，請重新登入",
+    "serverError": "伺服器錯誤，請稍後再試"
+  },
+  "UpdateFavoriteAction": {
+    "unverifiedUser": "未登入，請重新登入",
+    "addedFavorite": "已加入我的最愛",
+    "removedFavorite": "已從我的最愛移除",
+    "tokenExpired": "登入已過期，請重新登入",
+    "serverError": "伺服器錯誤，請稍後再試"
   },
   "HeaderLayout": {
-    "login": "登入"
+    "login": "登入",
+    "logout": "登出"
   },
   "LoginPage": {
     "title": "登入",
-    "accountLabel": "帳號",
+    "emailLabel": "信箱",
     "passwordLabel": "密碼",
     "navigateRegisterPage": "前往註冊",
     "forgetPassword": "忘記密碼",
@@ -25,7 +49,7 @@
   },
   "RegisterPage": {
     "title": "註冊",
-    "accountLabel": "帳號",
+    "emailLabel": "信箱",
     "nameLabel": "姓名",
     "passwordLabel": "密碼",
     "confirmPasswordLabel": "確認密碼",
@@ -43,6 +67,12 @@
       "confirmPassword": {
         "passwordMismatch": "密碼不匹配"
       }
+    }
+  },
+  "CoffeeMap": {
+    "popupInfo": {
+      "storeName": "店家名稱",
+      "address": "地址"
     }
   }
 }

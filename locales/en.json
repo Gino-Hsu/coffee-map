@@ -1,16 +1,40 @@
 {
   "LoginServerAction": {
-    "missing": "Account and password are required",
+    "missing": "Email and password are required",
     "serverError": "Server error, please try again later",
-    "invalidCredentials": "Invalid account or password",
-    "success": "Login successful"
+    "invalidCredentials": "Invalid email or password",
+    "success": "Login successful",
+    "tooManyAttempts": "Too many login attempts. Please try again later"
+  },
+  "RegisterServerAction" : {
+    "missing": "All register fields are required",
+    "serverError": "Server error, please try again later",
+    "confirmPasswordUnmatched": "Password doesn't match with confirmPassword",
+    "emailAlreadyInUse":"Email already in use",
+    "success": "Registration successful"
+  },
+  "GetUserServerAction": {
+    "missingToken": "Token not found.",
+    "userNotFound":"user not found.",
+    "userFound": "user found.",
+    "tokenExpired": "Expired token",
+    "tokenValidationFailed": "Token validation failed.",
+    "serverError": "Server error, please try again later"
+  },
+  "UpdateFavoriteAction": {
+    "unverifiedUser": "Not logged in, please log in again",
+    "addedFavorite": "Added to favorites",
+    "removedFavorite": "Removed from favorites",
+    "tokenExpired": "Session expired, please log in again",
+    "serverError": "Server error, please try again later"
   },
   "HeaderLayout": {
-    "login": "Login"
+    "login": "Login",
+    "logout": "logout"
   },
   "LoginPage": {
     "title": "Login",
-    "accountLabel": "Account",
+    "emailLabel": "Email",
     "passwordLabel": "Password",
     "navigateRegisterPage": "Go to Register",
     "forgetPassword": "Forgot Password",
@@ -25,7 +49,7 @@
   },
   "RegisterPage": {
     "title": "Register",
-    "accountLabel": "Account",
+    "emailLabel": "Email",
     "nameLabel": "Name",
     "passwordLabel": "Password",
     "confirmPasswordLabel": "Confirm Password",
@@ -43,6 +67,12 @@
       "confirmPassword": {
         "passwordMismatch": "Passwords do not match"
       }
+    }
+  },
+  "CoffeeMap": {
+    "popupInfo": {
+      "storeName": "Shop Name",
+      "address": "Address"
     }
   }
 }

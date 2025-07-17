@@ -21,8 +21,16 @@
     "tokenValidationFailed": "驗證失敗，請重新登入",
     "serverError": "伺服器錯誤，請稍後再試"
   },
+  "UpdateFavoriteAction": {
+    "unverifiedUser": "未登入，請重新登入",
+    "addedFavorite": "已加入我的最愛",
+    "removedFavorite": "已從我的最愛移除",
+    "tokenExpired": "登入已過期，請重新登入",
+    "serverError": "伺服器錯誤，請稍後再試"
+  },
   "HeaderLayout": {
-    "login": "登入"
+    "login": "登入",
+    "logout": "登出"
   },
   "LoginPage": {
     "title": "登入",

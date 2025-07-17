@@ -21,8 +21,16 @@
     "tokenValidationFailed": "Token validation failed.",
     "serverError": "Server error, please try again later"
   },
+  "UpdateFavoriteAction": {
+    "unverifiedUser": "Not logged in, please log in again",
+    "addedFavorite": "Added to favorites",
+    "removedFavorite": "Removed from favorites",
+    "tokenExpired": "Session expired, please log in again",
+    "serverError": "Server error, please try again later"
+  },
   "HeaderLayout": {
-    "login": "Login"
+    "login": "Login",
+    "logout": "logout"
   },
   "LoginPage": {
     "title": "Login",

@@ -28,6 +28,7 @@ export async function getUserAction(locale: string) {
       where: { id: decoded.userId },
       select: {
         id: true,
+        avatar: true,
         email: true,
         name: true,
         role: true,

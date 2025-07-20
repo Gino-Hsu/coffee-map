@@ -24,4 +24,10 @@ const createRegisterSchema = (t: ReturnType<typeof useTranslations>) => {
     });
 };
 
-export { createLoginSchema, createRegisterSchema };
+const createForgotPasswordSchema = (t: ReturnType<typeof useTranslations>) => {
+  return z.object({
+    email: z.email(t('errorMSG.email.format')).min(1, t('required')),
+  });
+};
+
+export { createLoginSchema, createRegisterSchema, createForgotPasswordSchema };

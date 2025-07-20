@@ -24,6 +24,8 @@ model User {
   createdAt DateTime @default(now())
   createdList String[] @default([]) // 建立哪些店家資料
   favoriteList String[] @default([]) // 收藏哪些店家
+  resetPasswordToken   String?   // 可為 null
+  resetPasswordExpires DateTime? // token 過期時間
 }
 
 model ShopList {

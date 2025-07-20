@@ -3,6 +3,7 @@ import { useRef, useState, useTransition } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import ModalMessage from '../common/modalMessage';
+import ModalForgotPassword from './modalForgotPassword';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createLoginSchema } from '@/lib/formValidation';
@@ -17,7 +18,8 @@ export default function LoginPage({ lang }: { lang: string }) {
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof typeLoginForm, string>>
   >({});
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalErrorMessageOpen, setModalErrorMessageOpen] = useState(false);
+  const [modalForgotPasswordOpen, setModalForgotPasswordOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [isPending, startTransition] = useTransition(); // 用於處理異步操作
 
@@ -65,7 +67,7 @@ export default function LoginPage({ lang }: { lang: string }) {
         setErrorMSGs({}); // 清除錯誤訊息
         console.log('登入失敗:', res?.data?.message);
         setModalMessage(res?.data?.message ? res?.data?.message : '');
-        setModalOpen(true);
+        setModalErrorMessageOpen(true);
         return;
       } else {
         // 登入成功後的處理
@@ -75,7 +77,7 @@ export default function LoginPage({ lang }: { lang: string }) {
   };
 
   const handleClickForgetPassword = () => {
-    console.log('forget password clicked，準備開光箱');
+    setModalForgotPasswordOpen(true);
   };
 
   return (
@@ -131,10 +133,18 @@ export default function LoginPage({ lang }: { lang: string }) {
           </Button>
         </FormControl>
       </form>
+      {/* Modal here */}
+      {/* 錯誤訊息 Modal */}
       <ModalMessage
-        open={modalOpen}
+        open={modalErrorMessageOpen}
         message={`❗️ ${modalMessage}`}
-        onClose={() => setModalOpen(false)}
+        onClose={() => setModalErrorMessageOpen(false)}
+      />
+      {/* 忘記密碼 Modal */}
+      <ModalForgotPassword
+        open={modalForgotPasswordOpen}
+        onClose={() => setModalForgotPasswordOpen(false)}
+        lang={lang}
       />
     </>
   );

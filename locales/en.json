@@ -3,7 +3,8 @@
     "missing": "Email and password are required",
     "serverError": "Server error, please try again later",
     "invalidCredentials": "Invalid email or password",
-    "success": "Login successful"
+    "success": "Login successful",
+    "tooManyAttempts": "Too many login attempts. Please try again later"
   },
   "RegisterServerAction" : {
     "missing": "All register fields are required",
@@ -12,8 +13,24 @@
     "emailAlreadyInUse":"Email already in use",
     "success": "Registration successful"
   },
+  "GetUserServerAction": {
+    "missingToken": "Token not found.",
+    "userNotFound":"user not found.",
+    "userFound": "user found.",
+    "tokenExpired": "Expired token",
+    "tokenValidationFailed": "Token validation failed.",
+    "serverError": "Server error, please try again later"
+  },
+  "UpdateFavoriteAction": {
+    "unverifiedUser": "Not logged in, please log in again",
+    "addedFavorite": "Added to favorites",
+    "removedFavorite": "Removed from favorites",
+    "tokenExpired": "Session expired, please log in again",
+    "serverError": "Server error, please try again later"
+  },
   "HeaderLayout": {
-    "login": "Login"
+    "login": "Login",
+    "logout": "logout"
   },
   "LoginPage": {
     "title": "Login",

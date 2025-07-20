@@ -45,7 +45,17 @@
       "email": {
         "format": "正確な電子郵件地址を入力してください"
       },
-      "password": "暗証番号が正しくありません"
+      "password": "暗号が正しくありません"
+    },
+    "forgotPasswordModal": {
+      "title": "暗号忘れた",
+      "emailLabel": "電子郵件",
+      "required": "この欄は必須です",
+      "errorMSG": {
+        "email": {
+          "format": "正確な電子郵件地址を入力してください"
+        }
+      }
     }
   },
   "RegisterPage": {

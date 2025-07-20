@@ -14,10 +14,10 @@ export async function getUserAction(locale: string) {
   const token = cookieStore.get('coffee_auth_token')?.value;
   console.log('userAction called with token');
 
-  const t = await getTranslations({ locale, namespace: 'LoginServerAction' });
+  const t = await getTranslations({ locale, namespace: 'GetUserServerAction' });
 
   if (!token) {
-    return { data: { message: t('missing') }, status: 401 };
+    return { data: { message: t('missingToken') }, status: 401 };
   }
 
   try {
@@ -28,6 +28,7 @@ export async function getUserAction(locale: string) {
       where: { id: decoded.userId },
       select: {
         id: true,
+        avatar: true,
         email: true,
         name: true,
         role: true,
@@ -38,14 +39,14 @@ export async function getUserAction(locale: string) {
     if (!userInfo) {
       console.error('❗️User not found in prisma');
       return {
-        data: { message: '找不到對應的user資料', resData: null },
+        data: { message: t('userNotFound'), resData: null },
         status: 401,
       };
     }
 
     console.log('✅User info found');
     return {
-      data: { message: '成功抓取登入資料', resData: userInfo },
+      data: { message: t('userFound'), resData: userInfo },
       status: 200,
     };
   } catch (e) {
@@ -57,7 +58,7 @@ export async function getUserAction(locale: string) {
       if (name === 'TokenExpiredError') {
         console.warn('❗️JWT 已過期');
         return {
-          data: { message: '登入已過期，請重新登入', resData: null },
+          data: { message: t('tokenExpired'), resData: null },
           status: 401,
         };
       }
@@ -65,13 +66,13 @@ export async function getUserAction(locale: string) {
       if (name === 'JsonWebTokenError') {
         console.warn('❗️JWT 解析錯誤');
         return {
-          data: { message: '驗證失敗，請重新登入', resData: null },
+          data: { message: t('tokenValidationFailed'), resData: null },
           status: 401,
         };
       }
     }
     return {
-      data: { message: 'server error', resData: null },
+      data: { message: t('serverError'), resData: null },
       status: 500,
     };
   }

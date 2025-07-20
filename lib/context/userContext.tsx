@@ -1,7 +1,15 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { getUserAction } from '@/app/actions/user/getUser';
-import { createContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from 'react';
+import { enumAvatarImg } from '@/type/memberType';
 
 export type User =
   | {
@@ -10,13 +18,14 @@ export type User =
       email: string;
       role: string;
       favoriteList: string[];
+      avatar: enumAvatarImg; // TODO 待完成 prisma api
     }
   | null
   | undefined;
 
 type UserContextType = {
   user: User;
-  setUser: (user: User) => void;
+  setUser: Dispatch<SetStateAction<User>>;
 };
 
 export const UserContext = createContext<UserContextType>({
@@ -32,6 +41,7 @@ export const UserProvider = ({
   lang: string;
 }) => {
   const [user, setUser] = useState<User>(null); // 初始值為 null
+  const pathname = usePathname();
 
   useEffect(() => {
     const getUser = async () => {
@@ -41,7 +51,7 @@ export const UserProvider = ({
       }
     };
     getUser();
-  }, [lang]);
+  }, [lang, pathname]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

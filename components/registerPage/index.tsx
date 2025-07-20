@@ -7,15 +7,10 @@ import { useTranslations } from 'next-intl';
 import { createRegisterSchema } from '@/lib/formValidation';
 import { registerAction } from '@/app/actions/user/register';
 import AvatarSelector from '@/components/common/avatarSelector';
+import type { typeFormDataRef } from '@/type/memberType';
 
 export default function RegisterPage() {
-  const formDataRef = useRef<{
-    email: string;
-    name: string;
-    password: string;
-    confirmPassword: string;
-    avatar: number;
-  }>({
+  const formDataRef = useRef<typeFormDataRef>({
     email: '',
     name: '',
     password: '',
@@ -82,10 +77,6 @@ export default function RegisterPage() {
     });
   };
 
-  const handleClickForgetPassword = () => {
-    console.log('forget password clicked，準備開光箱');
-  };
-
   return (
     <form onSubmit={handleSubmitRegister}>
       <FormControl className="flex flex-col gap-y-3">
@@ -133,7 +124,7 @@ export default function RegisterPage() {
             onChange={e => handleChange(e, 'confirmPassword')}
             disabled={isPending}
           />
-          <AvatarSelector />
+          <AvatarSelector formData={formDataRef.current} />
         </div>
         <div className="flex justify-end gap-1">
           <Link
@@ -142,13 +133,6 @@ export default function RegisterPage() {
           >
             {t('navigateLoginPage')}
           </Link>
-          <p className="text-xs text-gray-500">/</p>
-          <p
-            onClick={handleClickForgetPassword}
-            className="text-xs text-gray-500 hover:underline cursor-pointer"
-          >
-            {t('forgetPassword')}
-          </p>
         </div>
         <Button
           type="submit"

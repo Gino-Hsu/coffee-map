@@ -64,7 +64,7 @@ export async function forgotPasswordAction({
     const headersList = await headers(); // 等待 Promise
     const host = headersList.get('host');
     const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-    const resetLink = `${protocol}://${host}/reset-password?token=${token}`;
+    const resetLink = `${protocol}://${host}/${locale}/reset-password-mail?token=${token}`;
 
     const emailSubject = t('emailSubject');
     const emailBody = t('emailBody', { link: resetLink });

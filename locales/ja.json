@@ -5,7 +5,6 @@
     "invalidCredentials": "電子郵件または暗証番号が正しくありません",
     "success": "登入に成功しました",
     "tooManyAttempts": "認証試行回数が過多です。暫時後に再試行願います"
-
   },
   "RegisterServerAction": {
     "missing": "全ての登入欄位は必須です",
@@ -22,7 +21,7 @@
     "tokenValidationFailed": "認証トークンの検証に失敗しました",
     "serverError": "サーバーエラーが発生しました。しばらくしてから再度お試しください"
   },
- "UpdateFavoriteAction": {
+  "UpdateFavoriteAction": {
     "unverifiedUser": "未登入です。再度登入してください",
     "addedFavorite": "お気に入りに追加しました",
     "removedFavorite": "お気に入りから削除しました",
@@ -89,6 +88,12 @@
         "passwordMismatch": "暗証番号が一致しません"
       }
     }
+  },
+  "ResetPasswordMailPage": {
+    "title": "パスワード再設定",
+    "passwordLabel": "新しいパスワード",
+    "confirmPasswordLabel": "新しいパスワード（確認）",
+    "resetPasswordButton": "送信"
   },
   "CoffeeMap": {
     "popupInfo": {

@@ -6,16 +6,16 @@
     "success": "登入成功",
     "tooManyAttempts": "嘗試登入次數過多，請稍後再試"
   },
-  "RegisterServerAction" : {
+  "RegisterServerAction": {
     "missing": "信箱、名稱、密碼和確認密碼為必填項目",
     "serverError": "伺服器錯誤，請稍後再試",
     "confirmPasswordUnmatched": "密碼與確認密碼不匹配",
-    "emailAlreadyInUse":"此信箱已被使用", 
+    "emailAlreadyInUse": "此信箱已被使用",
     "success": "註冊成功"
   },
   "GetUserServerAction": {
     "missingToken": "找不到對應的token",
-    "userNotFound":"找不到對應的user資料",
+    "userNotFound": "找不到對應的user資料",
     "userFound": "成功抓取登入資料",
     "tokenExpired": "登入已過期，請重新登入",
     "tokenValidationFailed": "驗證失敗，請重新登入",
@@ -88,6 +88,12 @@
         "passwordMismatch": "密碼不匹配"
       }
     }
+  },
+  "ResetPasswordMailPage": {
+    "title": "重設密碼",
+    "passwordLabel": "新密碼",
+    "confirmPasswordLabel": "確認新密碼",
+    "resetPasswordButton": "送出"
   },
   "CoffeeMap": {
     "popupInfo": {

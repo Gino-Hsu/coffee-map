@@ -6,16 +6,16 @@
     "success": "Login successful",
     "tooManyAttempts": "Too many login attempts. Please try again later"
   },
-  "RegisterServerAction" : {
+  "RegisterServerAction": {
     "missing": "All register fields are required",
     "serverError": "Server error, please try again later",
     "confirmPasswordUnmatched": "Password doesn't match with confirmPassword",
-    "emailAlreadyInUse":"Email already in use",
+    "emailAlreadyInUse": "Email already in use",
     "success": "Registration successful"
   },
   "GetUserServerAction": {
     "missingToken": "Token not found.",
-    "userNotFound":"user not found.",
+    "userNotFound": "user not found.",
     "userFound": "user found.",
     "tokenExpired": "Expired token",
     "tokenValidationFailed": "Token validation failed.",
@@ -62,7 +62,7 @@
       "required": "This is required",
       "errorMSG": {
         "email": {
-         "format": "Please enter the correct email."
+          "format": "Please enter the correct email."
         }
       }
     }
@@ -88,6 +88,12 @@
         "passwordMismatch": "Passwords do not match"
       }
     }
+  },
+  "ResetPasswordMailPage": {
+    "title": "Reset Password",
+    "passwordLabel": "New Password",
+    "confirmPasswordLabel": "Confirm New Password",
+    "resetPasswordButton": "Submit"
   },
   "CoffeeMap": {
     "popupInfo": {

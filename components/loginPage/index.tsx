@@ -82,8 +82,8 @@ export default function LoginPage({ lang }: { lang: string }) {
 
   return (
     <>
-      <form onSubmit={handleSubmitLogin}>
-        <FormControl className="flex flex-col gap-y-3">
+      <form className="min-w-[300px]" onSubmit={handleSubmitLogin}>
+        <FormControl className="flex flex-col gap-y-3" fullWidth={true}>
           <div className="flex flex-col gap-y-3">
             <TextField
               id="email"

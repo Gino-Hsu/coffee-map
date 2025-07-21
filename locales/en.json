@@ -28,6 +28,15 @@
     "tokenExpired": "Session expired, please log in again",
     "serverError": "Server error, please try again later"
   },
+  "ForgotPasswordAction": {
+    "emailRequired": "Email is required",
+    "userNotFound": "User not found",
+    "success": "Password reset email sent",
+    "serverError": "Server error",
+    "tooFrequentRequest": "You cannot request a password reset within 10 minutes",
+    "emailSubject": "Password Reset",
+    "emailBody": "Hello,\n\nWe received a request to reset your password. Please click the link below within 30 minutes to complete the password reset:\n{link}\n\nIf you did not request this, please ignore this email.\n\nThank you!"
+  },
   "HeaderLayout": {
     "login": "Login",
     "logout": "logout"
@@ -48,6 +57,7 @@
     },
     "forgotPasswordModal": {
       "title": "Forgot Password",
+      "submitButton": "Submit",
       "emailLabel": "Email",
       "required": "This is required",
       "errorMSG": {

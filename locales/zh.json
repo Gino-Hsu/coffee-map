@@ -28,6 +28,15 @@
     "tokenExpired": "登入已過期，請重新登入",
     "serverError": "伺服器錯誤，請稍後再試"
   },
+  "ForgotPasswordAction": {
+    "emailRequired": "Email 不得為空",
+    "userNotFound": "使用者不存在",
+    "success": "重設密碼信件已發送",
+    "serverError": "伺服器錯誤",
+    "tooFrequentRequest": "10 分鐘內不可重複發送密碼重設郵件",
+    "emailSubject": "密碼重設",
+    "emailBody": "您好，\n\n我們收到您的密碼重設請求，請在 30 分鐘內點擊以下連結完成密碼重設：\n{link}\n\n如果您沒有發出此請求，請忽略此封郵件。\n\n謝謝！"
+  },
   "HeaderLayout": {
     "login": "登入",
     "logout": "登出"
@@ -48,6 +57,7 @@
     },
     "forgotPasswordModal": {
       "title": "忘記密碼",
+      "submitButton": "送出",
       "emailLabel": "信箱",
       "required": "這是必填項目",
       "errorMSG": {

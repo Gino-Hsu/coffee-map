@@ -1,8 +1,28 @@
 enum enumAvatarImg {
   'bear' = 1,
-  'cat' = 2,
-  'dog' = 3,
-  'rabbit' = 4,
+  'cat',
+  'dog',
+  'rabbit',
+}
+
+interface typeAvatarOptions {
+  id: enumAvatarImg;
+  htmlForLabel: string;
+  imgSrc: string;
+}
+interface typeAvatarFrameProps {
+  option: typeAvatarOptions;
+  currentAvatar: enumAvatarImg;
+  selectHandler: (id: enumAvatarImg) => void;
+}
+
+interface typeFormDataRef {
+  email: string;
+  name: string;
+  password: string;
+  confirmPassword: string;
+  avatar: number;
 }
 
 export { enumAvatarImg };
+export type { typeAvatarOptions, typeAvatarFrameProps, typeFormDataRef };

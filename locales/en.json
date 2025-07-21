@@ -45,7 +45,17 @@
         "format": "Please enter the correct email."
       },
       "password": "Incorrect password"
-    } 
+    },
+    "forgotPasswordModal": {
+      "title": "Forgot Password",
+      "emailLabel": "Email",
+      "required": "This is required",
+      "errorMSG": {
+        "email": {
+         "format": "Please enter the correct email."
+        }
+      }
+    }
   },
   "RegisterPage": {
     "title": "Register",

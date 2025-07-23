@@ -11,7 +11,6 @@ import { useRouter } from 'next/navigation';
 import ModalMessage from '@/components/common/modalMessage';
 
 export default function ResetPasswordMailPage({ lang }: { lang: string }) {
-  console.log('lang for resetPasswordMailAction', lang);
   const formDataRef = useRef({ password: '', confirmPassword: '' });
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof typeResetPasswordMailForm, string>>
@@ -63,6 +62,7 @@ export default function ResetPasswordMailPage({ lang }: { lang: string }) {
       const res = await resetPasswordMailAction({
         token,
         newPassword: formDataRef.current.password,
+        locale: lang,
       });
 
       if (res.status !== 200) {

@@ -37,6 +37,12 @@
     "emailSubject": "Password Reset",
     "emailBody": "Hello,\n\nWe received a request to reset your password. Please click the link below within 30 minutes to complete the password reset:\n{link}\n\nIf you did not request this, please ignore this email.\n\nThank you!"
   },
+  "ResetPasswordMailAction": {
+    "missingFields": "Required fields are missing",
+    "invalidOrExpiredToken": "The reset link is invalid or expired",
+    "success": "Password has been reset successfully",
+    "serverError": "Server error, please try again later"
+  },
   "HeaderLayout": {
     "login": "Login",
     "logout": "logout"
@@ -93,7 +99,16 @@
     "title": "Reset Password",
     "passwordLabel": "New Password",
     "confirmPasswordLabel": "Confirm New Password",
-    "resetPasswordButton": "Submit"
+    "resetPasswordButton": "Submit",
+    "errorMSG": {
+      "required": "This is required",
+      "password": {
+        "length": "Password must be at least 6 characters long"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "Passwords do not match"
+      }
+    }
   },
   "CoffeeMap": {
     "popupInfo": {

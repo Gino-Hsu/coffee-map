@@ -30,4 +30,23 @@ const createForgotPasswordSchema = (t: ReturnType<typeof useTranslations>) => {
   });
 };
 
-export { createLoginSchema, createRegisterSchema, createForgotPasswordSchema };
+const createResetPasswordMailSchema = (
+  t: ReturnType<typeof useTranslations>
+) => {
+  return z
+    .object({
+      password: z.string().min(1, t('errorMSG.required')), //TODO:密碼驗證格式待確認
+      confirmPassword: z.string().min(1, t('errorMSG.required')),
+    })
+    .refine(data => data.password === data.confirmPassword, {
+      path: ['confirmPassword'],
+      message: t('errorMSG.confirmPassword.passwordMismatch'),
+    });
+};
+
+export {
+  createLoginSchema,
+  createRegisterSchema,
+  createForgotPasswordSchema,
+  createResetPasswordMailSchema,
+};

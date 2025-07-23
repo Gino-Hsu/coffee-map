@@ -18,15 +18,15 @@ export default function LoginPage({ lang }: { lang: string }) {
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof typeLoginForm, string>>
   >({});
-  const [modalErrorMessageOpen, setModalErrorMessageOpen] = useState(false);
+  const [modalMessageOpen, setModalMessageOpen] = useState(false);
   const [modalForgotPasswordOpen, setModalForgotPasswordOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [isPending, startTransition] = useTransition(); // 用於處理異步操作
+  const router = useRouter();
 
   const t = useTranslations('LoginPage');
   const loginSchema = createLoginSchema(t);
   type typeLoginForm = z.infer<typeof loginSchema>;
-  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -65,9 +65,8 @@ export default function LoginPage({ lang }: { lang: string }) {
           password: '',
         }; // 清空表單密碼
         setErrorMSGs({}); // 清除錯誤訊息
-        console.log('登入失敗:', res?.data?.message);
         setModalMessage(res?.data?.message ? res?.data?.message : '');
-        setModalErrorMessageOpen(true);
+        setModalMessageOpen(true);
         return;
       } else {
         // 登入成功後的處理
@@ -136,9 +135,9 @@ export default function LoginPage({ lang }: { lang: string }) {
       {/* Modal here */}
       {/* 錯誤訊息 Modal */}
       <ModalMessage
-        open={modalErrorMessageOpen}
+        open={modalMessageOpen}
         message={`❗️ ${modalMessage}`}
-        onClose={() => setModalErrorMessageOpen(false)}
+        onClose={() => setModalMessageOpen(false)}
       />
       {/* 忘記密碼 Modal */}
       <ModalForgotPassword

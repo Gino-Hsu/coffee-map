@@ -1,13 +1,11 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 import { randomBytes } from 'crypto';
 import { sendEmail } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
 import redis from '@/lib/redis';
-
-const prisma = new PrismaClient();
 
 const BLOCK_TIME_SECONDS = 60 * 10; // 限制(分鐘)
 

@@ -37,6 +37,12 @@
     "emailSubject": "パスワード再設定",
     "emailBody": "こんにちは、\n\nパスワード再設定のリクエストを受け取りました。30分以内に以下のリンクをクリックしてパスワードを再設定してください：\n{link}\n\nもしこのメールに心当たりがない場合は、このメールを無視してください。\n\nよろしくお願いいたします。"
   },
+  "ResetPasswordMailAction": {
+    "missingFields": "必須項目が不足しています",
+    "invalidOrExpiredToken": "再設定リンクが無効または有効期限切れです",
+    "success": "パスワードが正常に再設定されました",
+    "serverError": "サーバーエラーが発生しました。後でもう一度お試しください"
+  },
   "HeaderLayout": {
     "login": "登入",
     "logout": "登出"
@@ -93,7 +99,16 @@
     "title": "パスワード再設定",
     "passwordLabel": "新しいパスワード",
     "confirmPasswordLabel": "新しいパスワード（確認）",
-    "resetPasswordButton": "送信"
+    "resetPasswordButton": "送信",
+    "errorMSG": {
+      "required": "この欄は必須です",
+      "password": {
+        "length": "暗証番号は6文字以上で入力してください"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "暗証番号が一致しません"
+      }
+    }
   },
   "CoffeeMap": {
     "popupInfo": {

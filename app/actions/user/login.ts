@@ -1,13 +1,12 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getTranslations } from 'next-intl/server';
 import redis from '@/lib/redis';
 
-const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET!;
 const EXPIRES_IN = '7d';
 

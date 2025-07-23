@@ -6,16 +6,16 @@
     "success": "Login successful",
     "tooManyAttempts": "Too many login attempts. Please try again later"
   },
-  "RegisterServerAction" : {
+  "RegisterServerAction": {
     "missing": "All register fields are required",
     "serverError": "Server error, please try again later",
     "confirmPasswordUnmatched": "Password doesn't match with confirmPassword",
-    "emailAlreadyInUse":"Email already in use",
+    "emailAlreadyInUse": "Email already in use",
     "success": "Registration successful"
   },
   "GetUserServerAction": {
     "missingToken": "Token not found.",
-    "userNotFound":"user not found.",
+    "userNotFound": "user not found.",
     "userFound": "user found.",
     "tokenExpired": "Expired token",
     "tokenValidationFailed": "Token validation failed.",
@@ -26,6 +26,21 @@
     "addedFavorite": "Added to favorites",
     "removedFavorite": "Removed from favorites",
     "tokenExpired": "Session expired, please log in again",
+    "serverError": "Server error, please try again later"
+  },
+  "ForgotPasswordAction": {
+    "emailRequired": "Email is required",
+    "userNotFound": "User not found",
+    "success": "Password reset email sent",
+    "serverError": "Server error",
+    "tooFrequentRequest": "You cannot request a password reset within 10 minutes",
+    "emailSubject": "Password Reset",
+    "emailBody": "Hello,\n\nWe received a request to reset your password. Please click the link below within 30 minutes to complete the password reset:\n{link}\n\nIf you did not request this, please ignore this email.\n\nThank you!"
+  },
+  "ResetPasswordMailAction": {
+    "missingFields": "Required fields are missing",
+    "invalidOrExpiredToken": "The reset link is invalid or expired",
+    "success": "Password has been reset successfully",
     "serverError": "Server error, please try again later"
   },
   "HeaderLayout": {
@@ -48,11 +63,12 @@
     },
     "forgotPasswordModal": {
       "title": "Forgot Password",
+      "submitButton": "Submit",
       "emailLabel": "Email",
       "required": "This is required",
       "errorMSG": {
         "email": {
-         "format": "Please enter the correct email."
+          "format": "Please enter the correct email."
         }
       }
     }
@@ -71,6 +87,21 @@
       "email": {
         "format": "Please enter the correct email."
       },
+      "password": {
+        "length": "Password must be at least 6 characters long"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "Passwords do not match"
+      }
+    }
+  },
+  "ResetPasswordMailPage": {
+    "title": "Reset Password",
+    "passwordLabel": "New Password",
+    "confirmPasswordLabel": "Confirm New Password",
+    "resetPasswordButton": "Submit",
+    "errorMSG": {
+      "required": "This is required",
       "password": {
         "length": "Password must be at least 6 characters long"
       },

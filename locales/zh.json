@@ -53,6 +53,9 @@
       "errorMSG": {
         "email": {
           "format": "請輸入正確的電子信箱"
+        },
+        "password": {
+          "length": "密碼長度必須至少為8個字符"
         }
       }
     }
@@ -72,7 +75,26 @@
         "format": "請輸入正確的電子信箱"
       },
       "password": {
-        "length": "密碼長度必須至少為6個字符"
+        "length": "密碼長度必須至少為8個字符"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "密碼不匹配"
+      }
+    }
+  },
+  "MemberCenterPage": {
+    "title": "會員中心",
+    "nameLabel": "姓名",
+    "updateInfoButton": "更新會員資料"
+  },
+  "UpdateInfo": {
+    "errorMSG": {
+      "required": "這是必填項目",
+      "email": {
+        "format": "請輸入正確的電子信箱"
+      },
+      "password": {
+        "length": "密碼長度必須至少為8個字符"
       },
       "confirmPassword": {
         "passwordMismatch": "密碼不匹配"

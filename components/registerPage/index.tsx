@@ -136,7 +136,7 @@ export default function RegisterPage() {
         </div>
         <Button
           type="submit"
-          size="small"
+          size="medium"
           variant="contained"
           color="secondary"
           disabled={isPending}

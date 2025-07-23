@@ -79,6 +79,25 @@
       }
     }
   },
+  "MemberCenterPage": {
+    "title": "Member Center",
+    "nameLabel": "Name",
+    "updateInfoButton": "Update Member Info"
+  },
+  "UpdateInfo": {
+    "errorMSG": {
+      "required": "This field is required",
+      "email": {
+        "format": "Please enter a valid email address"
+      },
+      "password": {
+        "length": "Password must be at least 8 characters long"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "Passwords do not match"
+      }
+    }
+  },
   "CoffeeMap": {
     "popupInfo": {
       "storeName": "Shop Name",

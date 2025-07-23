@@ -18,7 +18,7 @@ export type User =
       email: string;
       role: string;
       favoriteList: string[];
-      avatar: enumAvatarImg; // TODO 待完成 prisma api
+      avatar: enumAvatarImg;
     }
   | null
   | undefined;

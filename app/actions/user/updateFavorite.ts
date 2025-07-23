@@ -1,12 +1,11 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import prisma from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
 import { getTranslations } from 'next-intl/server';
 import { logoutAction } from './logout';
 
-const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function updateFavoriteAction(locale: string, shopId: string) {

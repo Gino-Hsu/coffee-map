@@ -54,12 +54,15 @@
     "navigateRegisterPage": "登録へ進む",
     "forgetPassword": "暗証番号をお忘れですか？",
     "loginButton": "登入",
-    "required": "この欄は必須です",
     "errorMSG": {
+      "required": "この欄は必須です",
       "email": {
         "format": "正確な電子郵件地址を入力してください"
       },
-      "password": "暗号が正しくありません"
+      "password": {
+        "length": "暗証番号は8文字以上で入力してください",
+        "requireAlphaNum": "パスワードには英字と数字を含める必要があります"
+      }
     },
     "forgotPasswordModal": {
       "title": "暗号忘れた",
@@ -88,7 +91,8 @@
         "format": "正確な電子郵件地址を入力してください"
       },
       "password": {
-        "length": "暗証番号は6文字以上で入力してください"
+        "length": "暗証番号は8文字以上で入力してください",
+        "requireAlphaNum": "パスワードには英字と数字を含める必要があります"
       },
       "confirmPassword": {
         "passwordMismatch": "暗証番号が一致しません"
@@ -103,7 +107,8 @@
     "errorMSG": {
       "required": "この欄は必須です",
       "password": {
-        "length": "暗証番号は6文字以上で入力してください"
+        "length": "暗証番号は8文字以上で入力してください",
+        "requireAlphaNum": "パスワードには英字と数字を含める必要があります"
       },
       "confirmPassword": {
         "passwordMismatch": "暗証番号が一致しません"

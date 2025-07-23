@@ -54,12 +54,15 @@
     "navigateRegisterPage": "Go to Register",
     "forgetPassword": "Forgot Password",
     "loginButton": "Login",
-    "required": "This is required",
     "errorMSG": {
+      "required": "This is required",
       "email": {
         "format": "Please enter the correct email."
       },
-      "password": "Incorrect password"
+      "password": {
+        "length": "Password must be at least 8 characters long",
+        "requireAlphaNum": "Password must contain both letters and numbers"
+      }
     },
     "forgotPasswordModal": {
       "title": "Forgot Password",
@@ -88,7 +91,8 @@
         "format": "Please enter the correct email."
       },
       "password": {
-        "length": "Password must be at least 6 characters long"
+        "length": "Password must be at least 8 characters long",
+        "requireAlphaNum": "Password must contain both letters and numbers"
       },
       "confirmPassword": {
         "passwordMismatch": "Passwords do not match"
@@ -103,7 +107,8 @@
     "errorMSG": {
       "required": "This is required",
       "password": {
-        "length": "Password must be at least 6 characters long"
+        "length": "Password must be at least 8 characters long",
+        "requireAlphaNum": "Password must contain both letters and numbers"
       },
       "confirmPassword": {
         "passwordMismatch": "Passwords do not match"

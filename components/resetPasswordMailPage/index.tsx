@@ -65,29 +65,26 @@ export default function ResetPasswordMailPage({ lang }: { lang: string }) {
         locale: lang,
       });
 
+      setErrorMSGs({}); // 清除錯誤訊息
+      setModalMessage(res?.data?.message ? res?.data?.message : '');
+      setModalMessageOpen(true);
+
       if (res.status !== 200) {
         formDataRef.current = {
           password: '',
           confirmPassword: '',
         }; // 清空表單資料
-        setErrorMSGs({}); // 清除錯誤訊息
-        setModalMessage(res?.data?.message ? res?.data?.message : '');
-        setModalMessageOpen(true);
         setTimeout(() => {
           setModalMessageOpen(false);
           router.replace(`/${lang}`);
         }, 5000);
       } else {
-        setModalMessage(res?.data?.message ? res?.data?.message : '');
-        setModalMessageOpen(true);
         setTimeout(() => {
           setModalMessageOpen(false);
           router.replace(`/${lang}/login`);
         }, 5000);
       }
     });
-
-    console.log('重設密碼');
   };
 
   useEffect(() => {

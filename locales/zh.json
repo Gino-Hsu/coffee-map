@@ -6,16 +6,16 @@
     "success": "登入成功",
     "tooManyAttempts": "嘗試登入次數過多，請稍後再試"
   },
-  "RegisterServerAction" : {
+  "RegisterServerAction": {
     "missing": "信箱、名稱、密碼和確認密碼為必填項目",
     "serverError": "伺服器錯誤，請稍後再試",
     "confirmPasswordUnmatched": "密碼與確認密碼不匹配",
-    "emailAlreadyInUse":"此信箱已被使用", 
+    "emailAlreadyInUse": "此信箱已被使用",
     "success": "註冊成功"
   },
   "GetUserServerAction": {
     "missingToken": "找不到對應的token",
-    "userNotFound":"找不到對應的user資料",
+    "userNotFound": "找不到對應的user資料",
     "userFound": "成功抓取登入資料",
     "tokenExpired": "登入已過期，請重新登入",
     "tokenValidationFailed": "驗證失敗，請重新登入",
@@ -26,6 +26,21 @@
     "addedFavorite": "已加入我的最愛",
     "removedFavorite": "已從我的最愛移除",
     "tokenExpired": "登入已過期，請重新登入",
+    "serverError": "伺服器錯誤，請稍後再試"
+  },
+  "ForgotPasswordAction": {
+    "emailRequired": "Email 不得為空",
+    "userNotFound": "使用者不存在",
+    "success": "重設密碼信件已發送",
+    "serverError": "伺服器錯誤",
+    "tooFrequentRequest": "10 分鐘內不可重複發送密碼重設郵件",
+    "emailSubject": "密碼重設",
+    "emailBody": "您好，\n\n我們收到您的密碼重設請求，請在 30 分鐘內點擊以下連結完成密碼重設：\n{link}\n\n如果您沒有發出此請求，請忽略此封郵件。\n\n謝謝！"
+  },
+  "ResetPasswordMailAction": {
+    "missingFields": "缺少必要欄位",
+    "invalidOrExpiredToken": "重設連結無效或已過期",
+    "success": "密碼已成功重設",
     "serverError": "伺服器錯誤，請稍後再試"
   },
   "HeaderLayout": {
@@ -39,15 +54,19 @@
     "navigateRegisterPage": "前往註冊",
     "forgetPassword": "忘記密碼",
     "loginButton": "登入",
-    "required": "這是必填項目",
     "errorMSG": {
+      "required": "這是必填項目",
       "email": {
         "format": "請輸入正確的電子信箱"
       },
-      "password": "密碼錯誤"
+      "password": {
+        "length": "密碼長度必須至少為8個字符",
+        "requireAlphaNum": "密碼必須包含英文字母和數字"
+      }
     },
     "forgotPasswordModal": {
       "title": "忘記密碼",
+      "submitButton": "送出",
       "emailLabel": "信箱",
       "required": "這是必填項目",
       "errorMSG": {
@@ -72,7 +91,24 @@
         "format": "請輸入正確的電子信箱"
       },
       "password": {
-        "length": "密碼長度必須至少為6個字符"
+        "length": "密碼長度必須至少為8個字符",
+        "requireAlphaNum": "密碼必須包含英文字母和數字"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "密碼不匹配"
+      }
+    }
+  },
+  "ResetPasswordMailPage": {
+    "title": "重設密碼",
+    "passwordLabel": "新密碼",
+    "confirmPasswordLabel": "確認新密碼",
+    "resetPasswordButton": "送出",
+    "errorMSG": {
+      "required": "這是必填項目",
+      "password": {
+        "length": "密碼長度必須至少為8個字符",
+        "requireAlphaNum": "密碼必須包含英文字母和數字"
       },
       "confirmPassword": {
         "passwordMismatch": "密碼不匹配"

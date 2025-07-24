@@ -5,7 +5,6 @@
     "invalidCredentials": "電子郵件または暗証番号が正しくありません",
     "success": "登入に成功しました",
     "tooManyAttempts": "認証試行回数が過多です。暫時後に再試行願います"
-
   },
   "RegisterServerAction": {
     "missing": "全ての登入欄位は必須です",
@@ -22,11 +21,26 @@
     "tokenValidationFailed": "認証トークンの検証に失敗しました",
     "serverError": "サーバーエラーが発生しました。しばらくしてから再度お試しください"
   },
- "UpdateFavoriteAction": {
+  "UpdateFavoriteAction": {
     "unverifiedUser": "未登入です。再度登入してください",
     "addedFavorite": "お気に入りに追加しました",
     "removedFavorite": "お気に入りから削除しました",
     "tokenExpired": "登入期限切れです。再度登入してください",
+    "serverError": "サーバーエラーが発生しました。後でもう一度お試しください"
+  },
+  "ForgotPasswordAction": {
+    "emailRequired": "メールアドレスは必須です",
+    "userNotFound": "ユーザーが見つかりません",
+    "success": "パスワード再設定メールを送信しました",
+    "serverError": "サーバーエラーが発生しました",
+    "tooFrequentRequest": "10分以内にパスワード再設定を再度リクエストすることはできません",
+    "emailSubject": "パスワード再設定",
+    "emailBody": "こんにちは、\n\nパスワード再設定のリクエストを受け取りました。30分以内に以下のリンクをクリックしてパスワードを再設定してください：\n{link}\n\nもしこのメールに心当たりがない場合は、このメールを無視してください。\n\nよろしくお願いいたします。"
+  },
+  "ResetPasswordMailAction": {
+    "missingFields": "必須項目が不足しています",
+    "invalidOrExpiredToken": "再設定リンクが無効または有効期限切れです",
+    "success": "パスワードが正常に再設定されました",
     "serverError": "サーバーエラーが発生しました。後でもう一度お試しください"
   },
   "HeaderLayout": {
@@ -40,15 +54,19 @@
     "navigateRegisterPage": "登録へ進む",
     "forgetPassword": "暗証番号をお忘れですか？",
     "loginButton": "登入",
-    "required": "この欄は必須です",
     "errorMSG": {
+      "required": "この欄は必須です",
       "email": {
         "format": "正確な電子郵件地址を入力してください"
       },
-      "password": "暗号が正しくありません"
+      "password": {
+        "length": "暗証番号は8文字以上で入力してください",
+        "requireAlphaNum": "パスワードには英字と数字を含める必要があります"
+      }
     },
     "forgotPasswordModal": {
       "title": "暗号忘れた",
+      "submitButton": "送信する",
       "emailLabel": "電子郵件",
       "required": "この欄は必須です",
       "errorMSG": {
@@ -73,7 +91,24 @@
         "format": "正確な電子郵件地址を入力してください"
       },
       "password": {
-        "length": "暗証番号は6文字以上で入力してください"
+        "length": "暗証番号は8文字以上で入力してください",
+        "requireAlphaNum": "パスワードには英字と数字を含める必要があります"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "暗証番号が一致しません"
+      }
+    }
+  },
+  "ResetPasswordMailPage": {
+    "title": "パスワード再設定",
+    "passwordLabel": "新しいパスワード",
+    "confirmPasswordLabel": "新しいパスワード（確認）",
+    "resetPasswordButton": "送信",
+    "errorMSG": {
+      "required": "この欄は必須です",
+      "password": {
+        "length": "暗証番号は8文字以上で入力してください",
+        "requireAlphaNum": "パスワードには英字と数字を含める必要があります"
       },
       "confirmPassword": {
         "passwordMismatch": "暗証番号が一致しません"

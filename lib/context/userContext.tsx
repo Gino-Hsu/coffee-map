@@ -25,11 +25,13 @@ export type User =
 
 type UserContextType = {
   user: User;
+  isGetUserLoading: boolean;
   setUser: Dispatch<SetStateAction<User>>;
 };
 
 export const UserContext = createContext<UserContextType>({
   user: null,
+  isGetUserLoading: false,
   setUser: () => {},
 });
 
@@ -41,6 +43,7 @@ export const UserProvider = ({
   lang: string;
 }) => {
   const [user, setUser] = useState<User>(null); // 初始值為 null
+  const [isGetUserLoading, setIsGetUserLoading] = useState(true);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -49,12 +52,13 @@ export const UserProvider = ({
       if (userResult.status === 200) {
         setUser(userResult.data.resData);
       }
+      setIsGetUserLoading(false);
     };
     getUser();
   }, [lang, pathname]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, isGetUserLoading, setUser }}>
       {children}
     </UserContext.Provider>
   );

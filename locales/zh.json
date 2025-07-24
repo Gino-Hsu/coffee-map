@@ -115,6 +115,15 @@
       }
     }
   },
+  "CreateShopPage": {
+    "title": "建立咖啡廳",
+    "cityLabel": "城市",
+    "nameLabel": "名稱",
+    "addressLabel": "地址",
+    "cityMenu": {
+      "taipei": "台北"
+    }
+  },
   "CoffeeMap": {
     "popupInfo": {
       "storeName": "店家名稱",

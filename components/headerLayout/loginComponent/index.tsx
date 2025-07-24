@@ -12,8 +12,8 @@ export default function LoginComponent() {
   const t = useTranslations('HeaderLayout');
   const { user, setUser } = useContext(UserContext);
 
-  const handleLogout = () => {
-    logoutAction();
+  const handleLogout = async () => {
+    await logoutAction();
     setUser(null);
   };
 

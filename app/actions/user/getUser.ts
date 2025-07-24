@@ -1,12 +1,10 @@
 'use server';
 
 import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken';
 import prisma from '@/lib/prisma';
+import { verifyToken } from '@/lib/auth';
 import { getTranslations } from 'next-intl/server';
 import { logoutAction } from './logout';
-
-const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function getUserAction(locale: string) {
   const cookieStore = await cookies();
@@ -20,8 +18,7 @@ export async function getUserAction(locale: string) {
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    console.log('decoded: ', decoded);
+    const decoded = verifyToken(token) as { userId: string };
 
     const userInfo = await prisma.user.findUnique({
       where: { id: decoded.userId },

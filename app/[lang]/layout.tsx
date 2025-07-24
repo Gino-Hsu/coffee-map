@@ -7,6 +7,7 @@ import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { UserProvider } from '@/lib/context/userContext';
+import ClientThemeProvider from '@/components/clietThemeProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -46,10 +47,12 @@ export default async function LocaleLayout({
       >
         <EmotionRegistry>
           <NextIntlClientProvider>
-            <UserProvider lang={lang}>
-              <HeaderLayout />
-              {children}
-            </UserProvider>
+            <ClientThemeProvider>
+              <UserProvider lang={lang}>
+                <HeaderLayout />
+                {children}
+              </UserProvider>
+            </ClientThemeProvider>
           </NextIntlClientProvider>
         </EmotionRegistry>
       </body>

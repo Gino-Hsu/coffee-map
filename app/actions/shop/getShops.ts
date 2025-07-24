@@ -1,6 +1,6 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 
 interface getShopsParams {
   city: string;
@@ -10,7 +10,6 @@ enum cityEnum {
   TAIPEI = 'taipei',
 }
 
-const prisma = new PrismaClient();
 const validateCityArr: string[] = [cityEnum.TAIPEI];
 
 export async function getShopsAction({ city }: getShopsParams) {

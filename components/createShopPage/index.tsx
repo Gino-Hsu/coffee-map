@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useTransition } from 'react';
 import { UserContext } from '@/lib/context/userContext';
 import { useRouter } from 'next/navigation';
 import { logoutAction } from '@/app/actions/user/logout';
@@ -8,20 +8,31 @@ import {
   TextField,
   InputLabel,
   Select,
+  SelectChangeEvent,
   MenuItem,
   Button,
 } from '@mui/material';
+import { z } from 'zod/v4';
+import { createShopSchema } from '@/lib/formValidation';
 import { useTranslations } from 'next-intl';
+import { enumCity } from '@/type/shopsType';
+import { createShopAction } from '@/app/actions/shop/createShop';
 
 export default function CreateShopPage({ lang }: { lang: string }) {
-  const formDataRef = useRef({
+  const { user, isGetUserLoading } = useContext(UserContext);
+  const [formData, setFormData] = useState({
     name: '',
     address: '',
-    city: '',
+    city: enumCity.TAIPEI,
   });
-  const { user, isGetUserLoading } = useContext(UserContext);
+  const [errorMSGs, setErrorMSGs] = useState<
+    Partial<Record<keyof typeCreateShopForm, string>>
+  >({});
+  const [isPending, startTransition] = useTransition(); // 用於處理異步操作
   const router = useRouter();
   const t = useTranslations('CreateShopPage');
+  const shopSchema = createShopSchema(t);
+  type typeCreateShopForm = z.infer<typeof shopSchema>;
 
   useEffect(() => {
     if (!isGetUserLoading && !user) {
@@ -30,8 +41,48 @@ export default function CreateShopPage({ lang }: { lang: string }) {
     }
   }, [user, isGetUserLoading, router, lang]);
 
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+      | SelectChangeEvent<string>,
+    field: keyof typeCreateShopForm
+  ) => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      [field]: e.target.value.trim(),
+    }));
+    setErrorMSGs({ ...errorMSGs, [field]: '' });
+  };
+
+  const handleSubmitCreateShop = (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = shopSchema.safeParse(formData);
+
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof typeCreateShopForm, string>> = {};
+      for (const issue of result.error.issues) {
+        const key = issue.path[0] as keyof typeCreateShopForm;
+        fieldErrors[key] = issue.message;
+      }
+      setErrorMSGs(fieldErrors);
+      return;
+    }
+
+    // 送出表單 api
+    startTransition(async () => {
+      const res = await createShopAction({
+        name: formData.name,
+        address: formData.address,
+        city: formData.city,
+        locale: lang,
+      });
+
+      console.log('formRes', res);
+    });
+  };
+
   return (
-    <form>
+    <form className="min-w-[300px]" onSubmit={handleSubmitCreateShop}>
       <FormControl className="flex flex-col gap-y-3">
         <div className="flex flex-col gap-y-3">
           <InputLabel id="city">{t('cityLabel')}</InputLabel>
@@ -39,8 +90,10 @@ export default function CreateShopPage({ lang }: { lang: string }) {
             id="city"
             name="city"
             label={t('cityLabel')}
-            value={formDataRef.current.city}
-            // onChange={handleLangChange}
+            value={formData.city}
+            error={!!errorMSGs.city}
+            onChange={e => handleChange(e, 'city')}
+            disabled={isPending}
           >
             <MenuItem value={'taipei'}>{t('cityMenu.taipei')}</MenuItem>
           </Select>
@@ -48,21 +101,21 @@ export default function CreateShopPage({ lang }: { lang: string }) {
             id="name"
             label={t('nameLabel')}
             variant="outlined"
-            value={formDataRef.current.name}
-            // error={!!errorMSGs.name}
-            // helperText={errorMSGs.name}
-            // onChange={e => handleChange(e, 'name')}
-            // disabled={isPending}
+            value={formData.name}
+            error={!!errorMSGs.name}
+            helperText={errorMSGs.name}
+            onChange={e => handleChange(e, 'name')}
+            disabled={isPending}
           />
           <TextField
             id="address"
             label={t('addressLabel')}
             variant="outlined"
-            value={formDataRef.current.address}
-            // error={!!errorMSGs.name}
-            // helperText={errorMSGs.name}
-            // onChange={e => handleChange(e, 'name')}
-            // disabled={isPending}
+            value={formData.address}
+            error={!!errorMSGs.address}
+            helperText={errorMSGs.address}
+            onChange={e => handleChange(e, 'address')}
+            disabled={isPending}
           />
         </div>
         <Button
@@ -70,9 +123,9 @@ export default function CreateShopPage({ lang }: { lang: string }) {
           size="small"
           variant="contained"
           color="secondary"
-          // disabled={isPending}
+          disabled={isPending}
         >
-          {t('registerButton')}
+          {t('submitButton')}
         </Button>
       </FormControl>
     </form>

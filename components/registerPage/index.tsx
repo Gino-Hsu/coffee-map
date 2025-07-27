@@ -101,7 +101,6 @@ export default function RegisterPage() {
             onChange={e => handleChange(e, 'name')}
             disabled={isPending}
           />
-
           <TextField
             id="password"
             label={t('passwordLabel')}

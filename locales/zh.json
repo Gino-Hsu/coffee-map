@@ -43,6 +43,13 @@
     "success": "密碼已成功重設",
     "serverError": "伺服器錯誤，請稍後再試"
   },
+  "CreateShopAction": {
+    "missingToken": "缺少登入憑證，請重新登入",
+    "userNotFound": "找不到使用者資料",
+    "tokenExpired": "登入已過期，請重新登入",
+    "tokenValidationFailed": "登入憑證驗證失敗，請重新登入",
+    "serverError": "伺服器錯誤，請稍後再試"
+  },
   "HeaderLayout": {
     "login": "登入",
     "logout": "登出"
@@ -113,6 +120,19 @@
       "confirmPassword": {
         "passwordMismatch": "密碼不匹配"
       }
+    }
+  },
+  "CreateShopPage": {
+    "title": "建立咖啡廳",
+    "cityLabel": "城市",
+    "nameLabel": "名稱",
+    "addressLabel": "地址",
+    "cityMenu": {
+      "taipei": "台北"
+    },
+    "submitButton": "送出",
+    "errorMSG": {
+      "required": "這是必填項目"
     }
   },
   "CoffeeMap": {

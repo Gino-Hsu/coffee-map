@@ -1,5 +1,6 @@
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
+import { enumCity } from '@/type/shopsType';
 
 const passwordSchema = (t: ReturnType<typeof useTranslations>) =>
   z
@@ -51,9 +52,23 @@ const createResetPasswordMailSchema = (
     });
 };
 
+// Object.values 取出的是 string[]
+const cityValues = Object.values(enumCity) as [string, ...string[]];
+
+const createShopSchema = (t: ReturnType<typeof useTranslations>) => {
+  return z.object({
+    name: z.string().min(1, t('errorMSG.required')),
+    address: z.string().min(1, t('errorMSG.required')),
+    city: z.enum(cityValues, {
+      message: t('errorMSG.required'),
+    }),
+  });
+};
+
 export {
   createLoginSchema,
   createRegisterSchema,
   createForgotPasswordSchema,
   createResetPasswordMailSchema,
+  createShopSchema,
 };

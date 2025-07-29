@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { FormControl, TextField, Button } from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
@@ -34,7 +34,7 @@ export default function ModalForgotPassword({
   onClose: () => void;
   lang: string;
 }) {
-  const formDataRef = useRef<{ email: string }>({ email: '' });
+  const [formData, setFormData] = useState({ email: '' });
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof forgotPassWordForm, string>>
   >({});
@@ -52,13 +52,13 @@ export default function ModalForgotPassword({
     field: keyof forgotPassWordForm
   ) => {
     const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
-    formDataRef.current[field] = cleanedValue;
+    setFormData({ ...formData, [field]: cleanedValue });
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
   const handleSubmitForgotPassword = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = forgotPasswordSchema.safeParse(formDataRef.current);
+    const result = forgotPasswordSchema.safeParse(formData);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof forgotPassWordForm, string>> = {};
@@ -71,18 +71,16 @@ export default function ModalForgotPassword({
     }
 
     startTransition(async () => {
+      setErrorMSGs({}); // 清除錯誤訊息
+
       const res = await forgotPasswordAction({
-        email: formDataRef.current.email,
+        email: formData.email,
         locale: lang,
       });
 
-      setErrorMSGs({}); // 清除錯誤訊息
-      formDataRef.current.email = ''; // 清空輸入 email
+      setFormData({ ...formData, email: '' }); // 清空輸入 email
 
       if (res.status !== 200) {
-        formDataRef.current = {
-          email: formDataRef.current.email,
-        };
         setModalMessage(res?.data?.message ? `❗️${res?.data?.message}` : '');
         setModalMessageOpen(true);
         setMessageModalType('error');
@@ -124,7 +122,7 @@ export default function ModalForgotPassword({
                 id="email"
                 label={t('emailLabel')}
                 variant="outlined"
-                value={formDataRef.current.email}
+                value={formData.email}
                 error={!!errorMSGs.email}
                 helperText={errorMSGs.email}
                 onChange={e => handleChange(e, 'email')}

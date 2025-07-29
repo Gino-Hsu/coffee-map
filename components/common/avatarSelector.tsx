@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { enumAvatarImg } from '@/type/memberType';
-import type { typeFormDataRef } from '@/type/memberType';
+import type { typeFormDataState } from '@/type/memberType';
 import AvatarFrame from './avatarFrame';
 
 const avatarOptions: {
@@ -34,7 +34,7 @@ const avatarOptions: {
 export default function AvatarSelector({
   formData,
 }: {
-  formData: typeFormDataRef;
+  formData: typeFormDataState;
 }) {
   const [selectedAvatar, setSelectedAvatar] = useState<enumAvatarImg>(
     enumAvatarImg.bear

@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl';
 import { createForgotPasswordSchema } from '@/lib/formValidation';
 import { forgotPasswordAction } from '@/app/actions/user/forgotPassword';
 import { useRouter } from 'next/navigation';
+import ModalMessage from '@/components/common/modalMessage';
 
 const style = {
   position: 'absolute' as const,
@@ -37,6 +38,9 @@ export default function ModalForgotPassword({
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof forgotPassWordForm, string>>
   >({});
+  const [modalErrorMessageOpen, setModalMessageOpen] = useState<boolean>(false);
+  const [messageModalType, setMessageModalType] = useState<string>();
+  const [modalMessage, setModalMessage] = useState('');
   const [isPending, startTransition] = useTransition();
   const t = useTranslations('LoginPage.forgotPasswordModal');
   const forgotPasswordSchema = createForgotPasswordSchema(t);
@@ -65,63 +69,85 @@ export default function ModalForgotPassword({
       setErrorMSGs(fieldErrors);
       return;
     }
-    console.log('result', result);
 
     startTransition(async () => {
       const res = await forgotPasswordAction({
         email: formDataRef.current.email,
+        locale: lang,
       });
+
+      setErrorMSGs({}); // 清除錯誤訊息
+      formDataRef.current.email = ''; // 清空輸入 email
 
       if (res.status !== 200) {
         formDataRef.current = {
           email: formDataRef.current.email,
         };
-        setErrorMSGs({}); // 清除錯誤訊息
-        console.log('登入失敗:', res?.data?.message);
-        // setModalMessage(res?.data?.message ? res?.data?.message : '');
-        // setModalErrorMessageOpen(true);
+        setModalMessage(res?.data?.message ? `❗️${res?.data?.message}` : '');
+        setModalMessageOpen(true);
+        setMessageModalType('error');
         return;
       } else {
-        // 登入成功後的處理
-        router.replace(`/${lang}`);
+        setModalMessage(res?.data?.message ? `✉️ ${res?.data?.message}` : '');
+        setModalMessageOpen(true);
+        setMessageModalType('success');
       }
     });
   };
 
+  const handleModalMessageOnClose = () => {
+    if (messageModalType === 'error') {
+      setModalMessageOpen(false);
+    }
+    if (messageModalType === 'success') {
+      setModalMessageOpen(false);
+      router.replace(`/${lang}`);
+    }
+  };
+
   return (
-    <Modal
-      open={open}
-      onClose={onClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-      slots={{ backdrop: Backdrop }}
-    >
-      <Box sx={style}>
-        <h1 className="text-2xl font-bold pb-4 text-[#5a3d1b]">忘記密碼</h1>
-        <form onSubmit={handleSubmitForgotPassword}>
-          <FormControl className="flex flex-col gap-y-3">
-            <TextField
-              id="email"
-              label={t('emailLabel')}
-              variant="outlined"
-              value={formDataRef.current.email}
-              error={!!errorMSGs.email}
-              helperText={errorMSGs.email}
-              onChange={e => handleChange(e, 'email')}
-              disabled={isPending}
-            />
-            <Button
-              type="submit"
-              size="small"
-              variant="contained"
-              color="secondary"
-              disabled={isPending}
-            >
-              {'registerButton'}
-            </Button>
-          </FormControl>
-        </form>
-      </Box>
-    </Modal>
+    <>
+      <Modal
+        open={open}
+        onClose={onClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        slots={{ backdrop: Backdrop }}
+      >
+        <Box sx={style}>
+          <h1 className="text-2xl font-bold pb-4 text-[#5a3d1b]">
+            {t('title')}
+          </h1>
+          <form onSubmit={handleSubmitForgotPassword}>
+            <FormControl className="flex flex-col gap-y-3">
+              <TextField
+                id="email"
+                label={t('emailLabel')}
+                variant="outlined"
+                value={formDataRef.current.email}
+                error={!!errorMSGs.email}
+                helperText={errorMSGs.email}
+                onChange={e => handleChange(e, 'email')}
+                disabled={isPending}
+              />
+              <Button
+                type="submit"
+                size="small"
+                variant="contained"
+                color="secondary"
+                disabled={isPending}
+              >
+                {t('submitButton')}
+              </Button>
+            </FormControl>
+          </form>
+        </Box>
+      </Modal>
+      <ModalMessage
+        open={modalErrorMessageOpen}
+        message={`${modalMessage}`}
+        onClose={handleModalMessageOnClose}
+      />
+    </>
   );
 }

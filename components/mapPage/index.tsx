@@ -12,7 +12,7 @@ interface coffeeShop {
   createdBy: string | null;
 }
 
-export default async function MapComponent({ city }: { city: string }) {
+export default async function MapPage({ city }: { city: string }) {
   const getShop = await getShopsAction({ city });
   if (getShop.status !== 200) {
     console.error('Error fetching shops:', getShop.data.message);

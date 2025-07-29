@@ -4,11 +4,7 @@ import nodemailer from 'nodemailer';
 const JWT_SECRET = process.env.JWT_SECRET;
 
 export function verifyToken(token: string) {
-  try {
-    return jwt.verify(token, JWT_SECRET as string);
-  } catch {
-    return null;
-  }
+  return jwt.verify(token, JWT_SECRET as string);
 }
 
 export async function sendEmail(to: string, subject: string, html: string) {

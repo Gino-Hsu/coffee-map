@@ -123,21 +123,20 @@
     }
   },
   "MemberCenterPage": {
-    "title": "Member Center",
-    "nameLabel": "Name",
-    "updateInfoButton": "Update Member Info"
+    "title": "会員センター",
+    "updateUser": "会員情報を更新"
   },
-  "UpdateInfo": {
+  "UpdateUser": {
     "errorMSG": {
-      "required": "This field is required",
+      "required": "この項目は必須です",
       "email": {
-        "format": "Please enter a valid email address"
+        "format": "有効なメールアドレスを入力してください"
       },
       "password": {
-        "length": "Password must be at least 8 characters long"
+        "length": "パスワードは8文字以上で入力してください"
       },
       "confirmPassword": {
-        "passwordMismatch": "Passwords do not match"
+        "passwordMismatch": "パスワードが一致しません"
       }
     }
   },

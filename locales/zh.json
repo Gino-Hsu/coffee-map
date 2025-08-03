@@ -111,10 +111,10 @@
   },
   "MemberCenterPage": {
     "title": "會員中心",
-    "nameLabel": "姓名",
-    "updateInfoButton": "更新會員資料"
+    "updateUser": "更新會員資料"
   },
-  "UpdateInfo": {
+  "UpdateUser": {
+    "nameLabel": "編輯姓名",
     "errorMSG": {
       "required": "這是必填項目",
       "email": {
@@ -125,8 +125,10 @@
       },
       "confirmPassword": {
         "passwordMismatch": "密碼不匹配"
-      }
-    }
+      },
+      "updateFailed": "更新失敗"
+    },
+    "updateInfoButton": "更新會員資料"
   },
     "ResetPasswordMailPage": {
     "title": "重設密碼",

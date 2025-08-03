@@ -65,9 +65,20 @@ const createShopSchema = (t: ReturnType<typeof useTranslations>) => {
   });
 };
 
+const createUpdateInfoSchema = (t: ReturnType<typeof useTranslations>) => {
+  return z.object({
+    name: z.string().min(1, t('errorMSG.required')),
+    avatar: z
+      .number()
+      .min(1, t('errorMSG.required'))
+      .max(1, t('errorMSG.required')),
+  });
+};
+
 export {
   createLoginSchema,
   createRegisterSchema,
+  createUpdateInfoSchema,
   createForgotPasswordSchema,
   createResetPasswordMailSchema,
   createShopSchema,

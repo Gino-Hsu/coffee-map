@@ -124,10 +124,10 @@
   },
   "MemberCenterPage": {
     "title": "Member Center",
-    "nameLabel": "Name",
-    "updateInfoButton": "Update Member Info"
+    "updateUser": "Update Member Info"
   },
-  "UpdateInfo": {
+  "UpdateUser": {
+    "nameLabel": "Edit Name",
     "errorMSG": {
       "required": "This field is required",
       "email": {
@@ -138,8 +138,10 @@
       },
       "confirmPassword": {
         "passwordMismatch": "Passwords do not match"
-      }
-    }
+      },
+      "updateFailed": "Update failed"
+    },
+    "updateInfoButton": "Update Member Info"
   },
   "CreateShopPage": {
     "title": "Create Coffee Shop",

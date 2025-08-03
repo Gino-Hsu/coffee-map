@@ -1,49 +1,61 @@
 'use client';
-import { useRef, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { useContext } from 'react';
 import { UserContext } from '@/lib/context/userContext';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
+// import { useRouter } from 'next/navigation';
 import { createUpdateInfoSchema } from '@/lib/formValidation';
-import { getUserAction } from '@/app/actions/user/getUser';
-import { updateInfoAction } from '@/app/actions/user/updateInfo';
+import { updateUserAction } from '@/app/actions/user/updateUser';
 import AvatarSelector from '@/components/common/avatarSelector';
+import { enumAvatarImg } from '@/type/memberType';
 
 export default function UpdateInfo() {
-  const t = useTranslations('UpdateInfo');
+  const t = useTranslations('UpdateUser');
+  // const router = useRouter();
   const { user, setUser } = useContext(UserContext);
-  const { email } = user;
+  const email = user?.email ?? '';
   console.log('current user: ', user);
 
-  const formDataRef = useRef<{
-    name: string;
-    avatar: number;
-  }>({
+  const [formData, setFormData] = useState({
     name: '',
     avatar: 1,
   });
-  const [errorMSGs, setErrorMSGs] = useState<
-    Partial<Record<keyof typeLoginForm, string>>
-  >({});
   const [isPending, startTransition] = useTransition(); // 用於處理異步操作
 
   const updateInfoSchema = createUpdateInfoSchema(t);
   type typeLoginForm = z.infer<typeof updateInfoSchema>;
 
+  const [errorMSGs, setErrorMSGs] = useState<
+    Partial<Record<keyof typeLoginForm, string>>
+  >({});
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: keyof typeLoginForm
+    field: 'name' | 'avatar'
   ) => {
     const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
-    formDataRef.current[field] = cleanedValue;
+    setFormData(prev => ({
+      ...prev,
+      [field]: cleanedValue,
+    }));
     setErrorMSGs({ ...errorMSGs, [field]: '' });
+  };
+
+  const handleAvatarChange = (id: enumAvatarImg) => {
+    console.log('run handleAvatarChange, id :', id);
+    setFormData(prev => ({
+      ...prev,
+      avatar: id,
+    }));
   };
 
   const handleSubmitUpdateInfo = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = updateInfoSchema.safeParse(formDataRef.current);
-    console.log('UpdateInfo form data:', result?.error?.issues);
+
+    const result = updateInfoSchema.safeParse(formData);
+    console.log('UpdateUser form data:', result?.error?.issues);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof typeLoginForm, string>> = {};
@@ -59,33 +71,27 @@ export default function UpdateInfo() {
 
     // 把新的info寫進資料庫裡
     startTransition(async () => {
-      //使用getUser驗證當前token
-      const currentUser = await getUserAction('zh');
-      console.log('user in updateInfo: ', currentUser);
-      if (!currentUser) {
-        //TODO: 登出
-      }
-
-      //成功的話繼續打 updateInfoAction
-      const { name, avatar } = formDataRef.current;
-      const res = await updateInfoAction({ email, name, avatar, locale: 'zh' });
+      const { name, avatar } = formData;
+      const res = await updateUserAction({ email, name, avatar, locale: 'zh' });
 
       // 失敗處理
       if (res.status !== 200) {
         setErrorMSGs(prev => ({
           ...prev,
-          name: res?.data.message || t('updateFailed'), // 顯示錯誤訊息
+          name: res.data.message, // 顯示錯誤訊息
         }));
         return;
       }
       // 成功的話才去setUser
-      setUser(prev => ({
-        ...prev,
-        name,
-        avatar,
-      }));
+      setUser(prev => {
+        if (!prev) return prev;
+        return { ...prev, name, avatar };
+      });
     });
   };
+
+  //TODO: 一進頁面確認登入狀態
+  //TODO: 加入提示光箱
 
   return (
     <>
@@ -94,25 +100,27 @@ export default function UpdateInfo() {
           <div className="flex flex-col gap-y-3">
             <TextField
               id="name"
-              label={'nameLabel'}
+              label={t('nameLabel')}
               variant="outlined"
-              value={formDataRef.current.name}
+              value={formData.name}
               error={!!errorMSGs.name}
-              // error={false}
               helperText={errorMSGs.name}
               onChange={e => handleChange(e, 'name')}
               disabled={isPending}
             />
-            <AvatarSelector formData={formDataRef.current} />
+            <AvatarSelector
+              handleChange={handleAvatarChange}
+              selectedAvatar={formData.avatar}
+            />
           </div>
           <Button
             type="submit"
             size="medium"
             variant="contained"
             color="secondary"
-            // disabled={isPending}
+            disabled={isPending}
           >
-            {'updateInfoButton'}
+            {t('updateInfoButton')}
           </Button>
         </FormControl>
       </form>

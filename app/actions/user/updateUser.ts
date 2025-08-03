@@ -1,7 +1,8 @@
 'use server';
 import prisma from '@/lib/prisma';
 import { getTranslations } from 'next-intl/server';
-// import { cookies } from 'next/headers';
+import { cookies } from 'next/headers';
+import { logoutAction } from '@/app/actions/user/logout';
 
 interface updateInfoInput {
   email: string;
@@ -10,7 +11,7 @@ interface updateInfoInput {
   locale?: string;
 }
 
-export async function updateInfoAction({
+export async function updateUserAction({
   email,
   name,
   avatar,
@@ -21,15 +22,16 @@ export async function updateInfoAction({
     namespace: 'MemberCenterPage',
   });
 
-  // const cookieStore = await cookies();
-  // const token = cookieStore.get('coffee_auth_token')?.value;
-  // console.log('updateInfoAction called with token');
+  const cookieStore = await cookies();
+  const token = cookieStore.get('coffee_auth_token')?.value;
+  console.log('updateUserAction called with token');
 
-  // if (!token) {
-  //   return { data: { message: t('missingToken') }, status: 401 };
-  // }
+  if (!token) {
+    await logoutAction();
+    return { data: { message: t('missingToken') }, status: 401 };
+  }
 
-  //! 確保信箱、名稱、大頭貼皆不為空
+  //! 確保姓名、大頭貼皆不為空
   if (!name.trim() || !avatar) {
     console.error('❗️All register fields are required.');
     return { data: { message: t('missing') }, status: 400 };
@@ -45,7 +47,7 @@ export async function updateInfoAction({
     //找不到或是更新失敗時回傳status
     if (!updatedUser) {
       console.error('❗️Invalid email or password');
-      return { data: { message: 'invalidCredentials' }, status: 401 };
+      return { data: { message: t('invalidCredentials') }, status: 401 };
     }
 
     // 返回成功訊息和狀態碼
@@ -58,6 +60,6 @@ export async function updateInfoAction({
     return { data: { message: t('success') }, status: 200 };
   } catch (error) {
     console.error('❗️Register error:', error);
-    return { date: { message: t('serverError') }, status: 500 };
+    return { data: { message: t('serverError') }, status: 500 };
   }
 }

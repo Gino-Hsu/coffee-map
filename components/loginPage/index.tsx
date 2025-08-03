@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import ModalMessage from '../common/modalMessage';
@@ -11,7 +11,7 @@ import { loginAction } from '@/app/actions/user/login';
 import { useRouter } from 'next/navigation';
 
 export default function LoginPage({ lang }: { lang: string }) {
-  const formDataRef = useRef<{ email: string; password: string }>({
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
@@ -33,13 +33,13 @@ export default function LoginPage({ lang }: { lang: string }) {
     field: keyof typeLoginForm
   ) => {
     const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
-    formDataRef.current[field] = cleanedValue;
+    setFormData({ ...formData, [field]: cleanedValue });
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = loginSchema.safeParse(formDataRef.current);
+    const result = loginSchema.safeParse(formData);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof typeLoginForm, string>> = {};
@@ -54,16 +54,16 @@ export default function LoginPage({ lang }: { lang: string }) {
     // 送出登入資料的api(server action)
     startTransition(async () => {
       const res = await loginAction({
-        email: formDataRef.current.email,
-        password: formDataRef.current.password,
+        email: formData.email,
+        password: formData.password,
         locale: lang,
       });
 
       if (res.status !== 200) {
-        formDataRef.current = {
-          email: formDataRef.current.email,
+        setFormData({
+          ...formData,
           password: '',
-        }; // 清空表單密碼
+        }); // 清空表單密碼
         setErrorMSGs({}); // 清除錯誤訊息
         setModalMessage(res?.data?.message ? res?.data?.message : '');
         setModalMessageOpen(true);
@@ -88,7 +88,7 @@ export default function LoginPage({ lang }: { lang: string }) {
               id="email"
               label={t('emailLabel')}
               variant="outlined"
-              value={formDataRef.current.email}
+              value={formData.email}
               error={!!errorMSGs.email}
               helperText={errorMSGs.email}
               onChange={e => handleChange(e, 'email')}
@@ -99,7 +99,7 @@ export default function LoginPage({ lang }: { lang: string }) {
               label={t('passwordLabel')}
               type="password"
               variant="outlined"
-              value={formDataRef.current.password}
+              value={formData.password}
               error={!!errorMSGs.password}
               helperText={errorMSGs.password}
               onChange={e => handleChange(e, 'password')}

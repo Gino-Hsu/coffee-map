@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
@@ -7,10 +7,9 @@ import { useTranslations } from 'next-intl';
 import { createRegisterSchema } from '@/lib/formValidation';
 import { registerAction } from '@/app/actions/user/register';
 import AvatarSelector from '@/components/common/avatarSelector';
-import type { typeFormDataRef } from '@/type/memberType';
 
 export default function RegisterPage() {
-  const formDataRef = useRef<typeFormDataRef>({
+  const [formData, setFormData] = useState({
     email: '',
     name: '',
     password: '',
@@ -30,13 +29,13 @@ export default function RegisterPage() {
     field: keyof typeRegisterForm
   ) => {
     const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
-    formDataRef.current[field] = cleanedValue;
+    setFormData({ ...formData, [field]: cleanedValue });
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
   const handleSubmitRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = registerSchema.safeParse(formDataRef.current);
+    const result = registerSchema.safeParse(formData);
 
     console.log('Register form data:', result?.error?.issues);
 
@@ -55,18 +54,14 @@ export default function RegisterPage() {
     //送出註冊資料的api
     startTransition(async () => {
       const res = await registerAction({
-        email: formDataRef.current.email,
-        name: formDataRef.current.name,
-        password: formDataRef.current.password,
-        confirmPassword: formDataRef.current.confirmPassword,
+        email: formData.email,
+        name: formData.name,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
       });
 
       if (res.status !== 200) {
-        formDataRef.current = {
-          ...formDataRef.current,
-          password: '',
-          confirmPassword: '',
-        }; // 清空表單密碼
+        setFormData({ ...formData, password: '', confirmPassword: '' }); // 清空表單密碼;
         setErrorMSGs({}); // 清除錯誤訊息
         console.log('註冊失敗:', res?.data?.message);
         return;
@@ -85,7 +80,7 @@ export default function RegisterPage() {
             id="email"
             label={t('emailLabel')}
             variant="outlined"
-            value={formDataRef.current.email}
+            value={formData.email}
             error={!!errorMSGs.email}
             helperText={errorMSGs.email}
             onChange={e => handleChange(e, 'email')}
@@ -95,19 +90,18 @@ export default function RegisterPage() {
             id="name"
             label={t('nameLabel')}
             variant="outlined"
-            value={formDataRef.current.name}
+            value={formData.name}
             error={!!errorMSGs.name}
             helperText={errorMSGs.name}
             onChange={e => handleChange(e, 'name')}
             disabled={isPending}
           />
-
           <TextField
             id="password"
             label={t('passwordLabel')}
             type="password"
             variant="outlined"
-            value={formDataRef.current.password}
+            value={formData.password}
             error={!!errorMSGs.password}
             helperText={errorMSGs.password}
             onChange={e => handleChange(e, 'password')}
@@ -118,13 +112,13 @@ export default function RegisterPage() {
             label={t('confirmPasswordLabel')}
             type="password"
             variant="outlined"
-            value={formDataRef.current.confirmPassword}
+            value={formData.confirmPassword}
             error={!!errorMSGs.confirmPassword}
             helperText={errorMSGs.confirmPassword}
             onChange={e => handleChange(e, 'confirmPassword')}
             disabled={isPending}
           />
-          <AvatarSelector formData={formDataRef.current} />
+          <AvatarSelector formData={formData} />
         </div>
         <div className="flex justify-end gap-1">
           <Link

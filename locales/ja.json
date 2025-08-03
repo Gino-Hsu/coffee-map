@@ -43,6 +43,13 @@
     "success": "パスワードが正常に再設定されました",
     "serverError": "サーバーエラーが発生しました。後でもう一度お試しください"
   },
+  "CreateShopAction": {
+    "missingToken": "認証トークンが見つかりません。再度ログインしてください。",
+    "userNotFound": "ユーザーが見つかりません。",
+    "tokenExpired": "セッションの有効期限が切れました。再度ログインしてください。",
+    "tokenValidationFailed": "トークンの検証に失敗しました。再度ログインしてください。",
+    "serverError": "サーバーエラーが発生しました。しばらくしてから再試行してください。"
+  },
   "HeaderLayout": {
     "login": "登入",
     "logout": "登出"
@@ -132,6 +139,19 @@
       "confirmPassword": {
         "passwordMismatch": "Passwords do not match"
       }
+    }
+  },
+  "CreateShopPage": {
+    "title": "コーヒーショップを作成",
+    "cityLabel": "都市",
+    "nameLabel": "名前",
+    "addressLabel": "店の住所",
+    "cityMenu": {
+      "taipei": "台北"
+    },
+    "submitButton": "送信",
+    "errorMSG": {
+      "required": "この欄は必須です"
     }
   },
   "CoffeeMap": {

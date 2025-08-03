@@ -19,7 +19,7 @@ import { enumCity } from '@/type/shopsType';
 import { createShopAction } from '@/app/actions/shop/createShop';
 
 export default function CreateShopPage({ lang }: { lang: string }) {
-  const { user, isGetUserLoading } = useContext(UserContext);
+  const { user, isGetUserLoading, setIsLoginSession } = useContext(UserContext);
   const [formData, setFormData] = useState({
     name: '',
     address: '',
@@ -35,11 +35,15 @@ export default function CreateShopPage({ lang }: { lang: string }) {
   type typeCreateShopForm = z.infer<typeof shopSchema>;
 
   useEffect(() => {
-    if (!isGetUserLoading && !user) {
-      logoutAction();
-      router.replace(`/${lang}`);
-    }
-  }, [user, isGetUserLoading, router, lang]);
+    const handleLogout = async () => {
+      if (!isGetUserLoading && !user) {
+        await logoutAction();
+        if (setIsLoginSession) setIsLoginSession(false);
+        router.replace(`/${lang}`);
+      }
+    };
+    handleLogout();
+  }, [user, setIsLoginSession, isGetUserLoading, router, lang]);
 
   const handleChange = (
     e:

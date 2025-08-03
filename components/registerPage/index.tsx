@@ -37,8 +37,6 @@ export default function RegisterPage() {
     e.preventDefault();
     const result = registerSchema.safeParse(formData);
 
-    console.log('Register form data:', result?.error?.issues);
-
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof typeRegisterForm, string>> = {};
       for (const issue of result.error.issues) {

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useTransition } from 'react';
+import { useState, useTransition, useContext } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import ModalMessage from '../common/modalMessage';
@@ -9,8 +9,10 @@ import { useTranslations } from 'next-intl';
 import { createLoginSchema } from '@/lib/formValidation';
 import { loginAction } from '@/app/actions/user/login';
 import { useRouter } from 'next/navigation';
+import { UserContext } from '@/lib/context/userContext';
 
 export default function LoginPage({ lang }: { lang: string }) {
+  const { setIsLoginSession } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -70,6 +72,7 @@ export default function LoginPage({ lang }: { lang: string }) {
         return;
       } else {
         // 登入成功後的處理
+        if (setIsLoginSession) setIsLoginSession(true);
         router.replace(`/${lang}`);
       }
     });

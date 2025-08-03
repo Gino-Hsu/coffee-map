@@ -27,12 +27,14 @@ type UserContextType = {
   user: User;
   isGetUserLoading: boolean;
   setUser: Dispatch<SetStateAction<User>>;
+  setIsLoginSession: ((value: boolean) => void) | null;
 };
 
 export const UserContext = createContext<UserContextType>({
   user: null,
   isGetUserLoading: false,
   setUser: () => {},
+  setIsLoginSession: null,
 });
 
 export const UserProvider = ({
@@ -44,21 +46,48 @@ export const UserProvider = ({
 }) => {
   const [user, setUser] = useState<User>(null); // 初始值為 null
   const [isGetUserLoading, setIsGetUserLoading] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   const pathname = usePathname();
 
+  // 🧠 包一層來同步 sessionStorage 狀態
+  const setIsLoginSession = (value: boolean) => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('isLogin', value ? '1' : '0');
+    }
+    setIsLogin(value);
+  };
+
+  // ✅ 初始化時讀取 sessionStorage 判斷是否登入
   useEffect(() => {
-    const getUser = async () => {
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('isLogin');
+      if (stored === '1') {
+        setIsLogin(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const getUser = async (isLogin: boolean) => {
+      setIsGetUserLoading(false);
+      if (!isLogin) {
+        return;
+      }
       const userResult = await getUserAction(lang);
       if (userResult.status === 200) {
         setUser(userResult.data.resData);
+      } else {
+        setUser(null);
+        setIsLogin(false);
       }
-      setIsGetUserLoading(false);
     };
-    getUser();
-  }, [lang, pathname]);
+    getUser(isLogin);
+  }, [lang, pathname, isLogin]);
 
   return (
-    <UserContext.Provider value={{ user, isGetUserLoading, setUser }}>
+    <UserContext.Provider
+      value={{ user, isGetUserLoading, setUser, setIsLoginSession }}
+    >
       {children}
     </UserContext.Provider>
   );

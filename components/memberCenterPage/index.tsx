@@ -1,12 +1,9 @@
-'use client';
-// import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import UpdateInfo from './updateInfo';
 
-export default function MemberCenterPage() {
-  const t = useTranslations('MemberCenterPage');
+export default async function MemberCenterPage({ lang }: { lang: string }) {
+  const t = await getTranslations('MemberCenterPage');
 
-  // const [memberCenterSubMenu, setMemberCenterSubMenu] = useState(1);
   return (
     <>
       <div className="flex gap-x-4 p-2">
@@ -14,10 +11,9 @@ export default function MemberCenterPage() {
           <p className="text-xl font-bold pb-4 text-[#5a3d1b]">
             {t('updateUser')}
           </p>
-          {/* <p className="text-xl font-bold pb-4 text-[#5a3d1b]">更新密碼</p> */}
         </div>
         <div>
-          <UpdateInfo />
+          <UpdateInfo lang={lang} />
         </div>
       </div>
     </>

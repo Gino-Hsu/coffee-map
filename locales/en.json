@@ -141,6 +141,7 @@
       },
       "updateFailed": "Update failed"
     },
+    "updateSuccess": "Update successful",
     "updateInfoButton": "Update Member Info"
   },
   "CreateShopPage": {

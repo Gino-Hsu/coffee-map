@@ -137,8 +137,10 @@
       },
       "confirmPassword": {
         "passwordMismatch": "パスワードが一致しません"
-      }
-    }
+      },
+      "updateFailed": "更新に失敗しました"
+    },
+    "updateSuccess": "更新に成功しました"
   },
   "CreateShopPage": {
     "title": "コーヒーショップを作成",

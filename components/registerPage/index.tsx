@@ -29,7 +29,10 @@ export default function RegisterPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof typeRegisterForm
   ) => {
-    const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
+    const cleanedValue =
+      field === 'name'
+        ? e.target.value
+        : e.target.value.replace(/[\s\u3000]/g, '');
     setFormData({ ...formData, [field]: cleanedValue });
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };

@@ -54,6 +54,9 @@ export const UserProvider = ({
     if (typeof window !== 'undefined') {
       sessionStorage.setItem('isLogin', value ? '1' : '0');
     }
+    if (value === false) {
+      setUser(null);
+    }
     setIsLogin(value);
   };
 
@@ -69,7 +72,6 @@ export const UserProvider = ({
 
   useEffect(() => {
     const getUser = async (isLogin: boolean) => {
-      setIsGetUserLoading(false);
       if (!isLogin) {
         return;
       }
@@ -80,6 +82,7 @@ export const UserProvider = ({
         setUser(null);
         setIsLogin(false);
       }
+      setIsGetUserLoading(false);
     };
     getUser(isLogin);
   }, [lang, pathname, isLogin]);

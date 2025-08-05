@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useTransition } from 'react';
+import { useState, useRef, useTransition, useEffect } from 'react';
 import { useContext } from 'react';
 import { UserContext } from '@/lib/context/userContext';
 import { FormControl, TextField, Button } from '@mui/material';
@@ -9,13 +9,16 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { createUpdateInfoSchema } from '@/lib/formValidation';
 import { updateUserAction } from '@/app/actions/user/updateUser';
+import { logoutAction } from '@/app/actions/user/logout';
 import AvatarSelector from '@/components/common/avatarSelector';
 import { enumAvatarImg } from '@/type/memberType';
 
 export default function UpdateInfo({ lang }: { lang: string }) {
   const t = useTranslations('UpdateUser');
   const router = useRouter();
-  const { user, setUser } = useContext(UserContext);
+
+  const { user, setUser, isGetUserLoading, setIsLoginSession } =
+    useContext(UserContext);
   const email = user?.email ?? '';
   console.log('current user: ', user);
 
@@ -40,10 +43,9 @@ export default function UpdateInfo({ lang }: { lang: string }) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: 'name' | 'avatar'
   ) => {
-    const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
     setFormData(prev => ({
       ...prev,
-      [field]: cleanedValue,
+      [field]: e.target.value,
     }));
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
@@ -86,9 +88,8 @@ export default function UpdateInfo({ lang }: { lang: string }) {
         setModalMessage(`❗️ ${t('errorMSG.updateFailed')}`);
         setModalMessageOpen(true);
         modalType.current = 'error';
-
-        // 關閉提示光箱時才導回首頁
-        // router.replace(`/${lang}`);
+        if (setIsLoginSession) setIsLoginSession(false);
+        logoutAction();
       } else {
         // 成功的話才去setUser
         setUser(prev => {
@@ -113,8 +114,22 @@ export default function UpdateInfo({ lang }: { lang: string }) {
     }
   };
 
-  //TODO: 一進頁面確認登入狀態
-  //TODO: 有登入就帶入預設暱稱
+  useEffect(() => {
+    if (user?.name)
+      setFormData(prevData => ({ ...prevData, name: user?.name }));
+  }, [user?.name]);
+
+  useEffect(() => {
+    const checkIsLogin = () => {
+      if (isGetUserLoading) return;
+      if (!user) {
+        if (setIsLoginSession) setIsLoginSession(false);
+        logoutAction();
+        router.replace(`/${lang}`);
+      }
+    };
+    checkIsLogin();
+  }, [user, lang, router, isGetUserLoading, setIsLoginSession]);
 
   return (
     <>
@@ -148,18 +163,12 @@ export default function UpdateInfo({ lang }: { lang: string }) {
         </FormControl>
       </form>
       {/* Modal here */}
-      {/* 成功訊息 Modal */}
+      {/* 更新結果提示 Modal */}
       <ModalMessage
         open={modalMessageOpen}
         message={modalMessage}
         onClose={() => handleModalClose(modalType.current)}
       />
-      {/* 錯誤訊息 Modal */}
-      {/* <ModalMessage
-        open={modalMessageOpen}
-        message={modalMessage}
-        onClose={() => setModalMessageOpen(false)}
-      /> */}
     </>
   );
 }

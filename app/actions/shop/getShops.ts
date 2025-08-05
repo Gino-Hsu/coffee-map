@@ -1,17 +1,13 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
+import { enumCity } from '@/type/shopsType';
 
 interface getShopsParams {
   city: string;
 }
 
-enum cityEnum {
-  TAIPEI = 'taipei',
-}
-
-const prisma = new PrismaClient();
-const validateCityArr: string[] = [cityEnum.TAIPEI];
+const validateCityArr: string[] = [enumCity.TAIPEI];
 
 export async function getShopsAction({ city }: getShopsParams) {
   const cityLower = city.trim().toLowerCase();

@@ -18,7 +18,13 @@ export default function AvatarFrame({
       `}
         onClick={() => selectHandler(id)}
       >
-        <Image width={120} height={120} alt={htmlForLabel} src={imgSrc} />
+        <Image
+          width={120}
+          height={120}
+          alt={htmlForLabel}
+          src={imgSrc}
+          priority
+        />
       </label>
       <input id={htmlForLabel} name="avatar" type="radio" hidden value={id} />
     </>

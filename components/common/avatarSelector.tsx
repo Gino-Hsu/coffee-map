@@ -1,7 +1,5 @@
 'use client';
-import { useState } from 'react';
 import { enumAvatarImg } from '@/type/memberType';
-import type { typeFormDataRef } from '@/type/memberType';
 import AvatarFrame from './avatarFrame';
 
 const avatarOptions: {
@@ -32,18 +30,12 @@ const avatarOptions: {
 ];
 
 export default function AvatarSelector({
-  formData,
+  handleChange,
+  selectedAvatar,
 }: {
-  formData: typeFormDataRef;
+  handleChange: (id: enumAvatarImg) => void;
+  selectedAvatar: enumAvatarImg;
 }) {
-  const [selectedAvatar, setSelectedAvatar] = useState<enumAvatarImg>(
-    enumAvatarImg.bear
-  );
-  const handleAvatarSelect = (id: enumAvatarImg) => {
-    setSelectedAvatar(id);
-    formData.avatar = id;
-  };
-
   return (
     <div className="flex gap-x-4">
       {avatarOptions.map(option => {
@@ -52,7 +44,7 @@ export default function AvatarSelector({
             key={option.id}
             option={option}
             currentAvatar={selectedAvatar}
-            selectHandler={handleAvatarSelect}
+            selectHandler={handleChange}
           />
         );
       })}

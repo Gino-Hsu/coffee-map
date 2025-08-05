@@ -24,6 +24,7 @@ const createRegisterSchema = (t: ReturnType<typeof useTranslations>) => {
       email: z.email(t('errorMSG.email.format')).min(1, t('errorMSG.required')),
       name: z.string().min(1, t('errorMSG.required')),
       password: passwordSchema(t),
+      confirmPassword: z.string().min(1, t('errorMSG.required')),
     })
     .refine(data => data.password === data.confirmPassword, {
       path: ['confirmPassword'],

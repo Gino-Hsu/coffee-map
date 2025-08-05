@@ -127,13 +127,17 @@
     "updateUser": "会員情報を更新"
   },
   "UpdateUser": {
+    "nameLabel": "姓名",
+    "passwordLabel": "暗証番号",
+    "confirmPasswordLabel": "暗証番号（確認）",
     "errorMSG": {
       "required": "この項目は必須です",
       "email": {
         "format": "有効なメールアドレスを入力してください"
       },
       "password": {
-        "length": "パスワードは8文字以上で入力してください"
+        "length": "暗証番号は8文字以上で入力してください",
+        "requireAlphaNum": "パスワードには英字と数字を含める必要があります"
       },
       "confirmPassword": {
         "passwordMismatch": "パスワードが一致しません"

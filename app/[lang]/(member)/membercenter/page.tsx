@@ -8,8 +8,8 @@ export default async function MemberCenter(params: {
   const t = await getTranslations('MemberCenterPage');
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-8">
-      <h1 className="text-2xl font-bold pb-4 text-[#5a3d1b]">{t('title')}</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen p-8 bg-[#f8f6ed]">
+      <h1 className="text-2xl font-bold pb-4 text-[#1285c5]">{t('title')}</h1>
       <MemberCenterPage lang={lang} />
     </div>
   );

@@ -122,6 +122,26 @@
       }
     }
   },
+  "MemberCenterPage": {
+    "title": "会員センター",
+    "updateUser": "会員情報を更新"
+  },
+  "UpdateUser": {
+    "errorMSG": {
+      "required": "この項目は必須です",
+      "email": {
+        "format": "有効なメールアドレスを入力してください"
+      },
+      "password": {
+        "length": "パスワードは8文字以上で入力してください"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "パスワードが一致しません"
+      },
+      "updateFailed": "更新に失敗しました"
+    },
+    "updateSuccess": "更新に成功しました"
+  },
   "CreateShopPage": {
     "title": "コーヒーショップを作成",
     "cityLabel": "都市",

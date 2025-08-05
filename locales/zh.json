@@ -79,6 +79,9 @@
       "errorMSG": {
         "email": {
           "format": "請輸入正確的電子信箱"
+        },
+        "password": {
+          "length": "密碼長度必須至少為8個字符"
         }
       }
     }
@@ -106,7 +109,29 @@
       }
     }
   },
-  "ResetPasswordMailPage": {
+  "MemberCenterPage": {
+    "title": "會員中心",
+    "updateUser": "更新會員資料"
+  },
+  "UpdateUser": {
+    "nameLabel": "編輯姓名",
+    "errorMSG": {
+      "required": "這是必填項目",
+      "email": {
+        "format": "請輸入正確的電子信箱"
+      },
+      "password": {
+        "length": "密碼長度必須至少為8個字符"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "密碼不匹配"
+      },
+      "updateFailed": "更新失敗"
+    },
+    "updateSuccess": "更新成功",
+    "updateInfoButton": "更新會員資料"
+  },
+    "ResetPasswordMailPage": {
     "title": "重設密碼",
     "passwordLabel": "新密碼",
     "confirmPasswordLabel": "確認新密碼",

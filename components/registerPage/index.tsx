@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { createRegisterSchema } from '@/lib/formValidation';
 import { registerAction } from '@/app/actions/user/register';
 import AvatarSelector from '@/components/common/avatarSelector';
+import { enumAvatarImg } from '@/type/memberType';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -31,6 +32,14 @@ export default function RegisterPage() {
     const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
     setFormData({ ...formData, [field]: cleanedValue });
     setErrorMSGs({ ...errorMSGs, [field]: '' });
+  };
+
+  const handleAvatarChange = (id: enumAvatarImg) => {
+    console.log('run handleAvatarChange, id :', id);
+    setFormData(prev => ({
+      ...prev,
+      avatar: id,
+    }));
   };
 
   const handleSubmitRegister = (e: React.FormEvent) => {
@@ -116,7 +125,10 @@ export default function RegisterPage() {
             onChange={e => handleChange(e, 'confirmPassword')}
             disabled={isPending}
           />
-          <AvatarSelector formData={formData} />
+          <AvatarSelector
+            handleChange={handleAvatarChange}
+            selectedAvatar={formData.avatar}
+          />
         </div>
         <div className="flex justify-end gap-1">
           <Link
@@ -128,7 +140,7 @@ export default function RegisterPage() {
         </div>
         <Button
           type="submit"
-          size="small"
+          size="medium"
           variant="contained"
           color="secondary"
           disabled={isPending}

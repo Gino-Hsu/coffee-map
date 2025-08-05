@@ -24,6 +24,8 @@ export default function UpdateInfo({ lang }: { lang: string }) {
 
   const [formData, setFormData] = useState({
     name: '',
+    password: '',
+    confirmPassword: '',
     avatar: 1,
   });
   const [modalMessageOpen, setModalMessageOpen] = useState(false);
@@ -41,11 +43,16 @@ export default function UpdateInfo({ lang }: { lang: string }) {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: 'name' | 'avatar'
+    field: 'name' | 'avatar' | 'password' | 'confirmPassword'
   ) => {
+    const cleanedValue =
+      field === 'name'
+        ? e.target.value
+        : e.target.value.replace(/[\s\u3000]/g, '');
+
     setFormData(prev => ({
       ...prev,
-      [field]: e.target.value,
+      [field]: cleanedValue,
     }));
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
@@ -63,7 +70,7 @@ export default function UpdateInfo({ lang }: { lang: string }) {
     console.log('current formData: ', formData);
 
     const result = updateInfoSchema.safeParse(formData);
-    console.log('UpdateUser form data:', result);
+    console.log('UpdateUser formData:', result);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof typeLoginForm, string>> = {};
@@ -80,8 +87,14 @@ export default function UpdateInfo({ lang }: { lang: string }) {
 
     // 把新的info寫進資料庫裡
     startTransition(async () => {
-      const { name, avatar } = formData;
-      const res = await updateUserAction({ email, name, avatar, locale: 'zh' });
+      const { name, avatar, password } = formData;
+      const res = await updateUserAction({
+        email,
+        name,
+        avatar,
+        password,
+        locale: 'zh',
+      });
 
       // 失敗處理
       if (res.status !== 200) {
@@ -115,9 +128,14 @@ export default function UpdateInfo({ lang }: { lang: string }) {
   };
 
   useEffect(() => {
-    if (user?.name)
-      setFormData(prevData => ({ ...prevData, name: user?.name }));
-  }, [user?.name]);
+    if (user?.name || user?.avatar) {
+      setFormData(prevData => ({
+        ...prevData,
+        ...(user?.name && { name: user.name }),
+        ...(user?.avatar && { avatar: user.avatar }),
+      }));
+    }
+  }, [user?.name, user?.avatar]);
 
   useEffect(() => {
     const checkIsLogin = () => {
@@ -144,6 +162,28 @@ export default function UpdateInfo({ lang }: { lang: string }) {
               error={!!errorMSGs.name}
               helperText={errorMSGs.name}
               onChange={e => handleChange(e, 'name')}
+              disabled={isPending}
+            />
+            <TextField
+              id="password"
+              label={t('passwordLabel')}
+              type="password"
+              variant="outlined"
+              value={formData.password}
+              error={!!errorMSGs.password}
+              helperText={errorMSGs.password}
+              onChange={e => handleChange(e, 'password')}
+              disabled={isPending}
+            />
+            <TextField
+              id="confirmPassword"
+              label={t('confirmPasswordLabel')}
+              type="password"
+              variant="outlined"
+              value={formData.confirmPassword}
+              error={!!errorMSGs.confirmPassword}
+              helperText={errorMSGs.confirmPassword}
+              onChange={e => handleChange(e, 'confirmPassword')}
               disabled={isPending}
             />
             <AvatarSelector

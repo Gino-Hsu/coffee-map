@@ -66,10 +66,20 @@ const createShopSchema = (t: ReturnType<typeof useTranslations>) => {
 };
 
 const createUpdateInfoSchema = (t: ReturnType<typeof useTranslations>) => {
-  return z.object({
-    name: z.string().min(1, t('errorMSG.required')),
-    avatar: z.number().min(1, t('errorMSG.required')),
-  });
+  return z
+    .object({
+      name: z.string().min(1, t('errorMSG.required')),
+      password: z.preprocess(
+        val => (typeof val === 'string' && val.trim() === '' ? undefined : val),
+        passwordSchema(t).optional()
+      ),
+      confirmPassword: z.string(),
+      avatar: z.number().min(1, t('errorMSG.required')),
+    })
+    .refine(data => data.password === data.confirmPassword, {
+      path: ['confirmPassword'],
+      message: t('errorMSG.confirmPassword.passwordMismatch'),
+    });
 };
 
 export {

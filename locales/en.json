@@ -165,5 +165,9 @@
       "storeName": "Shop Name",
       "address": "Address"
     }
+  },
+  "MainVisual": {
+    "title_1": "In a quiet corner of the city, let the aroma linger.",
+    "title_2": "Plug in your laptop — and your thoughts."
   }
 }

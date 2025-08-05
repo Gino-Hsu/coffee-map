@@ -43,7 +43,7 @@ export default async function LocaleLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-bgColor`}
       >
         <EmotionRegistry>
           <NextIntlClientProvider>

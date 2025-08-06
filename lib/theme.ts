@@ -24,6 +24,9 @@ const theme = createTheme({
       },
     },
   },
+  typography: {
+    fontFamily: `var(--font-body)`,
+  },
 });
 
 export { theme };

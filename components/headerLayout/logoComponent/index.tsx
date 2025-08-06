@@ -3,7 +3,6 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import clsx from 'clsx';
 
 export default function LogoComponent({
   isHeaderFixed,
@@ -26,18 +25,12 @@ export default function LogoComponent({
       <Image
         src="/logoImg.png"
         alt="logo image"
-        width={!isLangHome ? 40 : isHeaderFixed ? 40 : 80}
-        height={40}
+        width={!isLangHome ? 110 : isHeaderFixed ? 110 : 300}
+        height={!isLangHome ? 56 : isHeaderFixed ? 56 : 150}
+        style={{ height: 'auto' }}
         className="transition-all duration-300 ease-in-out"
+        priority
       />
-      <span
-        className={clsx(
-          'font-bold text-[#0178a8;] transition-all duration-300 ease-in-out',
-          !isLangHome ? 'text-base' : isHeaderFixed ? 'text-base' : 'text-xl'
-        )}
-      >
-        Coffee Map
-      </span>
     </Link>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { Noto_Sans_JP, Noto_Sans_TC, Noto_Sans_SC } from 'next/font/google';
 import './globals.css';
 import EmotionRegistry from '../../emotion/registry';
 import HeaderLayout from '@/components/headerLayout';
@@ -17,6 +18,27 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+});
+
+const notoSansJP = Noto_Sans_JP({
+  variable: '--font-noto-jp',
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
+});
+
+const notoSansTC = Noto_Sans_TC({
+  variable: '--font-noto-tc',
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
+});
+
+const notoSansSC = Noto_Sans_SC({
+  variable: '--font-noto-sc',
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '500', '700'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -43,7 +65,14 @@ export default async function LocaleLayout({
   return (
     <html lang={lang} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-custom-bgColor`}
+        className={`
+    ${geistSans.variable} 
+    ${geistMono.variable}
+    ${notoSansJP.variable} 
+    ${notoSansTC.variable} 
+    ${notoSansSC.variable}
+    antialiased bg-custom-bgColor
+  `}
       >
         <EmotionRegistry>
           <NextIntlClientProvider>

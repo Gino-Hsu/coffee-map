@@ -8,27 +8,55 @@ import clsx from 'clsx';
 export default function MainVisual() {
   const totalImages = 3;
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isInitImmediately, setIsInitImmediately] = useState(false);
+  const [isInit, setIsInit] = useState(false);
   const t = useTranslations('MainVisual');
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    const timer_imgControl = setInterval(() => {
       setActiveIndex(prev => (prev + 1) % totalImages);
     }, 9000);
 
-    return () => clearInterval(timer);
+    const timer_initControl = setTimeout(() => {
+      setIsInit(true);
+    }, 800);
+
+    setIsInitImmediately(true);
+
+    return () => {
+      clearInterval(timer_imgControl);
+      clearTimeout(timer_initControl);
+    };
   }, []);
 
   return (
-    <div className="h-[calc(100vh-64px)] flex border-b border-custom-borderColor overflow-hidden">
-      <div className="flex-1 border-r border-custom-borderColor">
-        <h1 className="relative top-60 ml-10 font-bold text-xl text-custom-fontColor">
+    <div className="h-[calc(100vh-64px)] relative flex overflow-hidden">
+      <div className="flex-1">
+        <h1
+          className={clsx(
+            'relative top-72 ml-11 font-bold text-3xl leading-relaxed text-custom-fontColor  transition-opacity duration-500 ease-in-out',
+            isInit ? 'opacity-100' : 'opacity-0'
+          )}
+        >
           {t('title_1')}
           <br />
           {t('title_2')}
         </h1>
       </div>
 
-      <div className="relative flex-1 overflow-hidden">
+      <div
+        className={clsx(
+          'z-10 w-[2px] bg-custom-borderColor transition-[height] duration-1000 ease-in-out',
+          isInitImmediately ? 'h-full' : 'h-0'
+        )}
+      ></div>
+
+      <div
+        className={clsx(
+          'relative flex-1 overflow-hidden transition-opacity duration-500 ease-in-out',
+          isInit ? 'opacity-100' : 'opacity-0'
+        )}
+      >
         {[...Array(totalImages)].map((_, index) => (
           <div
             key={index}
@@ -44,13 +72,22 @@ export default function MainVisual() {
             <Image
               src={`/mainVisual/coffee${index + 1}.jpg`}
               alt={`main visual ${index + 1}`}
+              quality={80}
               fill
+              sizes="(max-width: 768px) 80%, (max-width: 1200px) 50%"
               className="object-cover"
-              priority={index === 0} // 避免首次閃爍
+              priority
             />
           </div>
         ))}
       </div>
+
+      <div
+        className={clsx(
+          'z-10 absolute bottom-0 h-[2px] w-full bg-custom-borderColor transition-transform duration-1000 ease-in-out origin-center',
+          isInitImmediately ? 'scale-x-100' : 'scale-x-0'
+        )}
+      ></div>
     </div>
   );
 }

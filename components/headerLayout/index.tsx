@@ -46,7 +46,7 @@ export default function HeaderLayout() {
       {/* Header */}
       <header
         className={
-          'sticky top-0 h-16 border-b border-custom-borderColor bg-custom-bgColor'
+          'sticky top-0 h-16 border-b-2 border-custom-borderColor bg-custom-bgColor'
         }
       >
         <div className={clsx('h-full mx-7 flex items-center  justify-between')}>

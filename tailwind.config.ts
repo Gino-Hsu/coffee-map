@@ -12,6 +12,7 @@ export default {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         'custom-bgColor': '#f8f6ed',
+        'custom-bgColor-hover': '#559bf7',
         'custom-borderColor': '#0580b1',
         'custom-fontColor': '#559bf7',
       },

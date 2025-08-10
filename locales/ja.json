@@ -54,6 +54,36 @@
     "login": "登入",
     "logout": "登出"
   },
+  "City": {
+    "taipei": "台北市",
+    "newTaipei": "新北市",
+    "taoyuan": "桃園市",
+    "taichung": "台中市",
+    "tainan": "台南市",
+    "kaohsiung": "高雄市",
+    "keelung": "基隆市",
+    "hsinchuCity": "新竹市",
+    "hsinchuCounty": "新竹県",
+    "miaoli": "苗栗県",
+    "changhua": "彰化県",
+    "nantou": "南投県",
+    "yunlin": "雲林県",
+    "chiayiCity": "嘉義市",
+    "chiayiCounty": "嘉義県",
+    "pingtung": "屏東県",
+    "yilan": "宜蘭県",
+    "hualien": "花蓮県",
+    "taitung": "台東県",
+    "penghu": "澎湖県",
+    "kinmen": "金門県",
+    "lienchiang": "連江県"
+  },
+  "HomePage": {
+    "cityCard": {
+      "shopInfo": "店舗情報",
+      "mapInfo": "地図"
+    }
+  },
   "LoginPage": {
     "title": "登入",
     "emailLabel": "電子郵件",

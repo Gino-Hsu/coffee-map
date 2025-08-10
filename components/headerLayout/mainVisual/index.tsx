@@ -34,7 +34,7 @@ export default function MainVisual() {
       <div className="flex-1">
         <h1
           className={clsx(
-            'relative top-72 ml-11 font-bold text-3xl leading-relaxed text-custom-fontColor  transition-opacity duration-500 ease-in-out',
+            'relative top-72 mx-11 font-bold text-3xl leading-relaxed text-custom-fontColor  transition-opacity duration-500 ease-in-out',
             isInit ? 'opacity-100' : 'opacity-0'
           )}
         >

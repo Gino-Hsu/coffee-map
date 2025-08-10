@@ -1,4 +1,4 @@
-import MapComponent from '@/components/mapComponent';
+import MapPage from '@/components/mapPage';
 
 export default async function Map(params: {
   params: Promise<{ city: string }>;
@@ -7,7 +7,7 @@ export default async function Map(params: {
 
   return (
     <div className="h-[calc(100vh-64px)] p-0">
-      <MapComponent city={city} />
+      <MapPage city={city} />
     </div>
   );
 }

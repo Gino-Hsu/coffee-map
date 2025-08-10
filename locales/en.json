@@ -6,16 +6,16 @@
     "success": "Login successful",
     "tooManyAttempts": "Too many login attempts. Please try again later"
   },
-  "RegisterServerAction" : {
+  "RegisterServerAction": {
     "missing": "All register fields are required",
     "serverError": "Server error, please try again later",
     "confirmPasswordUnmatched": "Password doesn't match with confirmPassword",
-    "emailAlreadyInUse":"Email already in use",
+    "emailAlreadyInUse": "Email already in use",
     "success": "Registration successful"
   },
   "GetUserServerAction": {
     "missingToken": "Token not found.",
-    "userNotFound":"user not found.",
+    "userNotFound": "user not found.",
     "userFound": "user found.",
     "tokenExpired": "Expired token",
     "tokenValidationFailed": "Token validation failed.",
@@ -28,6 +28,28 @@
     "tokenExpired": "Session expired, please log in again",
     "serverError": "Server error, please try again later"
   },
+  "ForgotPasswordAction": {
+    "emailRequired": "Email is required",
+    "userNotFound": "User not found",
+    "success": "Password reset email sent",
+    "serverError": "Server error",
+    "tooFrequentRequest": "You cannot request a password reset within 10 minutes",
+    "emailSubject": "Password Reset",
+    "emailBody": "Hello,\n\nWe received a request to reset your password. Please click the link below within 30 minutes to complete the password reset:\n{link}\n\nIf you did not request this, please ignore this email.\n\nThank you!"
+  },
+  "ResetPasswordMailAction": {
+    "missingFields": "Required fields are missing",
+    "invalidOrExpiredToken": "The reset link is invalid or expired",
+    "success": "Password has been reset successfully",
+    "serverError": "Server error, please try again later"
+  },
+  "CreateShopAction": {
+    "missingToken": "Missing authentication token. Please log in again.",
+    "userNotFound": "User not found.",
+    "tokenExpired": "Your session has expired. Please log in again.",
+    "tokenValidationFailed": "Token validation failed. Please log in again.",
+    "serverError": "Server error. Please try again later."
+  },
   "HeaderLayout": {
     "login": "Login",
     "logout": "logout"
@@ -39,20 +61,24 @@
     "navigateRegisterPage": "Go to Register",
     "forgetPassword": "Forgot Password",
     "loginButton": "Login",
-    "required": "This is required",
     "errorMSG": {
+      "required": "This is required",
       "email": {
         "format": "Please enter the correct email."
       },
-      "password": "Incorrect password"
+      "password": {
+        "length": "Password must be at least 8 characters long",
+        "requireAlphaNum": "Password must contain both letters and numbers"
+      }
     },
     "forgotPasswordModal": {
       "title": "Forgot Password",
+      "submitButton": "Submit",
       "emailLabel": "Email",
       "required": "This is required",
       "errorMSG": {
         "email": {
-         "format": "Please enter the correct email."
+          "format": "Please enter the correct email."
         }
       }
     }
@@ -72,11 +98,66 @@
         "format": "Please enter the correct email."
       },
       "password": {
-        "length": "Password must be at least 6 characters long"
+        "length": "Password must be at least 8 characters long",
+        "requireAlphaNum": "Password must contain both letters and numbers"
       },
       "confirmPassword": {
         "passwordMismatch": "Passwords do not match"
       }
+    }
+  },
+  "ResetPasswordMailPage": {
+    "title": "Reset Password",
+    "passwordLabel": "New Password",
+    "confirmPasswordLabel": "Confirm New Password",
+    "resetPasswordButton": "Submit",
+    "errorMSG": {
+      "required": "This is required",
+      "password": {
+        "length": "Password must be at least 8 characters long",
+        "requireAlphaNum": "Password must contain both letters and numbers"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "Passwords do not match"
+      }
+    }
+  },
+  "MemberCenterPage": {
+    "title": "Member Center",
+    "updateUser": "Update Member Info"
+  },
+  "UpdateUser": {
+    "nameLabel": "Edit Name",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "errorMSG": {
+      "required": "This field is required",
+      "email": {
+        "format": "Please enter a valid email address"
+      },
+      "password": {
+        "length": "Password must be at least 8 characters long",
+        "requireAlphaNum": "Password must contain both letters and numbers"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "Passwords do not match"
+      },
+      "updateFailed": "Update failed"
+    },
+    "updateSuccess": "Update successful",
+    "updateInfoButton": "Update Member Info"
+  },
+  "CreateShopPage": {
+    "title": "Create Coffee Shop",
+    "cityLabel": "City",
+    "nameLabel": "Name",
+    "addressLabel": "Shop Address",
+    "cityMenu": {
+      "taipei": "Taipei"
+    },
+    "submitButton": "Submit",
+    "errorMSG": {
+      "required": "This is required"
     }
   },
   "CoffeeMap": {
@@ -84,5 +165,9 @@
       "storeName": "Shop Name",
       "address": "Address"
     }
+  },
+  "MainVisual": {
+    "title_1": "In a quiet corner of the city, let the aroma linger.",
+    "title_2": "Plug in your laptop — and your thoughts."
   }
 }

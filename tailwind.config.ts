@@ -11,6 +11,18 @@ export default {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        'custom-bgColor': '#f8f6ed',
+        'custom-borderColor': '#0580b1',
+        'custom-fontColor': '#559bf7',
+      },
+      keyframes: {
+        'subtle-move': {
+          '0%, 100%': { transform: 'translateX(-50%)' },
+          '50%': { transform: 'translateX(calc(-50% + 20px))' },
+        },
+      },
+      animation: {
+        'subtle-move': 'subtle-move 18s ease-in-out infinite',
       },
     },
   },

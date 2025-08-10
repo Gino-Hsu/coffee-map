@@ -11,6 +11,7 @@ interface registerInput {
   confirmPassword: string;
   locale?: string;
 }
+
 export async function registerAction({
   email,
   name,

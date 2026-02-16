@@ -4,7 +4,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
-export default function LogoComponent() {
+export default function LogoComponent({
+  isHeaderFixed,
+  isLangHome,
+}: {
+  isHeaderFixed: boolean;
+  isLangHome: boolean;
+}) {
   const params = useParams();
   const [lang, setLang] = useState('zh');
 
@@ -16,8 +22,15 @@ export default function LogoComponent() {
 
   return (
     <Link className="flex items-center gap-1" href={`/${lang}`}>
-      <Image src="/logoImg.png" alt="logo image" width={40} height={40} />
-      <span className="font-bold text-[#5a3d1b]">Coffee Map</span>
+      <Image
+        src="/logoImg.png"
+        alt="logo image"
+        width={!isLangHome ? 110 : isHeaderFixed ? 110 : 300}
+        height={!isLangHome ? 56 : isHeaderFixed ? 56 : 150}
+        style={{ height: 'auto' }}
+        className="transition-all duration-300 ease-in-out"
+        priority
+      />
     </Link>
   );
 }

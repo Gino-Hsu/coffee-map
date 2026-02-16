@@ -79,7 +79,9 @@
     "lienchiang": "連江県"
   },
   "HomePage": {
+    "title": "都市を選んで、カフェを探す",
     "cityCard": {
+      "title": "",
       "shopInfo": "店舗情報",
       "mapInfo": "地図"
     }
@@ -174,7 +176,8 @@
       },
       "updateFailed": "更新に失敗しました"
     },
-    "updateSuccess": "更新に成功しました"
+    "updateSuccess": "更新に成功しました",
+    "updateInfoButton": "更新會員資料"
   },
   "CreateShopPage": {
     "title": "コーヒーショップを作成",

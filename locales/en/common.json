@@ -1,0 +1,42 @@
+{
+  "HeaderLayout": {
+    "login": "Login",
+    "logout": "logout"
+  },
+  "City": {
+    "taipei": "Taipei City",
+    "newTaipei": "New Taipei City",
+    "taoyuan": "Taoyuan City",
+    "taichung": "Taichung City",
+    "tainan": "Tainan City",
+    "kaohsiung": "Kaohsiung City",
+    "keelung": "Keelung City",
+    "hsinchuCity": "Hsinchu City",
+    "hsinchuCounty": "Hsinchu County",
+    "miaoli": "Miaoli County",
+    "changhua": "Changhua County",
+    "nantou": "Nantou County",
+    "yunlin": "Yunlin County",
+    "chiayiCity": "Chiayi City",
+    "chiayiCounty": "Chiayi County",
+    "pingtung": "Pingtung County",
+    "yilan": "Yilan County",
+    "hualien": "Hualien County",
+    "taitung": "Taitung County",
+    "penghu": "Penghu County",
+    "kinmen": "Kinmen County",
+    "lienchiang": "Lienchiang County"
+  },
+  "HomePage": {
+    "title": "Select a city, find a café",
+    "cityCard": {
+      "title": "",
+      "shopInfo": "Shop Information",
+      "mapInfo": "Map"
+    }
+  },
+  "MainVisual": {
+    "title_1": "In a quiet corner of the city, let the aroma linger.",
+    "title_2": "Plug in your laptop — and your thoughts."
+  }
+}

@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState, useTransition } from 'react';
+import { useState, useTransition, useContext } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import ModalMessage from '../common/modalMessage';
@@ -9,37 +9,39 @@ import { useTranslations } from 'next-intl';
 import { createLoginSchema } from '@/lib/formValidation';
 import { loginAction } from '@/app/actions/user/login';
 import { useRouter } from 'next/navigation';
+import { UserContext } from '@/lib/context/userContext';
 
 export default function LoginPage({ lang }: { lang: string }) {
-  const formDataRef = useRef<{ email: string; password: string }>({
+  const { setIsLoginSession } = useContext(UserContext);
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof typeLoginForm, string>>
   >({});
-  const [modalErrorMessageOpen, setModalErrorMessageOpen] = useState(false);
+  const [modalMessageOpen, setModalMessageOpen] = useState(false);
   const [modalForgotPasswordOpen, setModalForgotPasswordOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [isPending, startTransition] = useTransition(); // 用於處理異步操作
+  const router = useRouter();
 
   const t = useTranslations('LoginPage');
   const loginSchema = createLoginSchema(t);
   type typeLoginForm = z.infer<typeof loginSchema>;
-  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof typeLoginForm
   ) => {
     const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
-    formDataRef.current[field] = cleanedValue;
+    setFormData({ ...formData, [field]: cleanedValue });
     setErrorMSGs({ ...errorMSGs, [field]: '' });
   };
 
   const handleSubmitLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = loginSchema.safeParse(formDataRef.current);
+    const result = loginSchema.safeParse(formData);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof typeLoginForm, string>> = {};
@@ -54,23 +56,23 @@ export default function LoginPage({ lang }: { lang: string }) {
     // 送出登入資料的api(server action)
     startTransition(async () => {
       const res = await loginAction({
-        email: formDataRef.current.email,
-        password: formDataRef.current.password,
+        email: formData.email,
+        password: formData.password,
         locale: lang,
       });
 
       if (res.status !== 200) {
-        formDataRef.current = {
-          email: formDataRef.current.email,
+        setFormData({
+          ...formData,
           password: '',
-        }; // 清空表單密碼
+        }); // 清空表單密碼
         setErrorMSGs({}); // 清除錯誤訊息
-        console.log('登入失敗:', res?.data?.message);
         setModalMessage(res?.data?.message ? res?.data?.message : '');
-        setModalErrorMessageOpen(true);
+        setModalMessageOpen(true);
         return;
       } else {
         // 登入成功後的處理
+        if (setIsLoginSession) setIsLoginSession(true);
         router.replace(`/${lang}`);
       }
     });
@@ -82,14 +84,14 @@ export default function LoginPage({ lang }: { lang: string }) {
 
   return (
     <>
-      <form onSubmit={handleSubmitLogin}>
-        <FormControl className="flex flex-col gap-y-3">
+      <form className="min-w-[300px]" onSubmit={handleSubmitLogin}>
+        <FormControl className="flex flex-col gap-y-3" fullWidth={true}>
           <div className="flex flex-col gap-y-3">
             <TextField
               id="email"
               label={t('emailLabel')}
               variant="outlined"
-              value={formDataRef.current.email}
+              value={formData.email}
               error={!!errorMSGs.email}
               helperText={errorMSGs.email}
               onChange={e => handleChange(e, 'email')}
@@ -100,7 +102,7 @@ export default function LoginPage({ lang }: { lang: string }) {
               label={t('passwordLabel')}
               type="password"
               variant="outlined"
-              value={formDataRef.current.password}
+              value={formData.password}
               error={!!errorMSGs.password}
               helperText={errorMSGs.password}
               onChange={e => handleChange(e, 'password')}
@@ -136,9 +138,9 @@ export default function LoginPage({ lang }: { lang: string }) {
       {/* Modal here */}
       {/* 錯誤訊息 Modal */}
       <ModalMessage
-        open={modalErrorMessageOpen}
+        open={modalMessageOpen}
         message={`❗️ ${modalMessage}`}
-        onClose={() => setModalErrorMessageOpen(false)}
+        onClose={() => setModalMessageOpen(false)}
       />
       {/* 忘記密碼 Modal */}
       <ModalForgotPassword

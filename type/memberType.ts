@@ -16,7 +16,7 @@ interface typeAvatarFrameProps {
   selectHandler: (id: enumAvatarImg) => void;
 }
 
-interface typeFormDataRef {
+interface typeFormDataState {
   email: string;
   name: string;
   password: string;
@@ -25,4 +25,4 @@ interface typeFormDataRef {
 }
 
 export { enumAvatarImg };
-export type { typeAvatarOptions, typeAvatarFrameProps, typeFormDataRef };
+export type { typeAvatarOptions, typeAvatarFrameProps, typeFormDataState };

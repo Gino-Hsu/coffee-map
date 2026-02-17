@@ -1,23 +1,21 @@
 'use client';
-import { useRef, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import Link from 'next/link';
 import { FormControl, TextField, Button } from '@mui/material';
 import { z } from 'zod/v4';
 import { useTranslations } from 'next-intl';
 import { createRegisterSchema } from '@/lib/formValidation';
 import { registerAction } from '@/app/actions/user/register';
+import AvatarSelector from '@/components/common/avatarSelector';
+import { enumAvatarImg } from '@/type/memberType';
 
 export default function RegisterPage() {
-  const formDataRef = useRef<{
-    email: string;
-    name: string;
-    password: string;
-    confirmPassword: string;
-  }>({
+  const [formData, setFormData] = useState({
     email: '',
     name: '',
     password: '',
     confirmPassword: '',
+    avatar: 1,
   });
   const [errorMSGs, setErrorMSGs] = useState<
     Partial<Record<keyof typeRegisterForm, string>>
@@ -31,16 +29,25 @@ export default function RegisterPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: keyof typeRegisterForm
   ) => {
-    const cleanedValue = e.target.value.replace(/[\s\u3000]/g, '');
-    formDataRef.current[field] = cleanedValue;
+    const cleanedValue =
+      field === 'name'
+        ? e.target.value
+        : e.target.value.replace(/[\s\u3000]/g, '');
+    setFormData({ ...formData, [field]: cleanedValue });
     setErrorMSGs({ ...errorMSGs, [field]: '' });
+  };
+
+  const handleAvatarChange = (id: enumAvatarImg) => {
+    console.log('run handleAvatarChange, id :', id);
+    setFormData(prev => ({
+      ...prev,
+      avatar: id,
+    }));
   };
 
   const handleSubmitRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = registerSchema.safeParse(formDataRef.current);
-
-    console.log('Register form data:', result?.error?.issues);
+    const result = registerSchema.safeParse(formData);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof typeRegisterForm, string>> = {};
@@ -57,18 +64,14 @@ export default function RegisterPage() {
     //送出註冊資料的api
     startTransition(async () => {
       const res = await registerAction({
-        email: formDataRef.current.email,
-        name: formDataRef.current.name,
-        password: formDataRef.current.password,
-        confirmPassword: formDataRef.current.confirmPassword,
+        email: formData.email,
+        name: formData.name,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
       });
 
       if (res.status !== 200) {
-        formDataRef.current = {
-          ...formDataRef.current,
-          password: '',
-          confirmPassword: '',
-        }; // 清空表單密碼
+        setFormData({ ...formData, password: '', confirmPassword: '' }); // 清空表單密碼;
         setErrorMSGs({}); // 清除錯誤訊息
         console.log('註冊失敗:', res?.data?.message);
         return;
@@ -79,10 +82,6 @@ export default function RegisterPage() {
     });
   };
 
-  const handleClickForgetPassword = () => {
-    console.log('forget password clicked，準備開光箱');
-  };
-
   return (
     <form onSubmit={handleSubmitRegister}>
       <FormControl className="flex flex-col gap-y-3">
@@ -91,7 +90,7 @@ export default function RegisterPage() {
             id="email"
             label={t('emailLabel')}
             variant="outlined"
-            value={formDataRef.current.email}
+            value={formData.email}
             error={!!errorMSGs.email}
             helperText={errorMSGs.email}
             onChange={e => handleChange(e, 'email')}
@@ -101,7 +100,7 @@ export default function RegisterPage() {
             id="name"
             label={t('nameLabel')}
             variant="outlined"
-            value={formDataRef.current.name}
+            value={formData.name}
             error={!!errorMSGs.name}
             helperText={errorMSGs.name}
             onChange={e => handleChange(e, 'name')}
@@ -112,7 +111,7 @@ export default function RegisterPage() {
             label={t('passwordLabel')}
             type="password"
             variant="outlined"
-            value={formDataRef.current.password}
+            value={formData.password}
             error={!!errorMSGs.password}
             helperText={errorMSGs.password}
             onChange={e => handleChange(e, 'password')}
@@ -123,11 +122,15 @@ export default function RegisterPage() {
             label={t('confirmPasswordLabel')}
             type="password"
             variant="outlined"
-            value={formDataRef.current.confirmPassword}
+            value={formData.confirmPassword}
             error={!!errorMSGs.confirmPassword}
             helperText={errorMSGs.confirmPassword}
             onChange={e => handleChange(e, 'confirmPassword')}
             disabled={isPending}
+          />
+          <AvatarSelector
+            handleChange={handleAvatarChange}
+            selectedAvatar={formData.avatar}
           />
         </div>
         <div className="flex justify-end gap-1">
@@ -137,17 +140,10 @@ export default function RegisterPage() {
           >
             {t('navigateLoginPage')}
           </Link>
-          <p className="text-xs text-gray-500">/</p>
-          <p
-            onClick={handleClickForgetPassword}
-            className="text-xs text-gray-500 hover:underline cursor-pointer"
-          >
-            {t('forgetPassword')}
-          </p>
         </div>
         <Button
           type="submit"
-          size="small"
+          size="medium"
           variant="contained"
           color="secondary"
           disabled={isPending}

@@ -9,12 +9,14 @@ const rawUserData = [
     email: process.env.ADMIN_YUAN_EMAIL!,
     password: process.env.ADMIN_YUAN_PASSWORD!,
     role: 'admin',
+    avatar: 2,
   },
   {
     name: 'Gino',
     email: process.env.ADMIN_GINO_EMAIL!,
     password: process.env.ADMIN_YUAN_PASSWORD!,
     role: 'admin',
+    avatar: 3,
   },
   // {
   //   name: 'Admin',

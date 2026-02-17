@@ -1,0 +1,36 @@
+{
+  "CreateShopAction": {
+    "missingToken": "Missing authentication token. Please log in again.",
+    "userNotFound": "User not found.",
+    "tokenExpired": "Your session has expired. Please log in again.",
+    "tokenValidationFailed": "Token validation failed. Please log in again.",
+    "serverError": "Server error. Please try again later."
+  },
+  "CreateShopPage": {
+    "title": "Create Coffee Shop",
+    "cityLabel": "City",
+    "nameLabel": "Name",
+    "addressLabel": "Shop Address",
+    "cityMenu": {
+      "taipei": "Taipei"
+    },
+    "submitButton": "Submit",
+    "errorMSG": {
+      "required": "This is required"
+    }
+  },
+  "CoffeeMap": {
+    "popupInfo": {
+      "storeName": "Shop Name",
+      "address": "Address"
+    }
+  },
+  "InformationPage": {
+    "shopList": {
+      "name": "Name",
+      "address": "Address",
+      "goCoffeeMap": "Go to Coffee Map",
+      "goGoogleMap": "Go to Google Map"
+    }
+  }
+}

@@ -19,10 +19,13 @@ model User {
   email String  @unique
   name  String
   password String
+  avatar Int @default(1) // 大頭貼
   role String @default("user") // Default role is 'user'
   createdAt DateTime @default(now())
   createdList String[] @default([]) // 建立哪些店家資料
   favoriteList String[] @default([]) // 收藏哪些店家
+  resetPasswordToken   String?   // 可為 null
+  resetPasswordExpires DateTime? // token 過期時間
 }
 
 model ShopList {

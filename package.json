@@ -13,7 +13,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate:init": "prisma migrate dev --name init",
-    "migrate:update": "Prisma migrate dev --name",
+    "migrate:update": "prisma migrate dev --name",
     "seed": "prisma db seed",
     "studio": "prisma studio",
     "reset": "prisma migrate reset --force"

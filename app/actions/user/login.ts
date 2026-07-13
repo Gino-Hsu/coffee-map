@@ -26,7 +26,6 @@ export async function loginAction({
 }: loginInput) {
   const t = await getTranslations({ locale, namespace: 'LoginServerAction' });
 
-  console.log('loginAction called with:', { email });
   //! 確保帳號和密碼不為空
   if (!email || !password) {
     console.error('❗️Email and password are required');
@@ -88,6 +87,6 @@ export async function loginAction({
     return { data: { message: t('success') }, status: 200 };
   } catch (error) {
     console.error('❗️Login error:', error);
-    return { date: { message: t('serverError') }, status: 500 };
+    return { data: { message: t('serverError') }, status: 500 };
   }
 }

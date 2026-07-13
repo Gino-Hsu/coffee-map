@@ -4,7 +4,9 @@
     "userNotFound": "User not found.",
     "tokenExpired": "Your session has expired. Please log in again.",
     "tokenValidationFailed": "Token validation failed. Please log in again.",
-    "serverError": "Server error. Please try again later."
+    "serverError": "Server error. Please try again later.",
+    "invalidInput": "Invalid input data",
+    "addressNotFound": "Address not found. Please check the address."
   },
   "CreateShopPage": {
     "title": "Create Coffee Shop",

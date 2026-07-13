@@ -4,7 +4,9 @@
     "userNotFound": "找不到使用者資料",
     "tokenExpired": "登入已過期，請重新登入",
     "tokenValidationFailed": "登入憑證驗證失敗，請重新登入",
-    "serverError": "伺服器錯誤，請稍後再試"
+    "serverError": "伺服器錯誤，請稍後再試",
+    "invalidInput": "輸入資料格式不正確",
+    "addressNotFound": "找不到此地址，請確認地址是否正確"
   },
   "CreateShopPage": {
     "title": "建立咖啡廳",

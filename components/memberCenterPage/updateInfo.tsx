@@ -19,8 +19,6 @@ export default function UpdateInfo({ lang }: { lang: string }) {
 
   const { user, setUser, isGetUserLoading, setIsLoginSession } =
     useContext(UserContext);
-  const email = user?.email ?? '';
-  console.log('current user: ', user);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -67,20 +65,16 @@ export default function UpdateInfo({ lang }: { lang: string }) {
 
   const handleSubmitUpdateInfo = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('current formData: ', formData);
 
     const result = updateInfoSchema.safeParse(formData);
-    console.log('UpdateUser formData:', result);
 
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof typeLoginForm, string>> = {};
       for (const issue of result.error.issues) {
-        console.log('issue in result: ', issue);
         const key = issue.path[0] as keyof typeLoginForm;
         fieldErrors[key] = issue.message;
       }
 
-      console.log('Validation errors:', fieldErrors);
       setErrorMSGs(fieldErrors);
       return;
     }
@@ -89,7 +83,6 @@ export default function UpdateInfo({ lang }: { lang: string }) {
     startTransition(async () => {
       const { name, avatar, password } = formData;
       const res = await updateUserAction({
-        email,
         name,
         avatar,
         password,

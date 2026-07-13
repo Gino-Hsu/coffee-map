@@ -54,7 +54,7 @@ export async function getShopsAction({ city }: getShopsParams) {
     }
 
     // 返回找到的商店列表
-    console.log('✅ Shops fetched successfully:', shops.length, shops);
+    console.log('✅ Shops fetched successfully:', shops.length);
     return {
       data: {
         message: 'Shops fetched successfully',

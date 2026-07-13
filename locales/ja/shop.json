@@ -4,7 +4,9 @@
     "userNotFound": "ユーザーが見つかりません。",
     "tokenExpired": "セッションの有効期限が切れました。再度ログインしてください。",
     "tokenValidationFailed": "トークンの検証に失敗しました。再度ログインしてください。",
-    "serverError": "サーバーエラーが発生しました。しばらくしてから再試行してください。"
+    "serverError": "サーバーエラーが発生しました。しばらくしてから再試行してください。",
+    "invalidInput": "入力データの形式が正しくありません",
+    "addressNotFound": "住所が見つかりません。住所をご確認ください。"
   },
   "CreateShopPage": {
     "title": "コーヒーショップを作成",

@@ -34,14 +34,14 @@ export default async function ShopList({ city }: { city: string }) {
         {shopsData.map((shop) => (
           <tr
             key={shop.id}
-            className="hover:bg-custom-table-bgColor-hover border-b-2 border-gray-200 bg-white last:border-none"
+            className="border-b-2 border-gray-200 bg-white last:border-none hover:bg-custom-table-bgColor-hover"
           >
             <td className="p-2 text-center">{shop.name}</td>
             <td className="p-2 text-center">{shop.address}</td>
             <td className="p-2 text-center">
               <Link
-                className="hover:text-custom-fontColor-hover flex cursor-pointer items-center justify-center gap-2"
-                href={`/${city}/map?id=${shop.id}`}
+                className="flex cursor-pointer items-center justify-center gap-2 hover:text-custom-fontColor-hover"
+                href={`/${city}/map?shop_id=${shop.id}`}
               >
                 <PlaceIcon />
                 {t("shopList.goCoffeeMap")}
@@ -49,7 +49,7 @@ export default async function ShopList({ city }: { city: string }) {
             </td>
             <td className="p-2 text-center">
               <Link
-                className="hover:text-custom-fontColor-hover flex cursor-pointer items-center justify-center gap-2"
+                className="flex cursor-pointer items-center justify-center gap-2 hover:text-custom-fontColor-hover"
                 href={`https://www.google.com/maps?q=https://www.google.com/maps/place/${shop.name}`}
                 target="_blank"
                 rel="noopener noreferrer"

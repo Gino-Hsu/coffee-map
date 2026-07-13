@@ -6,6 +6,7 @@ import { verifyToken } from '@/lib/auth';
 import { getTranslations } from 'next-intl/server';
 import { logoutAction } from '../user/logout';
 import { getCoordsFromAddress } from '@/lib/map/helper';
+import { createShopServerSchema } from '@/lib/serverValidation';
 
 interface createShopParams {
   name: string;
@@ -21,6 +22,14 @@ export async function createShopAction({
   locale,
 }: createShopParams) {
   const t = await getTranslations({ locale, namespace: 'CreateShopAction' });
+
+  //! Server 端驗證：名稱/地址必填、城市須為允許的值（前端可能被繞過）
+  const parsed = createShopServerSchema.safeParse({ name, address, city });
+  if (!parsed.success) {
+    console.error('❗️Create shop validation failed');
+    return { data: { message: t('invalidInput') }, status: 400 };
+  }
+
   const cookieStore = await cookies();
   const token = cookieStore.get('coffee_auth_token')?.value;
 
@@ -43,8 +52,15 @@ export async function createShopAction({
       };
     }
 
-    // 地址轉經緯度
-    const { lat, lng } = await getCoordsFromAddress(address);
+    // 地址轉經緯度（查無地址或 geocoding 服務失敗時回傳明確訊息，而非籠統 500）
+    let lat: number;
+    let lng: number;
+    try {
+      ({ lat, lng } = await getCoordsFromAddress(address));
+    } catch (geoErr) {
+      console.error('❗️Geocoding failed:', geoErr);
+      return { data: { message: t('addressNotFound') }, status: 422 };
+    }
 
     // 建立店家資料
     const newShop = await prisma.shopList.create({
@@ -72,7 +88,6 @@ export async function createShopAction({
   } catch (e) {
     if (e instanceof Error) {
       const name = e?.name;
-      console.log('error in getUserAction, name: ', name);
 
       if (name === 'TokenExpiredError') {
         console.warn('❗️JWT 已過期');

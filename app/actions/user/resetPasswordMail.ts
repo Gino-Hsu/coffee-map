@@ -3,6 +3,7 @@
 import prisma from '@/lib/prisma';
 import { getTranslations } from 'next-intl/server';
 import bcrypt from 'bcrypt';
+import { resetPasswordServerSchema } from '@/lib/serverValidation';
 
 interface resetPasswordMailInput {
   token: string;
@@ -20,9 +21,10 @@ export async function resetPasswordMailAction({
     namespace: 'ResetPasswordMailAction',
   });
 
-  //! token 和 password 不得為空
-  if (!token || !newPassword.trim()) {
-    console.error('❗️AToken and password are required.');
+  //! Server 端驗證：token 存在、密碼符合強度規則（前端可能被繞過）
+  const parsed = resetPasswordServerSchema.safeParse({ token, newPassword });
+  if (!parsed.success) {
+    console.error('❗️Reset password validation failed');
     return { data: { message: t('missingFields') }, status: 400 };
   }
 

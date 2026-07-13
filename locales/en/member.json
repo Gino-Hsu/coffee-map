@@ -1,0 +1,42 @@
+{
+  "GetUserServerAction": {
+    "missingToken": "Token not found.",
+    "userNotFound": "user not found.",
+    "userFound": "user found.",
+    "tokenExpired": "Expired token",
+    "tokenValidationFailed": "Token validation failed.",
+    "serverError": "Server error, please try again later"
+  },
+  "UpdateFavoriteAction": {
+    "unverifiedUser": "Not logged in, please log in again",
+    "addedFavorite": "Added to favorites",
+    "removedFavorite": "Removed from favorites",
+    "tokenExpired": "Session expired, please log in again",
+    "serverError": "Server error, please try again later"
+  },
+  "MemberCenterPage": {
+    "title": "Member Center",
+    "updateUser": "Update Member Info"
+  },
+  "UpdateUser": {
+    "nameLabel": "Edit Name",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "errorMSG": {
+      "required": "This field is required",
+      "email": {
+        "format": "Please enter a valid email address"
+      },
+      "password": {
+        "length": "Password must be at least 8 characters long",
+        "requireAlphaNum": "Password must contain both letters and numbers"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "Passwords do not match"
+      },
+      "updateFailed": "Update failed"
+    },
+    "updateSuccess": "Update successful",
+    "updateInfoButton": "Update Member Info"
+  }
+}

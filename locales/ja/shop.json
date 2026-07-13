@@ -1,0 +1,38 @@
+{
+  "CreateShopAction": {
+    "missingToken": "認証トークンが見つかりません。再度ログインしてください。",
+    "userNotFound": "ユーザーが見つかりません。",
+    "tokenExpired": "セッションの有効期限が切れました。再度ログインしてください。",
+    "tokenValidationFailed": "トークンの検証に失敗しました。再度ログインしてください。",
+    "serverError": "サーバーエラーが発生しました。しばらくしてから再試行してください。",
+    "invalidInput": "入力データの形式が正しくありません",
+    "addressNotFound": "住所が見つかりません。住所をご確認ください。"
+  },
+  "CreateShopPage": {
+    "title": "コーヒーショップを作成",
+    "cityLabel": "都市",
+    "nameLabel": "名前",
+    "addressLabel": "店の住所",
+    "cityMenu": {
+      "taipei": "台北"
+    },
+    "submitButton": "送信",
+    "errorMSG": {
+      "required": "この欄は必須です"
+    }
+  },
+  "CoffeeMap": {
+    "popupInfo": {
+      "storeName": "店名",
+      "address": "店の所在地"
+    }
+  },
+  "InformationPage": {
+    "shopList": {
+      "name": "店名",
+      "address": "店の住所",
+      "goCoffeeMap": "Coffee Mapに行く",
+      "goGoogleMap": "Google Mapに行く"
+    }
+  }
+}

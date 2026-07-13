@@ -13,7 +13,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate:init": "prisma migrate dev --name init",
-    "migrate:update": "Prisma migrate dev --name",
+    "migrate:update": "prisma migrate dev --name",
     "seed": "prisma db seed",
     "studio": "prisma studio",
     "reset": "prisma migrate reset --force"
@@ -55,6 +55,8 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "prisma": "^6.11.1",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.20.3",

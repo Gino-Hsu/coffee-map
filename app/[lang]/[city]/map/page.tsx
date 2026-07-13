@@ -1,4 +1,4 @@
-import MapPage from '@/components/mapPage';
+import MapPage from "@/components/mapPage";
 
 export default async function Map(params: {
   params: Promise<{ city: string }>;

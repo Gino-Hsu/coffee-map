@@ -32,7 +32,11 @@
       "name": "Name",
       "address": "Address",
       "goCoffeeMap": "Go to Coffee Map",
-      "goGoogleMap": "Go to Google Map"
+      "goGoogleMap": "Go to Google Map",
+      "phone": "Phone",
+      "openingHours": "Hours",
+      "shopCount": "{count} shops",
+      "emptyList": "No shops found"
     }
   }
 }

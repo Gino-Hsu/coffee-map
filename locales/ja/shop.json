@@ -32,7 +32,11 @@
       "name": "店名",
       "address": "店の住所",
       "goCoffeeMap": "Coffee Mapに行く",
-      "goGoogleMap": "Google Mapに行く"
+      "goGoogleMap": "Google Mapに行く",
+      "phone": "電話",
+      "openingHours": "営業時間",
+      "shopCount": "全 {count} 件",
+      "emptyList": "店舗データがありません"
     }
   }
 }

@@ -38,5 +38,11 @@
     },
     "updateSuccess": "更新成功",
     "updateInfoButton": "更新會員資料"
+  },
+  "UpdateUserServerAction": {
+    "missingToken": "缺少登入憑證，請重新登入",
+    "missing": "缺少必要欄位或格式不正確",
+    "success": "會員資料已更新",
+    "serverError": "伺服器錯誤，請稍後再試"
   }
 }

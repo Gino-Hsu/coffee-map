@@ -5,7 +5,7 @@ import { randomBytes } from 'crypto';
 import { sendEmail } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { getTranslations } from 'next-intl/server';
-import redis from '@/lib/redis';
+import { withRedis } from '@/lib/redis';
 
 const BLOCK_TIME_SECONDS = 60 * 10; // 限制(分鐘)
 
@@ -31,8 +31,8 @@ export async function forgotPasswordAction({
 
   try {
     const redisKey = `forgotPassword:sent:${email.toLowerCase()}`;
-    // 檢查是否在 10 分鐘限制中
-    const exists = await redis.get(redisKey);
+    // 檢查是否在 10 分鐘限制中（Redis 故障時略過限流，不阻擋寄信）
+    const exists = await withRedis(r => r.get(redisKey), null);
     if (exists) {
       console.warn('[RateLimit] ForgotPassword email already sent');
       return {
@@ -68,8 +68,8 @@ export async function forgotPasswordAction({
       const emailBody = t('emailBody', { link: resetLink });
       await sendEmail(user.email, emailSubject, emailBody);
 
-      // 設置 Redis 避免重複發送
-      await redis.set(redisKey, '1', 'EX', BLOCK_TIME_SECONDS);
+      // 設置 Redis 避免重複發送（Redis 故障時略過）
+      await withRedis(r => r.set(redisKey, '1', 'EX', BLOCK_TIME_SECONDS), null);
 
       console.log('success send Email');
     }

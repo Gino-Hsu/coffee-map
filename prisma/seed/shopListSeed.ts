@@ -20,12 +20,20 @@ const rawShopData = [
 ];
 
 export async function main() {
+  // name 已非 unique，改用 findFirst 判斷是否存在再決定 update/create
   for (const shop of rawShopData) {
-    await prisma.shopList.upsert({
+    const city = shop.city || 'taipei';
+    const existing = await prisma.shopList.findFirst({
       where: { name: shop.name },
-      update: { ...shop, city: shop.city || 'taipei' },
-      create: { ...shop, city: shop.city || 'taipei' },
     });
+    if (existing) {
+      await prisma.shopList.update({
+        where: { id: existing.id },
+        data: { ...shop, city },
+      });
+    } else {
+      await prisma.shopList.create({ data: { ...shop, city } });
+    }
   }
 }
 

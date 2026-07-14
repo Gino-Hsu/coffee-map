@@ -15,6 +15,7 @@
     "migrate:init": "prisma migrate dev --name init",
     "migrate:update": "prisma migrate dev --name",
     "seed": "prisma db seed",
+    "crawl:osm": "tsx scripts/crawl/osmCafes.ts",
     "studio": "prisma studio",
     "reset": "prisma migrate reset --force"
   },

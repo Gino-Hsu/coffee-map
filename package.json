@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=22.0.0"
+    "node": "^22.0.0"
   },
   "scripts": {
     "dev": "next dev",
@@ -11,7 +11,7 @@
     "postinstall": "prisma generate",
     "postinstall:prisma": "prisma generate",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "migrate:init": "prisma migrate dev --name init",
     "migrate:update": "prisma migrate dev --name",
     "seed": "prisma db seed",

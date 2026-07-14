@@ -38,5 +38,11 @@
     },
     "updateSuccess": "更新に成功しました",
     "updateInfoButton": "更新會員資料"
+  },
+  "UpdateUserServerAction": {
+    "missingToken": "認証トークンが見つかりません。再度ログインしてください。",
+    "missing": "必須項目が不足しているか、形式が正しくありません",
+    "success": "会員情報を更新しました",
+    "serverError": "サーバーエラーが発生しました。しばらくしてから再試行してください。"
   }
 }

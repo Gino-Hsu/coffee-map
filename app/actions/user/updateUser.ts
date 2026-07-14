@@ -27,7 +27,7 @@ export async function updateUserAction({
 }: updateInfoInput) {
   const t = await getTranslations({
     locale,
-    namespace: 'MemberCenterPage',
+    namespace: 'UpdateUserServerAction',
   });
 
   const cookieStore = await cookies();

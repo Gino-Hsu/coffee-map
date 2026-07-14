@@ -5,7 +5,7 @@ import prisma from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { getTranslations } from 'next-intl/server';
-import redis from '@/lib/redis';
+import { withRedis } from '@/lib/redis';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 const EXPIRES_IN = '7d';
@@ -37,9 +37,9 @@ export async function loginAction({
     return { data: { message: t('serverError') }, status: 500 };
   }
 
-  // ! 確保請求不超過上限
+  // ! 確保請求不超過上限（Redis 故障時以 best-effort 略過，不阻擋登入）
   const redisKey = `login:attempts:${email.toLowerCase()}`;
-  const attempts = await redis.get(redisKey);
+  const attempts = await withRedis(r => r.get(redisKey), null);
   if (attempts && parseInt(attempts) >= MAX_ATTEMPTS) {
     console.error(
       `[RateLimit] Too many login attempts for email: ${email}. Attempts: ${attempts}, Limit: ${MAX_ATTEMPTS}, Key: ${redisKey}`
@@ -58,9 +58,11 @@ export async function loginAction({
     if (!user || !(await bcrypt.compare(password, user.password))) {
       console.error('❗️Invalid email or password');
 
-      // 增加失敗次數
-      await redis.incr(redisKey);
-      await redis.expire(redisKey, BLOCK_TIME_SECONDS);
+      // 增加失敗次數（Redis 故障時略過）
+      await withRedis(async r => {
+        await r.incr(redisKey);
+        await r.expire(redisKey, BLOCK_TIME_SECONDS);
+      }, undefined);
 
       return { data: { message: t('invalidCredentials') }, status: 401 };
     }
@@ -79,8 +81,8 @@ export async function loginAction({
       path: '/',
     });
 
-    // 登入成功，清除 login attempts
-    await redis.del(redisKey);
+    // 登入成功，清除 login attempts（Redis 故障時略過）
+    await withRedis(r => r.del(redisKey), undefined);
 
     // 返回成功訊息和狀態碼
     console.log('✅Login successful, token set in cookies');

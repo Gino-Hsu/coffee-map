@@ -7,7 +7,7 @@ interface getShopsParams {
   city: string;
 }
 
-const validateCityArr: string[] = [enumCity.TAIPEI];
+const validateCityArr: string[] = Object.values(enumCity);
 
 export async function getShopsAction({ city }: getShopsParams) {
   const cityLower = city.trim().toLowerCase();
@@ -44,6 +44,8 @@ export async function getShopsAction({ city }: getShopsParams) {
         lng: true,
         createdAt: true,
         createdBy: true,
+        phone: true,
+        openingHours: true,
       },
     });
 

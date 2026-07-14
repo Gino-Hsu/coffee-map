@@ -1,52 +1,82 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
 import { randomBytes } from 'crypto';
 import { sendEmail } from '@/lib/auth';
 import { headers } from 'next/headers';
+import { getTranslations } from 'next-intl/server';
+import { withRedis } from '@/lib/redis';
 
-const prisma = new PrismaClient();
+const BLOCK_TIME_SECONDS = 60 * 10; // 限制(分鐘)
 
 interface forgotPasswordInput {
   email: string;
+  locale: string;
 }
 
-export async function forgotPasswordAction({ email }: forgotPasswordInput) {
+export async function forgotPasswordAction({
+  email,
+  locale = 'zh',
+}: forgotPasswordInput) {
+  const t = await getTranslations({
+    locale,
+    namespace: 'ForgotPasswordAction',
+  });
+
   //! 確保 email 不為空
   if (!email) {
     console.error('❗️Email is required');
-    return { data: { message: 'Email 不得為空', status: 400 } };
+    return { data: { message: t('emailRequired') }, status: 400 };
   }
 
   try {
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) {
-      return { data: { message: 'User not found' }, status: 404 };
+    const redisKey = `forgotPassword:sent:${email.toLowerCase()}`;
+    // 檢查是否在 10 分鐘限制中（Redis 故障時略過限流，不阻擋寄信）
+    const exists = await withRedis(r => r.get(redisKey), null);
+    if (exists) {
+      console.warn('[RateLimit] ForgotPassword email already sent');
+      return {
+        data: { message: t('tooFrequentRequest') }, // i18n 需新增
+        status: 429,
+      };
     }
 
-    // 產生隨機 token
-    const token = randomBytes(32).toString('hex');
-    const expires = new Date(Date.now() + 1000 * 60 * 30); // 30 分鐘
+    const user = await prisma.user.findUnique({ where: { email } });
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        resetPasswordToken: token,
-        resetPasswordExpires: expires,
-      },
-    });
+    // 為避免使用者列舉 (user enumeration)，無論帳號是否存在都回傳相同訊息；
+    // 只有帳號存在時才實際產生 token 並寄信。
+    if (user) {
+      // 產生隨機 token
+      const token = randomBytes(32).toString('hex');
+      const expires = new Date(Date.now() + 1000 * 60 * 30); // 30 分鐘
 
-    const headersList = await headers(); // 等待 Promise
-    const host = headersList.get('host');
-    const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
-    const resetLink = `${protocol}://${host}/reset-password?token=${token}`;
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          resetPasswordToken: token,
+          resetPasswordExpires: expires,
+        },
+      });
 
-    await sendEmail(user.email, 'Password Reset', `Click here: ${resetLink}`);
+      // 建立 Rest Key
+      const headersList = await headers(); // 等待 Promise
+      const host = headersList.get('host');
+      const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+      const resetLink = `${protocol}://${host}/${locale}/reset-password-mail?token=${token}`;
 
-    console.log('success send Email');
-    return { data: { message: 'success' }, status: 200 };
+      const emailSubject = t('emailSubject');
+      const emailBody = t('emailBody', { link: resetLink });
+      await sendEmail(user.email, emailSubject, emailBody);
+
+      // 設置 Redis 避免重複發送（Redis 故障時略過）
+      await withRedis(r => r.set(redisKey, '1', 'EX', BLOCK_TIME_SECONDS), null);
+
+      console.log('success send Email');
+    }
+
+    return { data: { message: t('success') }, status: 200 };
   } catch (error) {
     console.error('❗️ForgotPassword error:', error);
-    return { date: { message: 'server error' }, status: 500 };
+    return { data: { message: t('serverError') }, status: 500 };
   }
 }

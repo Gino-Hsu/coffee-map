@@ -1,0 +1,43 @@
+{
+  "HeaderLayout": {
+    "login": "登入",
+    "logout": "登出"
+  },
+  "City": {
+    "taipei": "台北市",
+    "newTaipei": "新北市",
+    "taoyuan": "桃園市",
+    "taichung": "台中市",
+    "tainan": "台南市",
+    "kaohsiung": "高雄市",
+    "keelung": "基隆市",
+    "hsinchuCity": "新竹市",
+    "hsinchuCounty": "新竹縣",
+    "miaoli": "苗栗縣",
+    "changhua": "彰化縣",
+    "nantou": "南投縣",
+    "yunlin": "雲林縣",
+    "chiayiCity": "嘉義市",
+    "chiayiCounty": "嘉義縣",
+    "pingtung": "屏東縣",
+    "yilan": "宜蘭縣",
+    "hualien": "花蓮縣",
+    "taitung": "台東縣",
+    "penghu": "澎湖縣",
+    "kinmen": "金門縣",
+    "lienchiang": "連江縣",
+    "new-taipei": "新北市"
+  },
+  "HomePage": {
+    "title": "選擇城市，找個咖啡廳",
+    "cityCard": {
+      "title": "",
+      "shopInfo": "店家資訊",
+      "mapInfo": "地圖"
+    }
+  },
+  "MainVisual": {
+    "title_1": "在城市的角落，靜謐咖啡香。",
+    "title_2": "插上電源，也插上靈感。"
+  }
+}

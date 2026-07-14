@@ -1,17 +1,13 @@
 'use server';
 
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prisma';
+import { enumCity } from '@/type/shopsType';
 
 interface getShopsParams {
   city: string;
 }
 
-enum cityEnum {
-  TAIPEI = 'taipei',
-}
-
-const prisma = new PrismaClient();
-const validateCityArr: string[] = [cityEnum.TAIPEI];
+const validateCityArr: string[] = Object.values(enumCity);
 
 export async function getShopsAction({ city }: getShopsParams) {
   const cityLower = city.trim().toLowerCase();
@@ -48,6 +44,8 @@ export async function getShopsAction({ city }: getShopsParams) {
         lng: true,
         createdAt: true,
         createdBy: true,
+        phone: true,
+        openingHours: true,
       },
     });
 
@@ -58,7 +56,7 @@ export async function getShopsAction({ city }: getShopsParams) {
     }
 
     // 返回找到的商店列表
-    console.log('✅ Shops fetched successfully:', shops.length, shops);
+    console.log('✅ Shops fetched successfully:', shops.length);
     return {
       data: {
         message: 'Shops fetched successfully',

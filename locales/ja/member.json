@@ -1,0 +1,48 @@
+{
+  "GetUserServerAction": {
+    "missingToken": "認証トークンが見つかりません",
+    "userNotFound": "ユーザー情報が見つかりません",
+    "userFound": "ユーザー情報の取得に成功しました",
+    "tokenExpired": "認証トークンの有効期限が切れています",
+    "tokenValidationFailed": "認証トークンの検証に失敗しました",
+    "serverError": "サーバーエラーが発生しました。しばらくしてから再度お試しください"
+  },
+  "UpdateFavoriteAction": {
+    "unverifiedUser": "未登入です。再度登入してください",
+    "addedFavorite": "お気に入りに追加しました",
+    "removedFavorite": "お気に入りから削除しました",
+    "tokenExpired": "登入期限切れです。再度登入してください",
+    "serverError": "サーバーエラーが発生しました。後でもう一度お試しください"
+  },
+  "MemberCenterPage": {
+    "title": "会員センター",
+    "updateUser": "会員情報を更新"
+  },
+  "UpdateUser": {
+    "nameLabel": "姓名",
+    "passwordLabel": "暗証番号",
+    "confirmPasswordLabel": "暗証番号（確認）",
+    "errorMSG": {
+      "required": "この項目は必須です",
+      "email": {
+        "format": "有効なメールアドレスを入力してください"
+      },
+      "password": {
+        "length": "暗証番号は8文字以上で入力してください",
+        "requireAlphaNum": "パスワードには英字と数字を含める必要があります"
+      },
+      "confirmPassword": {
+        "passwordMismatch": "パスワードが一致しません"
+      },
+      "updateFailed": "更新に失敗しました"
+    },
+    "updateSuccess": "更新に成功しました",
+    "updateInfoButton": "更新會員資料"
+  },
+  "UpdateUserServerAction": {
+    "missingToken": "認証トークンが見つかりません。再度ログインしてください。",
+    "missing": "必須項目が不足しているか、形式が正しくありません",
+    "success": "会員情報を更新しました",
+    "serverError": "サーバーエラーが発生しました。しばらくしてから再試行してください。"
+  }
+}

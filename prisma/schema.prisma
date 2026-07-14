@@ -30,11 +30,14 @@ model User {
 
 model ShopList {
   id      String  @id @default(uuid())
-  name    String  @unique
+  name    String // 連鎖店會有多家同名分店，故不設 unique
   lat     Float // 緯度
   lng     Float // 經度
   address String
-  city    String 
+  city    String
   createdAt DateTime @default(now())
   createdBy String? // 哪個會員id建立這筆資料
+  osmId   String? @unique // OSM 來源識別 (type/id)，供去重與重複匯入 upsert
+  phone        String? // 電話
+  openingHours String? // 營業時間 (OSM opening_hours 格式)
 }

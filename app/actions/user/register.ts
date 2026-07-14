@@ -3,6 +3,7 @@
 import prisma from '@/lib/prisma';
 import { getTranslations } from 'next-intl/server';
 import bcrypt from 'bcrypt';
+import { registerServerSchema } from '@/lib/serverValidation';
 
 interface registerInput {
   email: string;
@@ -11,6 +12,7 @@ interface registerInput {
   confirmPassword: string;
   locale?: string;
 }
+
 export async function registerAction({
   email,
   name,
@@ -22,22 +24,21 @@ export async function registerAction({
     locale,
     namespace: 'RegisterServerAction',
   });
-  console.log('registerAction called with:', { email });
 
-  //! 確保帳號、名稱密碼、忘記密碼皆不為空
-  if (
-    !email.trim() ||
-    !name.trim() ||
-    !password.trim() ||
-    !confirmPassword.trim()
-  ) {
-    console.error('❗️All register fields are required.');
+  //! Server 端驗證：帳號格式、密碼強度、必填欄位（前端可能被繞過）
+  const parsed = registerServerSchema.safeParse({
+    email,
+    name,
+    password,
+    confirmPassword,
+  });
+  if (!parsed.success) {
+    console.error('❗️Register validation failed');
     return { data: { message: t('missing') }, status: 400 };
   }
 
   //! 密碼跟確認密碼有沒有一樣
   if (password.trim() !== confirmPassword.trim()) {
-    console.error("❗️Password doesn't match with confirmPassword.");
     return { data: { message: t('confirmPasswordUnmatched') }, status: 400 };
   }
 
@@ -54,7 +55,7 @@ export async function registerAction({
   const hashedPassword = await bcrypt.hash(password.trim(), 10);
 
   try {
-    const newUser = await prisma.user.create({
+    await prisma.user.create({
       data: {
         email: email.trim(),
         name: name.trim(),
@@ -62,14 +63,11 @@ export async function registerAction({
       },
     });
     // 返回成功訊息和狀態碼
-    console.log('✅Register successful, newUser', {
-      id: newUser.id,
-      email: newUser.email,
-    });
+    console.log('✅Register successful');
 
     return { data: { message: t('success') }, status: 200 };
   } catch (error) {
     console.error('❗️Register error:', error);
-    return { date: { message: t('serverError') }, status: 500 };
+    return { data: { message: t('serverError') }, status: 500 };
   }
 }

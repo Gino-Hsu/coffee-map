@@ -1,18 +1,16 @@
 'use server';
 
 import { cookies } from 'next/headers';
+import prisma from '@/lib/prisma';
 import jwt from 'jsonwebtoken';
-import { PrismaClient } from '@prisma/client';
 import { getTranslations } from 'next-intl/server';
 import { logoutAction } from './logout';
 
-const prisma = new PrismaClient();
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function updateFavoriteAction(locale: string, shopId: string) {
   const cookieStore = await cookies();
   const token = cookieStore.get('coffee_auth_token')?.value;
-  console.log('userAction called with token');
 
   const t = await getTranslations({
     locale,
@@ -25,7 +23,6 @@ export async function updateFavoriteAction(locale: string, shopId: string) {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
-    console.log('decoded: ', decoded);
     const userId = decoded.userId;
 
     // 查詢目前的 favoriteList
@@ -65,13 +62,13 @@ export async function updateFavoriteAction(locale: string, shopId: string) {
       status: 200,
     };
   } catch (error) {
-    await logoutAction();
     if (error instanceof Error) {
       const name = error?.name;
-      console.log('error in getUserAction, name: ', name);
+      console.log('error in updateFavoriteAction, name: ', name);
 
       if (name === 'TokenExpiredError') {
         console.warn('❗️JWT 已過期');
+        await logoutAction();
         return {
           data: { message: t('tokenExpired'), resData: null },
           status: 401,
@@ -80,12 +77,14 @@ export async function updateFavoriteAction(locale: string, shopId: string) {
 
       if (name === 'JsonWebTokenError') {
         console.warn('❗️JWT 解析錯誤');
+        await logoutAction();
         return {
           data: { message: t('unverifiedUser'), resData: null },
           status: 401,
         };
       }
     }
+    // 非 token 錯誤（例如 DB 暫時故障）不應把使用者登出
     console.error('❗️update Favorite error:', error);
     return {
       data: { message: t('serverError'), resData: null },

@@ -10,10 +10,11 @@ export default function LoginComponent() {
   const params = useParams();
   const lang = params.lang || 'zh';
   const t = useTranslations('HeaderLayout');
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, setIsLoginSession } = useContext(UserContext);
 
-  const handleLogout = () => {
-    logoutAction();
+  const handleLogout = async () => {
+    await logoutAction();
+    if (setIsLoginSession) setIsLoginSession(false);
     setUser(null);
   };
 

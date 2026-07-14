@@ -38,5 +38,11 @@
     },
     "updateSuccess": "Update successful",
     "updateInfoButton": "Update Member Info"
+  },
+  "UpdateUserServerAction": {
+    "missingToken": "Missing authentication token. Please log in again.",
+    "missing": "Missing or invalid fields",
+    "success": "Member info updated",
+    "serverError": "Server error, please try again later"
   }
 }
